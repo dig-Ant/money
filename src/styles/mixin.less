@@ -1,0 +1,31 @@
+@import '~@/styles/var.less';
+// 美化滚动条
+.defaultScroll(@width: 4px,@color-thumb: fade(@primary-color,30%)) {
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      width: @width;
+      background-color: @color-thumb;
+      border-radius: 4px;
+    }
+  }
+  &::-webkit-scrollbar {
+    width: @width;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: @width;
+    background-color: transparent;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track-piece {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}

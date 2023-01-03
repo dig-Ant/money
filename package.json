@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "author": "杨泽环 <zehuan.yang@zhangmen.com>",
+  "scripts": {
+    "dev": "PORT=8004 umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev & npm run start-backend",
+    "start-backend": "node ./money-backend/index.js"
+  },
+  "dependencies": {
+    "antd": "^5.1.1",
+    "lodash": "^4.17.21",
+    "query-string": "^8.1.0",
+    "umi": "^4.0.40"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@umijs/plugins": "^4.0.41",
+    "prettier": "^2",
+    "prettier-plugin-organize-imports": "^2",
+    "prettier-plugin-packagejson": "^2",
+    "typescript": "^4.1.2"
+  }
+}
