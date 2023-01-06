@@ -71,9 +71,10 @@ const request = (url: string, props?: any) => {
   } else {
     requestConfig.data = data;
   }
-  console.log('requestConfig: ', requestConfig);
 
-  return requestCore(url, requestConfig);
+  return requestCore(url, requestConfig).catch((err) => {
+    console.error('request error', err);
+  });
 };
 
 export default request;

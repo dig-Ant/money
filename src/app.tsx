@@ -1,4 +1,4 @@
-import {message} from 'antd';
+import { message, notification } from 'antd';
 import type { RequestConfig } from 'umi';
 
 // 与后端约定的响应数据格式
@@ -19,35 +19,37 @@ export const request: RequestConfig = {
       console.log('errorThrower--res: ', res);
       const { code, data, errorTitle, errorMessage } = res;
       if (code !== 0) {
-        // const error: any = new Error(errorMessage);
-        // error.name = 'BizError';
-        // error.info = { errorTitle, errorMessage, data };
-        throw res; // 抛出自制的错误
+        const error: any = new Error(errorMessage);
+        error.name = 'BizError';
+        error.info = res;
+        throw error; // 抛出自制的错误
       }
     },
     errorHandler: (error: any, opts: any) => {
-      console.log('error: any, opts: any: ', error, opts);
+      console.log('errorHandler: ', error, opts);
       if (opts?.skipErrorHandler) throw error;
-      // 我们的 errorThrower 抛出的错误。
-      if (error.response) {
+      if (error.name === 'BizError') {
+        const res = error.res || { errorTitle: '', errorMessage: '请求报错' };
+        // message.error(`Response status:${error.response.status}`);
+        notification.error({
+          message: res.errorTitle,
+          description: res.errorMessage,
+        });
+      } else if (error.response) {
+        // 我们的 errorThrower 抛出的错误。
         // Axios 的错误
         // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
-        message.error(`Response status:${error.response.status}`);
-      } else if (error.request) {
-        // 请求已经成功发起，但没有收到响应
-        // \`error.request\` 在浏览器中是 XMLHttpRequest 的实例，
-        // 而在node.js中是 http.ClientRequest 的实例
-        message.error('None response! Please retry.');
+        message.error(`请求出错了哦:${error.name}--${error.message}`);
       } else {
         // 发送请求时出了点问题
-        message.error('Request error, please retry.');
+        message.error('请求出错了哦');
       }
     },
   },
   requestInterceptors: [
     // 直接写一个 function，作为拦截器
     (url, options) => {
-      console.log('requestInterceptors url: ', url,options);
+      // console.log('requestInterceptors url: ', url, options);
       // let token = auth.getToken();
       // if (
       //   token &&

@@ -117,13 +117,15 @@ export default function Layouts() {
               padding: 24,
               minHeight: 280,
               background: colorBgContainer,
+              overflowX: 'hidden',
+              overflowY: 'auto'
             }}
           >
-            <Breadcrumb>
+            {/* <Breadcrumb>
               <Breadcrumb.Item>
                 <a href="">{pathname}</a>
               </Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
             <Outlet />
           </Content>
         </Layout>

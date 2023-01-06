@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect, useSelector, useRequest } from 'umi';
+import { connect, useSelector, useRequest, useDispatch } from 'umi';
 
 import {
   Space,
@@ -10,6 +10,9 @@ import {
   Input,
   InputNumber,
   message,
+  notification,
+  Select,
+  Radio,
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_RESOURCE } from '@/utils/api';
@@ -107,6 +110,7 @@ const datas: DataType[] = [
 
 export default function HomePage() {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const { run, data, error, loading } = useRequest(
     (data) => {
       return request(GET_DY_RESOURCE, {
@@ -132,33 +136,69 @@ export default function HomePage() {
   };
   return (
     <div>
+      <Space style={{ marginBottom: 10 }}>
+        <Button
+          type="primary"
+          style={{ marginBottom: 10 }}
+          onClick={() => {
+            dispatch({
+              type: 'global/loginPup',
+            });
+          }}
+        >
+          首次需要登录chromium
+        </Button>
+        <Button
+          type="primary"
+          style={{ marginBottom: 10 }}
+          onClick={() => {
+            dispatch({
+              type: 'global/logoutPup',
+            });
+          }}
+        >
+          关闭登录chromium
+        </Button>
+      </Space>
       <Form
         {...layout}
         layout="inline"
         form={form}
         className={styles.filter}
         onFinish={onFinish}
+        initialValues={{ type: 'post' }}
       >
-        <Form.Item
-          name="url"
-          label="抖音列表链接"
-          rules={[{ required: true, message: '请输入抖音列表链接' }]}
-        >
+        <Form.Item name="url" label="抖音列表链接">
           <Input />
         </Form.Item>
 
-        <Form.Item name="filter" label="包含文字筛选">
+        {/* <Form.Item name="filter" label="包含文字筛选">
+          <Input />
+        </Form.Item> */}
+
+        <Form.Item name="downloadFilename" label="下载文件夹名称">
           <Input />
         </Form.Item>
 
         <Form.Item
-          name="num"
+          name="limitLen"
           label="最近几条"
-          rules={[{ required: true, message: '请输入最近几条' }]}
+          // rules={[{ required: true, message: '请输入最近几条' }]}
         >
           <InputNumber precision={0} style={{ width: '100%' }} />
         </Form.Item>
-
+        <Form.Item
+          label="类型"
+          name="type"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+        >
+          <Radio.Group>
+            <Radio.Button value="post">作品</Radio.Button>
+            <Radio.Button value="like">喜欢</Radio.Button>
+            <Radio.Button value="favorite_collection">收藏</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             提交

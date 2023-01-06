@@ -12,29 +12,37 @@ export default [
     }
   },
   {
-    path: '/test',
-    // component: '@/layouts/index',
+    path: '/search',
+    component: './search/index',
     meta: {
-      name: '测试',
-      icon: 'UserOutlined'
-    },
-    routes: [
-      {
-        path: '/test/ad',
-        component: './home',
-        meta: {
-          icon: 'UserOutlined',
-          name: '哈哈哈'
-        }
-      },
-      {
-        path: '/test/ad2',
-        component: './home',
-        meta: {
-          icon: 'UserOutlined',
-          name: '对对对'
-        }
-      }
-    ]
+      icon: 'UserOutlined',
+      name: '抖音搜索列表'
+    }
   },
+  // {
+  //   path: '/test',
+  //   // component: '@/layouts/index',
+  //   meta: {
+  //     name: '测试',
+  //     icon: 'UserOutlined'
+  //   },
+  //   routes: [
+  //     {
+  //       path: '/test/ad',
+  //       component: './home',
+  //       meta: {
+  //         icon: 'UserOutlined',
+  //         name: '哈哈哈'
+  //       }
+  //     },
+  //     {
+  //       path: '/test/ad2',
+  //       component: './home',
+  //       meta: {
+  //         icon: 'UserOutlined',
+  //         name: '对对对'
+  //       }
+  //     }
+  //   ]
+  // },
 ];

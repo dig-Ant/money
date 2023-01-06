@@ -78,17 +78,47 @@ class WebInterface {
       });
     });
 
+    // 获取下载抖音收藏列表
     app.post('/v1/getDyResource', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      this.pupp.urls = [body.url];
-      this.pupp.limitLen = body.num;
-      this.pupp.start();
-      console.log('body: ', body);
-      // await new Promise((res) => setTimeout(() => res(), 2000));
+      const dataSource = await this.pupp.start('feature_downloadVideo',body);
       res.send({
         code: 0,
-        data: { list: 12 },
+        data: { list: dataSource },
+      });
+    });
+
+    // 打开chromium浏览器
+    app.post('/v1/loginPup', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      await this.pupp.start('feature_login');
+      res.send({
+        code: 0,
+        data: {},
+      });
+    });
+
+    // 关闭
+    app.post('/v1/logoutPup', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      await this.pupp.start('feature_logout');
+      res.send({
+        code: 0,
+        data: {},
+      });
+    });
+
+    // 搜索抖音列表
+    app.post('/v1/getDySearch', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const list = await this.pupp.start('feature_search', body);
+      res.send({
+        code: 0,
+        data: { list },
       });
     });
 

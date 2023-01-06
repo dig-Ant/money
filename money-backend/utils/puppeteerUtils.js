@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const axiosRequest = require('./request');
 const { delay, getToday } = require('./index');
+const mkdirp = require('mkdirp');
 
 const hrefClassMap = {
   music: 'o2WoARuk',
@@ -72,39 +73,39 @@ const getSrc = async (page, videoArr) => {
   return videoSrcArr.sort((a, b) => b.zan - a.zan);
 };
 
-function download(video, file, i) {
+async function download(video, file, i) {
+  const { downloadPath } = file || {};
   return new Promise((resolve, reject) => {
-    axiosRequest.get(video.src, { responseType: 'stream' }).then((response) => {
-      const totalLength = response.headers['content-length'];
-      let totalChunkLength = 0; // 当前数据的总长度
-      const readSteam = response.data; // 当前读取的流
+    axiosRequest
+      .get(video.src, {
+        responseType: 'stream',
+      })
+      .then((response) => {
+        const totalLength = response.headers['content-length'];
+        let totalChunkLength = 0; // 当前数据的总长度
+        const readSteam = response.data; // 当前读取的流
 
-      // 读取流会触发的事件
-      readSteam.on('data', (chunk) => {
-        totalChunkLength += chunk.length;
-        // console.log(
-        //   "数据传输中，当前进度==>",
-        //   ((totalChunkLength / totalLength) * 100).toFixed(2) + "%"
-        // );
-      });
-      readSteam.on('end', (chunk) => {
-        console.log('获取远端数据完毕'); // 读取完成
-      });
-      readSteam.on('error', (err) => {
-        reject(err); // 读取错误
-        console.log('获取远端数据完毕，发生了错误,错误信息==>', err);
-      });
-
-      const folder = getToday();
-      fs.mkdir(path.resolve(__dirname, `../downloadFiles/${folder}`), (err) => {
-        if (err) {
-          // console.log('err:', err);
-        }
+        // 读取流会触发的事件
+        readSteam.on('data', (chunk) => {
+          totalChunkLength += chunk.length;
+          // console.log(
+          //   "数据传输中，当前进度==>",
+          //   ((totalChunkLength / totalLength) * 100).toFixed(2) + "%"
+          // );
+        });
+        readSteam.on('end', (chunk) => {
+          console.log('获取远端数据完毕'); // 读取完成
+        });
+        readSteam.on('error', (err) => {
+          reject(err); // 读取错误
+          console.log('获取远端数据完毕，发生了错误,错误信息==>', err);
+        });
+        const videoFilename = video.filename.replace('/', '-');
         const writeFile = readSteam.pipe(
           fs.createWriteStream(
             path.resolve(
               __dirname,
-              `../downloadFiles/${folder}/${i}-${video.filename}.mp4`,
+              `${downloadPath}/${i}-${videoFilename}.mp4`,
             ),
           ),
         );
@@ -119,21 +120,37 @@ function download(video, file, i) {
           console.log('报告主人，本地数据写入发生异常，错误信息==>', err);
         });
       });
-    });
   });
 }
 
+// 下载文件
 const downFile = async (arr, file) => {
+  const { downloadPath, pathname } = file || {};
+  const folder = getToday();
+  const mkdirPath =
+    downloadPath ||
+    `../downloadFiles/${pathname ? `${folder}/${pathname}` : folder}`;
+  try {
+    const made = mkdirp.sync(path.resolve(__dirname, mkdirPath));
+  } catch (error) {
+    console.log('创建下载目录失败', error);
+  }
+  try {
+    fs.writeFileSync(path.resolve(__dirname,`${mkdirPath}/test.json`), JSON.stringify(arr));
+  } catch (error) {
+    console.log('数据文件下载失败', error);
+  }
   let i = 0;
   while (arr[i]) {
     try {
-      await download(arr[i], file, i + 1);
+      await download(arr[i], { file, downloadPath: mkdirPath }, i + 1);
     } catch (error) {
       console.log(`第${i + 1}个出错了：${error}`);
     }
     i++;
   }
 };
+
 module.exports = {
   hrefClassMap,
   getHref,
