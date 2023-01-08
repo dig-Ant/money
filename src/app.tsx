@@ -6,7 +6,7 @@ interface ResponseStructure {
   code: number;
   data: any;
   errorTitle?: string;
-  errorMessage?: string;
+  errorMsg?: string;
 }
 
 // 在这里配置的规则将应用于所有的 request 和 useRequest 方法。
@@ -17,9 +17,9 @@ export const request: RequestConfig = {
   errorConfig: {
     errorThrower: (res: ResponseStructure) => {
       console.log('errorThrower--res: ', res);
-      const { code, data, errorTitle, errorMessage } = res;
+      const { code, data, errorTitle, errorMsg } = res;
       if (code !== 0) {
-        const error: any = new Error(errorMessage);
+        const error: any = new Error(errorMsg);
         error.name = 'BizError';
         error.info = res;
         throw error; // 抛出自制的错误
@@ -29,11 +29,11 @@ export const request: RequestConfig = {
       console.log('errorHandler: ', error, opts);
       if (opts?.skipErrorHandler) throw error;
       if (error.name === 'BizError') {
-        const res = error.res || { errorTitle: '', errorMessage: '请求报错' };
+        const res = error.res || { errorTitle: '', errorMsg: '请求报错' };
         // message.error(`Response status:${error.response.status}`);
         notification.error({
           message: res.errorTitle,
-          description: res.errorMessage,
+          description: res.errorMsg,
         });
       } else if (error.response) {
         // 我们的 errorThrower 抛出的错误。

@@ -123,20 +123,30 @@ async function download(video, file, i) {
   });
 }
 
-// 下载文件
-const downFile = async (arr, file) => {
-  const { downloadPath, pathname } = file || {};
+const createDownloadPath = (pathname, dp) => {
   const folder = getToday();
   const mkdirPath =
-    downloadPath ||
-    `../downloadFiles/${pathname ? `${folder}/${pathname}` : folder}`;
+    dp || `../downloadFiles/${pathname ? `${folder}/${pathname}` : folder}`;
   try {
     const made = mkdirp.sync(path.resolve(__dirname, mkdirPath));
   } catch (error) {
     console.log('创建下载目录失败', error);
   }
+  let partPath = '';
+  if (!dp || dp.includes('downloadFiles')) {
+    partPath = mkdirPath.split('downloadFiles')[1];
+  }
+  return [mkdirPath, partPath];
+};
+// 下载文件
+const downFile = async (arr, file) => {
+  const { downloadPath, pathname } = file || {};
+  const [mkdirPath] = createDownloadPath(pathname, downloadPath);
   try {
-    fs.writeFileSync(path.resolve(__dirname,`${mkdirPath}/test.json`), JSON.stringify(arr));
+    fs.writeFileSync(
+      path.resolve(__dirname, `${mkdirPath}/test.json`),
+      JSON.stringify(arr),
+    );
   } catch (error) {
     console.log('数据文件下载失败', error);
   }
@@ -157,4 +167,5 @@ module.exports = {
   getKeyboardHref,
   getSrc,
   downFile,
+  createDownloadPath,
 };

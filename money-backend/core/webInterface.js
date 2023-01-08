@@ -7,6 +7,7 @@ const express = require('express'),
   compress = require('compression'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
+  path = require('path'),
   Pupp = require('./pupp');
 
 class WebInterface {
@@ -82,7 +83,7 @@ class WebInterface {
     app.post('/v1/getDyResource', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const dataSource = await this.pupp.start('feature_downloadVideo',body);
+      const dataSource = await this.pupp.start('feature_downloadVideo', body);
       res.send({
         code: 0,
         data: { list: dataSource },
@@ -122,7 +123,107 @@ class WebInterface {
       });
     });
 
-    // map 规则相关接口
+    const resHandle = (res, err, list) => {
+      if (err) {
+        res.json({
+          status: 'error',
+          code: -1,
+          errorMsg: err,
+        });
+      } else {
+        res.json({
+          status: 'success',
+          data: { list },
+          code: 0,
+        });
+      }
+    };
+
+    // 下载目标用户
+    app.post('/v1/getDyUsers', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/userComment.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      const list = await this.pupp.start('feature_searchUsers', body);
+      db.insert(list, (err, docs) => {
+        resHandle(res, err, docs);
+      });
+    });
+
+    // 搜索目标用户
+    app.post('/v1/getDyUsersList', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/userComment.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      const body = req.body;
+      const { page = 1, pageSize = 10 } = body || {};
+      const start = Math.floor((Number(page) - 1) * Number(pageSize));
+      const end = Math.floor(start + Number(pageSize));
+      db.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
+          if (err) {
+            res.end({
+              code: -1,
+              status: 'error',
+              errorMsg: err.toString(),
+            });
+          } else {
+            res.json({
+              status: 'success',
+              code: 0,
+              data: {
+                total: docs.length,
+                list: docs.slice(start, end),
+                page: Number(page),
+                pageSize: Number(pageSize),
+              },
+            });
+          }
+        });
+    });
+
+    // 给用户点赞
+    app.post('/v1/execDyUsersLike', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/userComment.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      const body = req.body;
+      const { _id } = body || {};
+      db.find({ _id }, async (err, docs) => {
+        if (err) {
+          return res.json({
+            code: -1,
+            errorMsg: err,
+          });
+        }
+        const { code } = await this.pupp.start('feature_userLike', {
+          list: docs[0].commentList,
+        });
+        if (code !== 0) {
+          return res.json({
+            code: -1,
+            errorMsg: '点赞报错',
+          });
+        }
+        return res.json({
+          code: 1,
+          data: '成功',
+        });
+      });
+    });
+
+    // TODO 以下是不用接口 map 规则相关接口
     // 获取规则列表
     app.get('/api/getRuleList', (req, res) => {
       const { page = 1, pageSize = 10 } = req.query || {};

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet, history, useLocation,request,useRequest} from 'umi';
+import { Link, Outlet, history, useLocation, request, useRequest } from 'umi';
 // import { request } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import map from 'lodash/map';
@@ -97,6 +97,7 @@ export default function Layouts() {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={['/home']}
+            selectedKeys={[pathname]}
             // inlineCollapsed={collapsed}
             items={formatRoutesToMenus(routes)}
           />
@@ -118,7 +119,7 @@ export default function Layouts() {
               minHeight: 280,
               background: colorBgContainer,
               overflowX: 'hidden',
-              overflowY: 'auto'
+              overflowY: 'auto',
             }}
           >
             {/* <Breadcrumb>

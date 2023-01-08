@@ -19,6 +19,14 @@ export default [
       name: '抖音搜索列表'
     }
   },
+  {
+    path: '/searchUser',
+    component: './searchUser/index',
+    meta: {
+      icon: 'UserOutlined',
+      name: '抖音搜索目标用户'
+    }
+  },
   // {
   //   path: '/test',
   //   // component: '@/layouts/index',
