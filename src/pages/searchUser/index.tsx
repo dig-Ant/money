@@ -12,9 +12,11 @@ import {
   message,
   notification,
   Radio,
+  Modal,
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
+import { copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -38,7 +40,10 @@ interface DataType {
 export default function searchUser() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const model = useSelector((state) => state.searchUserModal);
+  const model = useSelector((state: any) => state.searchUserModal);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [current, setCurrent] = useState([]);
+
   console.log('model: ', model);
   const {
     run,
@@ -134,8 +139,19 @@ export default function searchUser() {
     {
       title: '所属有效用户',
       dataIndex: 'commentList',
-      render: (val) => {
-        return (val && val.length) || '0';
+      render: (val, record: any) => {
+        const num = (val && val.length) || 0;
+        const commentList = record?.commentList || [];
+        return (
+          <a
+            onClick={() => {
+              num && setIsModalOpen(true);
+              setCurrent(commentList);
+            }}
+          >
+            {num}
+          </a>
+        );
       },
     },
     {
@@ -158,6 +174,76 @@ export default function searchUser() {
               批量点赞
             </a>
             <a>删除</a>
+          </Space>
+        );
+      },
+    },
+  ];
+
+  const commentCols: ColumnsType<DataType> = [
+    {
+      title: '用户名',
+      dataIndex: 'userName',
+      width: 130,
+      render: (val, render: any) => {
+        return <a href={render?.userLink}>{val}</a>;
+      },
+    },
+    {
+      title: '性别',
+      dataIndex: 'userInfo',
+      width: 100,
+      render: (val) => {
+        const { gender } = val || {};
+        return gender;
+      },
+    },
+    {
+      title: '年龄',
+      dataIndex: 'userInfo',
+      width: 100,
+      render: (val) => {
+        const { age } = val || {};
+        return age;
+      },
+    },
+    {
+      title: '粉丝',
+      dataIndex: 'userInfo',
+      width: 100,
+      render: (val) => {
+        const { fans } = val || {};
+        return fans;
+      },
+    },
+    {
+      title: '点赞',
+      dataIndex: 'userInfo',
+      width: 100,
+      render: (val) => {
+        const { like } = val || {};
+        return like;
+      },
+    },
+    {
+      title: '视频标题',
+      dataIndex: 'userInfo',
+      render: (val, record) => {
+        const { videoTitles = [], firstVideoSrc } = val || {};
+        return (
+          <Space>
+            <a href={firstVideoSrc} target="_blank">
+              {videoTitles[0]}
+            </a>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => {
+                copy(videoTitles[0]);
+              }}
+            >
+              复制
+            </Button>
           </Space>
         );
       },
@@ -286,6 +372,23 @@ export default function searchUser() {
         //   },
         // }}
       />
+      <Modal
+        title="目标用户列表"
+        width={900}
+        open={isModalOpen}
+        onOk={() => {
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+      >
+        <Table
+          scroll={{ x: true }}
+          columns={commentCols}
+          dataSource={current}
+        />
+      </Modal>
     </div>
   );
 }
