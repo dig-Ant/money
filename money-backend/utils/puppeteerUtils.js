@@ -144,7 +144,7 @@ const downFile = async (arr, file) => {
   const [mkdirPath] = createDownloadPath(pathname, downloadPath);
   try {
     fs.writeFileSync(
-      path.resolve(__dirname, `${mkdirPath}/test.json`),
+      path.resolve(__dirname, `${mkdirPath}/dataSource.json`),
       JSON.stringify(arr),
     );
   } catch (error) {
