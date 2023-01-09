@@ -11,6 +11,7 @@ import {
   InputNumber,
   message,
   notification,
+  Radio,
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_SEARCH } from '@/utils/api';
@@ -116,8 +117,9 @@ export default function HomePage() {
         {...layout}
         layout="inline"
         form={form}
-        className={styles.filter}
+        className="list-filter"
         onFinish={onFinish}
+        initialValues={{ isLogin: false }}
       >
         {/* <Form.Item
           name="url"
@@ -146,6 +148,17 @@ export default function HomePage() {
         >
           <InputNumber precision={0} style={{ width: '100%' }} />
         </Form.Item>
+        <Form.Item
+          label="是否登录"
+          name="isLogin"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>登录</Radio.Button>
+            <Radio.Button value={false}>不登录</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -163,7 +176,7 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table scroll={{x:true}} columns={columns} dataSource={list} />
+      <Table scroll={{ x: true }} columns={columns} dataSource={list} />
     </div>
   );
 }
