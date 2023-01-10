@@ -110,7 +110,6 @@ const datas: DataType[] = [
 
 export default function HomePage() {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
   const { run, data, error, loading } = useRequest(
     (data) => {
       return request(GET_DY_RESOURCE, {
@@ -136,30 +135,6 @@ export default function HomePage() {
   };
   return (
     <div>
-      <Space style={{ marginBottom: 10 }}>
-        <Button
-          type="primary"
-          style={{ marginBottom: 10 }}
-          onClick={() => {
-            dispatch({
-              type: 'global/loginPup',
-            });
-          }}
-        >
-          首次需要登录chromium
-        </Button>
-        <Button
-          type="primary"
-          style={{ marginBottom: 10 }}
-          onClick={() => {
-            dispatch({
-              type: 'global/logoutPup',
-            });
-          }}
-        >
-          关闭登录chromium
-        </Button>
-      </Space>
       <Form
         {...layout}
         layout="inline"
