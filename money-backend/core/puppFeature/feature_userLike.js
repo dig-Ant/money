@@ -14,7 +14,8 @@ const feature_userLike = async function (params) {
     const { list = [], limitLen = 1 } = params || {};
     console.log('list: ', list);
     for (i = 0; i < list.length; i++) {
-      const { userInfo } = list[i];
+      const { userInfo } = 
+      list[i];
       const { firstVideoSrc } = userInfo || {};
       //firstVideoSrc
       if (firstVideoSrc) {
@@ -26,7 +27,7 @@ const feature_userLike = async function (params) {
           await newPage.waitForSelector('.xg-video-container video source');
           //类名 点赞kr4MM4DQ 有红心的NILc2fGS
           await newPage.click('.kr4MM4DQ:nth-child(1):not(.NILc2fGS)');
-          await delay(1000);
+          await delay(7000);
           newPage.close();
         } catch (error) {
           console.log('点赞可能失败', error);
