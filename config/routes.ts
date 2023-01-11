@@ -8,7 +8,7 @@ export default [
     component: './home/index',
     meta: {
       icon: 'UserOutlined',
-      name: '抖音数据下载'
+      name: '下载视频'
     }
   },
   {
@@ -16,7 +16,7 @@ export default [
     component: './search/index',
     meta: {
       icon: 'UserOutlined',
-      name: '抖音搜索列表'
+      name: '搜索'
     }
   },
   {
@@ -24,7 +24,7 @@ export default [
     component: './searchUser/index',
     meta: {
       icon: 'UserOutlined',
-      name: '抖音搜索目标用户'
+      name: '搜索用户'
     }
   },
   // {
