@@ -35,79 +35,6 @@ interface DataType {
   tags: string[];
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const datas: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
 export default function HomePage() {
   const [form] = Form.useForm();
   const { run, data, error, loading } = useRequest(
@@ -133,6 +60,22 @@ export default function HomePage() {
     console.log('values: ', values);
     run(values);
   };
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: '用户',
+      dataIndex: ['user', 'name'],
+    },
+    {
+      title: '标题',
+      dataIndex: 'title',
+    },
+    {
+      title: '点赞数',
+      dataIndex: 'likeNum',
+    },
+  ];
+
   return (
     <div>
       <Form
@@ -143,7 +86,7 @@ export default function HomePage() {
         onFinish={onFinish}
         initialValues={{ type: 'post' }}
       >
-        <Form.Item name="url" label="抖音列表链接">
+        <Form.Item name="url" label="link">
           <Input />
         </Form.Item>
 
@@ -151,7 +94,7 @@ export default function HomePage() {
           <Input />
         </Form.Item> */}
 
-        <Form.Item name="downloadFilename" label="下载文件夹名称">
+        <Form.Item name="downloadFilename" label="文件夹名">
           <Input />
         </Form.Item>
 
@@ -160,7 +103,7 @@ export default function HomePage() {
           label="最近几条"
           // rules={[{ required: true, message: '请输入最近几条' }]}
         >
-          <InputNumber precision={0} style={{ width: '100%' }} />
+          <InputNumber precision={0} style={{ width: '50%' }} />
         </Form.Item>
         <Form.Item
           label="类型"
@@ -190,7 +133,7 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={datas} />
+      <Table columns={columns} dataSource={data?.data.list || []} />
     </div>
   );
 }
