@@ -4,6 +4,8 @@ const { limitExec } = require('../../utils/common');
 const fs = require('fs');
 const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
+const puppeteerUtils = require('../../utils/puppeteerUtils');
+const { downFile, createDownloadPath } = puppeteerUtils;
 
 // TODO 抖音用户信息下载
 const feature_searchUsers = async function (params) {
@@ -325,10 +327,11 @@ const feature_searchUsers = async function (params) {
       5,
     );
     const [_, partPath] = createDownloadPath(downloadFilename);
+
     fs.writeFileSync(
       path.resolve(
         __dirname,
-        `../downloadFiles${partPath}/dataSource-${userType}-${moment().format(
+        `../../downloadFiles${partPath}/dataSource-${userType}-${moment().format(
           'HH:mm:ss',
         )}.json`,
       ),
