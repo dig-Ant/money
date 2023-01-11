@@ -188,6 +188,10 @@ const feature_searchUsers = async function (params) {
                     '推荐',
                     '精选',
                     '优品',
+                    '宝藏',
+                    '搭建',
+                    '宝贝',
+                    '生活',
                   ].some((val) => {
                     return userName.includes(val);
                     // return userType === 'user'
