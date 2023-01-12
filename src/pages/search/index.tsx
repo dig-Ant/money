@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
 import parse from 'query-string';
+import { copy } from '@/utils/common';
 
 import {
   Space,
@@ -40,30 +41,24 @@ const columns: ColumnsType<DataType> = [
     title: 'title',
     dataIndex: 'title',
     // render: (text) => text,
-  },
-  {
-    title: '发布时间',
-    dataIndex: 'createDate',
-  },
-  {
-    title: '点赞',
-    dataIndex: 'like',
-  },
-  {
-    title: '用户',
-    dataIndex: 'user',
-    render: (val, record: Record<string, any>) => {
-      const { userLink = 'javaScript:void(0);' } = record || {};
-      return <a href={userLink}>{val}</a>;
+    render: (val, render: any) => {
+      const {
+        user,
+        userLink = 'javaScript:void(0);',
+        like,
+        title,
+        createDate,
+      } = render;
+      return (
+        <div>
+          <a href={userLink}>{user}</a>-{like}-{title}-{createDate}
+        </div>
+      );
     },
   },
   {
     title: '评论数',
     dataIndex: 'comment',
-  },
-  {
-    title: '分享数',
-    dataIndex: 'share',
   },
   {
     title: '视频链接',

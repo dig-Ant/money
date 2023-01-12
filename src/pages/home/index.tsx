@@ -79,6 +79,7 @@ export default function HomePage() {
         return (
           <a
             href={href}
+            target="_blank"
             onClick={() => {
               copy(val);
             }}

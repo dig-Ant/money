@@ -335,7 +335,7 @@ const feature_searchUsers = async function (params) {
     fs.writeFileSync(
       path.resolve(
         __dirname,
-        `../../downloadFiles${partPath}/dataSource-${userType}-${moment().format(
+        `../../downloadFiles${partPath}/dataSource-${moment().format(
           'HH:mm:ss',
         )}.json`,
       ),
