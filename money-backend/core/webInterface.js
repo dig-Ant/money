@@ -149,6 +149,7 @@ class WebInterface {
         timestampData: true,
       });
       const list = await this.pupp.start('feature_searchUsers', body);
+      console.log('list',list)
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });

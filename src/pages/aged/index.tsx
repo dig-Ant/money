@@ -185,7 +185,7 @@ export default function searchUser() {
       width: 350,
       render: (val, record) => {
         const { videoTitles = [], firstVideoSrc } = val || {};
-        const text = videoTitles[0].split('\n').slice(-1)[0] || '';
+        const text = videoTitles[0]?.split('\n').slice(-1)[0] || '';
         const textList = text.split(/[#|\s]/);
         return (
           <Space>

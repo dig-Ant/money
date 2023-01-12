@@ -51,6 +51,7 @@ const feature_searchUsers = async function (params) {
       await page.goto(gotoUrl);
     }
   } catch (error) {
+    console.log('列表页打开失败', error);
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
   }
@@ -86,15 +87,15 @@ const feature_searchUsers = async function (params) {
         }
         eleList = eleList.map((el) => {
           const href = el.href;
-          const [like, title] = el.innerText.split('\n\n');
-          return {
-            userType,
-            href,
-            like,
-            likeNum: stringToNum(like),
-            title,
-            filename: `${like}-${title.split(' ')[0]}`,
-          };
+            const [like, title = ''] = el.innerText.split('\n\n');
+            return {
+              userType,
+              href,
+              like,
+              likeNum: stringToNum(like),
+              title,
+              filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
+            };
         });
         return eleList;
       },
@@ -106,6 +107,7 @@ const feature_searchUsers = async function (params) {
     dataSource.sort((a, b) => {
       return b.likeNum - a.likeNum;
     });
+    console.log('dataSource: ', dataSource);
 
     //  获取评论 src
     await limitExec(
@@ -281,18 +283,19 @@ const feature_searchUsers = async function (params) {
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
                   const gender = document.querySelector('.woman_svg__a');
-                  // if (!gender) {
-                  //   return null;
-                  // }
+                  if (!gender) {
+                    return null;
+                  }
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
-                  // if (fans > 150 && userType === 'consumer') {
-                  //   return null;
-                  // }
-                  // if (like > 350 && userType === 'consumer') {
-                  //   return null;
-                  // }
+                  console.log(fans,userType,gender);
+                  if (fans > 150 && userType === 'consumer') {
+                    return null;
+                  }
+                  if (like > 950 && userType === 'consumer') {
+                    return null;
+                  }
                   return {
                     gender: gender ? '女' : '未知',
                     age,
