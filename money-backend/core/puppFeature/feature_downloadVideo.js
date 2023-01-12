@@ -7,7 +7,8 @@ const { downFile, createDownloadPath } = puppeteerUtils;
 const feature_downloadVideo = async function (params) {
   const {
     url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
-    limitLen,
+    limitStart,
+    limitEnd,
     downloadFilename = '',
     type = '',
   } = params || {};
@@ -40,7 +41,7 @@ const feature_downloadVideo = async function (params) {
     await page.waitForSelector(resultsSelector);
 
     const dataSource = await page.evaluate(
-      async (resultsSelector, limitLen) => {
+      async (resultsSelector, limitStart, limitEnd) => {
         const stringToNum = (data, type = true) => {
           let res = data;
           if (type) {
@@ -55,13 +56,16 @@ const feature_downloadVideo = async function (params) {
 
         let eleList = [...document.querySelectorAll(resultsSelector)];
         // 获取对应数量为止
-        if (typeof limitLen !== 'undefined') {
-          while (eleList.length < limitLen) {
+        if (
+          typeof limitStart !== 'undefined' &&
+          typeof limitEnd !== 'undefined'
+        ) {
+          while (eleList.length < limitEnd) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
             eleList = [...document.querySelectorAll(resultsSelector)];
           }
-          eleList = eleList.slice(0, limitLen);
+          eleList = eleList.slice(limitStart, limitEnd);
         }
         eleList = eleList.map((el) => {
           const href = el.href;
@@ -77,7 +81,8 @@ const feature_downloadVideo = async function (params) {
         return eleList;
       },
       resultsSelector,
-      limitLen,
+      limitStart,
+      limitEnd,
     );
 
     // 按照点赞排序 高->低

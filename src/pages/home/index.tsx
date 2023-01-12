@@ -99,9 +99,14 @@ export default function HomePage() {
         </Form.Item>
 
         <Form.Item
-          name="limitLen"
-          label="最近几条"
-          // rules={[{ required: true, message: '请输入最近几条' }]}
+          name="limitStart"
+          label="start"
+        >
+          <InputNumber precision={0} style={{ width: '50%' }} />
+        </Form.Item>
+        <Form.Item
+          name="limitEnd"
+          label="end"
         >
           <InputNumber precision={0} style={{ width: '50%' }} />
         </Form.Item>
