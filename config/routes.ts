@@ -4,27 +4,43 @@ export default [
     redirect: '/home',
   },
   {
-    path: '/home',
-    component: './home/index',
+    path: '/consumer',
+    component: './consumer/index',
     meta: {
-      icon: 'UserOutlined',
-      name: '下载视频'
+      icon: 'RedditOutlined',
+      name: '消费粉'
+    }
+  },
+  {
+    path: '/business',
+  component: './business/index',
+    meta: {
+      icon: 'DropboxOutlined',
+      name: '同行'
+    }
+  },
+  {
+    path: '/aged',
+    component: './aged/index',
+    meta: {
+      icon: 'AlibabaOutlined',
+      name: '大龄粉'
     }
   },
   {
     path: '/search',
     component: './search/index',
     meta: {
-      icon: 'UserOutlined',
+      icon: 'SearchOutlined',
       name: '搜索'
     }
   },
   {
-    path: '/searchUser',
-    component: './searchUser/index',
+    path: '/home',
+    component: './home/index',
     meta: {
       icon: 'UserOutlined',
-      name: '搜索用户'
+      name: '下载视频'
     }
   },
   // {

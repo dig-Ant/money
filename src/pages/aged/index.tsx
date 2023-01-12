@@ -97,68 +97,29 @@ export default function searchUser() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: '视频标题',
-      dataIndex: 'title',
-      width: 240,
-      // render: (text) => text,
-    },
-    {
-      title: '筛选类型',
-      dataIndex: 'userType',
-      width: 240,
-      render: (text) => (text === 'user' ? '用户' : '同行'),
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createdAt',
-      render: (val) => moment(val).format('YYYY-MM-DD HH:mm:ss'),
-    },
-    {
-      title: '视频点赞',
-      dataIndex: 'like',
-      width: 100,
-    },
-    {
-      title: '用户',
-      dataIndex: 'user',
-      render: (val, record: Record<string, any>) => {
-        const { src = 'javaScript:void(0);', name = '' } = record || {};
-        return <a href={src}>{name}</a>;
-      },
-    },
-    {
-      title: '用户粉丝',
-      dataIndex: ['user', 'fans'],
-      width: 100,
-    },
-    {
-      title: '用户点赞',
-      dataIndex: ['user', 'like'],
-      width: 100,
-    },
-    {
-      title: '所属有效用户',
+      title: 'aged',
       dataIndex: 'commentList',
       render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const commentList = record?.commentList || [];
         return (
-          <a
-            onClick={() => {
-              num && setIsModalOpen(true);
-              setCurrent(commentList);
-            }}
-          >
-            {num}
-          </a>
+          <div>
+            <a
+              onClick={() => {
+                num && setIsModalOpen(true);
+                setCurrent(commentList);
+              }}
+            >
+              {num}
+            </a>
+          </div>
         );
       },
     },
     {
-      title: '操作',
+      title: 'action',
       key: 'action',
       fixed: 'right',
-      width: 140,
       render: (_, record) => {
         const { _id } = record || {};
         return (
@@ -171,12 +132,34 @@ export default function searchUser() {
                 });
               }}
             >
-              批量点赞
+              赞
             </a>
-            <a>删除</a>
+            {/* <a>删除</a> */}
           </Space>
         );
       },
+    },
+    {
+      title: '视频信息',
+      dataIndex: 'title',
+      render: (val, record: Record<string, any>) => {
+        const {
+          href = 'javaScript:void(0);',
+          title = '',
+          likeNum = '',
+          user = {},
+        } = record || {};
+        return (
+          <a href={href}>
+            {user.name || ''}-{likeNum}-{title}
+          </a>
+        );
+      },
+    },
+    {
+      title: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (val) => moment(val).format('YYYY-MM-DD HH:mm:ss').slice(5, 16),
     },
   ];
 
@@ -184,66 +167,57 @@ export default function searchUser() {
     {
       title: '用户名',
       dataIndex: 'userName',
-      width: 130,
+      width: 60,
       render: (val, render: any) => {
-        return <a href={render?.userLink}>{val}</a>;
+        const { userInfo } = render;
+        return (
+          <div>
+            <a href={render?.userLink}>{val}</a>-性别{userInfo?.gender}-
+            {userInfo?.age}-粉丝{userInfo?.fans}个-获
+            {userInfo?.like}赞
+          </div>
+        );
       },
     },
     {
-      title: '性别',
+      title: '第一条视频',
       dataIndex: 'userInfo',
-      width: 100,
-      render: (val) => {
-        const { gender } = val || {};
-        return gender;
-      },
-    },
-    {
-      title: '年龄',
-      dataIndex: 'userInfo',
-      width: 100,
-      render: (val) => {
-        const { age } = val || {};
-        return age;
-      },
-    },
-    {
-      title: '粉丝',
-      dataIndex: 'userInfo',
-      width: 100,
-      render: (val) => {
-        const { fans } = val || {};
-        return fans;
-      },
-    },
-    {
-      title: '点赞',
-      dataIndex: 'userInfo',
-      width: 100,
-      render: (val) => {
-        const { like } = val || {};
-        return like;
-      },
-    },
-    {
-      title: '视频标题',
-      dataIndex: 'userInfo',
+      width: 350,
       render: (val, record) => {
         const { videoTitles = [], firstVideoSrc } = val || {};
+        const text = videoTitles[0].split('\n').slice(-1)[0] || '';
+        const textList = text.split(/[#|\s]/);
         return (
           <Space>
             <a href={firstVideoSrc} target="_blank">
-              {videoTitles[0]}
+              link
             </a>
             <Button
-              type="primary"
-              size="small"
+              type="link"
               onClick={() => {
-                copy(videoTitles[0]);
+                window.open(location.origin + '/search?v=' + textList.join(''));
+                copy(textList.join(''));
               }}
             >
-              复制
+              total
             </Button>
+            {/* {text} */}
+            {textList.map((e: string, i: number) => {
+              return (
+                <Button
+                  type="link"
+                  size="small"
+                  style={{ padding: 0 }}
+                  key={i}
+                  onClick={() => {
+                    window.open(location.origin + '/search?v=' + e);
+                    copy(e);
+                  }}
+                >
+                  {e}
+                </Button>
+              );
+            })}
           </Space>
         );
       },
@@ -258,7 +232,6 @@ export default function searchUser() {
   return (
     <div>
       <Form
-        {...layout}
         layout="inline"
         form={form}
         className="list-filter"
@@ -268,75 +241,29 @@ export default function searchUser() {
           type: 'like',
           limitLen: 1,
           commentLimitLen: 100,
-          userType: 'user',
+          userType: 'aged',
         }}
+        colon={false}
       >
-        <Form.Item name="url" label="抖音列表链接">
-          <Input />
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            获取
+          </Button>
         </Form.Item>
-
-        {/* <Form.Item name="filter" label="包含文字筛选">
-          <Input />
-        </Form.Item> */}
-
-        <Form.Item name="downloadFilename" label="下载文件夹名称">
-          <Input />
+        <Form.Item label="前" name="limitLen">
+          <Input style={{ width: '42px' }} />
         </Form.Item>
-
-        <Form.Item
-          name="commentLimitLen"
-          label="初始评论条数"
-          // rules={[{ required: true, message: '请输入最近几条' }]}
-        >
-          <InputNumber precision={0} style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item
-          name="limitLen"
-          label="最近几条"
-          // rules={[{ required: true, message: '请输入最近几条' }]}
-        >
-          <InputNumber precision={0} style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item
-          label="类型"
-          name="type"
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 20 }}
-        >
+        <Form.Item name="type" label="条">
           <Radio.Group>
             <Radio.Button value="post">作品</Radio.Button>
             <Radio.Button value="like">喜欢</Radio.Button>
             <Radio.Button value="favorite_collection">收藏</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item
-          label="是否登录"
-          name="isLogin"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-        >
-          <Radio.Group>
-            <Radio.Button value={true}>登录</Radio.Button>
-            <Radio.Button value={false}>不登录</Radio.Button>
-          </Radio.Group>
+        <Form.Item name="commentLimitLen" label="的">
+          <Input style={{ width: '55px' }} />
         </Form.Item>
-        <Form.Item
-          label="筛选用户类型"
-          name="userType"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-        >
-          <Radio.Group>
-            <Radio.Button value={'business'}>同行</Radio.Button>
-            <Radio.Button value={'user'}>用户</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            运行查找
-          </Button>
-        </Form.Item>
-        <Form.Item>
+        <Form.Item label="条评论者">
           <Button
             type="primary"
             onClick={() => {
@@ -348,7 +275,7 @@ export default function searchUser() {
             查询
           </Button>
         </Form.Item>
-        <Form.Item>
+        {/* <Form.Item>
           <Button
             htmlType="button"
             onClick={() => {
@@ -357,7 +284,30 @@ export default function searchUser() {
           >
             重置
           </Button>
-        </Form.Item>
+        </Form.Item> */}
+        {/* <Form.Item name="url" label="link">
+          <Input />
+        </Form.Item> */}
+
+        {/* <Form.Item name="filter" label="包含文字筛选">
+          <Input />
+        </Form.Item> */}
+
+        {/* <Form.Item name="downloadFilename" label="文件夹名">
+          <Input />
+        </Form.Item> */}
+
+        {/* <Form.Item
+          label=""
+          name="isLogin"
+          labelCol={{ span: 0 }}
+          wrapperCol={{ span: 24 }}
+        >
+          <Radio.Group>
+            <Radio.Button value={true}>登录</Radio.Button>
+            <Radio.Button value={false}>不登录</Radio.Button>
+          </Radio.Group>
+        </Form.Item> */}
       </Form>
       <Table
         scroll={{ x: true }}
@@ -373,8 +323,9 @@ export default function searchUser() {
         // }}
       />
       <Modal
-        title="目标用户列表"
-        width={900}
+        title=""
+        width="85%"
+        // height="90%"
         open={isModalOpen}
         onOk={() => {
           setIsModalOpen(false);
@@ -382,9 +333,10 @@ export default function searchUser() {
         onCancel={() => {
           setIsModalOpen(false);
         }}
+        footer={null}
       >
         <Table
-          scroll={{ x: true }}
+          scroll={{ y: '75vh' }}
           columns={commentCols}
           dataSource={current}
         />

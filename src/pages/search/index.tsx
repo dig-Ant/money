@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
+import parse from 'query-string';
 
 import {
   Space,
@@ -106,6 +107,10 @@ export default function HomePage() {
       },
     },
   );
+  useEffect(() => {
+    const keyword = parse.parse(location.search);
+    keyword.v && run({ keyword: keyword.v });
+  }, []);
   const { list = [] } = data;
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
@@ -114,23 +119,24 @@ export default function HomePage() {
   return (
     <div>
       <Form
-        {...layout}
+        // {...layout}
         layout="inline"
         form={form}
         className="list-filter"
         onFinish={onFinish}
         initialValues={{ isLogin: false }}
+        colon={false}
       >
         {/* <Form.Item
           name="url"
-          label="抖音列表链接"
+          label="link"
           // rules={[{ required: true, message: '请输入抖音列表链接' }]}
         >
           <Input />
         </Form.Item> */}
         <Form.Item
           name="keyword"
-          label="抖音关键字搜索"
+          label="关键字"
           rules={[
             { required: true, message: '抖音关键字搜索', whitespace: true },
           ]}
@@ -147,17 +153,6 @@ export default function HomePage() {
           // rules={[{ required: true, message: '请输入最近几条' }]}
         >
           <InputNumber precision={0} style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item
-          label="是否登录"
-          name="isLogin"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-        >
-          <Radio.Group>
-            <Radio.Button value={true}>登录</Radio.Button>
-            <Radio.Button value={false}>不登录</Radio.Button>
-          </Radio.Group>
         </Form.Item>
 
         <Form.Item>

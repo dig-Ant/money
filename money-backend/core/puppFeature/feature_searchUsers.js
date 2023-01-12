@@ -194,20 +194,20 @@ const feature_searchUsers = async function (params) {
                     '生活',
                   ].some((val) => {
                     return userName.includes(val);
-                    // return userType === 'user'
+                    // return userType === 'consumer'
                     //   ? userName.includes(val)
                     //   : !userName.includes(val);
                   });
-                  if (filterName && userType === 'user') {
+                  if (filterName && userType === 'consumer') {
                     return null;
                   }
-                  if (!filterName && userType !== 'user') {
+                  if (!filterName && userType === 'business') {
                     return null;
                   }
                   // 点赞小于5
                   const userLike =
                     userInfoEl.querySelector('.jtyFqENC').innerText;
-                  if (stringToNum(userLike) > 5 && userType === 'user') {
+                  if (stringToNum(userLike) > 5 && userType === 'consumer') {
                     return null;
                   }
                   const userCm = userInfoEl.querySelector('p').innerText;
@@ -287,12 +287,12 @@ const feature_searchUsers = async function (params) {
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
-                  if (fans > 150 && userType === 'user') {
-                    return null;
-                  }
-                  if (like > 350 && userType === 'user') {
-                    return null;
-                  }
+                  // if (fans > 150 && userType === 'consumer') {
+                  //   return null;
+                  // }
+                  // if (like > 350 && userType === 'consumer') {
+                  //   return null;
+                  // }
                   return {
                     gender: gender ? '女' : '未知',
                     age,
