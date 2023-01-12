@@ -18,6 +18,7 @@ import request from '@/utils/request';
 import { GET_DY_RESOURCE } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
+import { copy } from '@/utils/common';
 
 const layout = {
   labelCol: { span: 10 },
@@ -69,22 +70,39 @@ export default function HomePage() {
     {
       title: '标题',
       dataIndex: 'title',
-    },
-    {
-      title: '点赞数',
-      dataIndex: 'likeNum',
+      render: (val, record: Record<string, any>) => {
+        const {
+          href = 'javaScript:void(0);',
+          name = '',
+          likeNum,
+        } = record || {};
+        return (
+          <a
+            href={href}
+            onClick={() => {
+              copy(val);
+            }}
+          >
+            {likeNum}-{val}
+          </a>
+        );
+      },
     },
   ];
 
   return (
     <div>
       <Form
-        {...layout}
+        // {...layout}
         layout="inline"
         form={form}
         className={styles.filter}
+        // size="small"
         onFinish={onFinish}
-        initialValues={{ type: 'post' }}
+        initialValues={{ type: 'favorite_collection' }}
+        // wrapperCol={{span: 0, offset: 0}}
+        // labelCol={{ span: 0, offset: 0 }}
+        colon={false}
       >
         <Form.Item name="url" label="link">
           <Input />
@@ -98,17 +116,11 @@ export default function HomePage() {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          name="limitStart"
-          label="start"
-        >
-          <InputNumber precision={0} style={{ width: '50%' }} />
+        <Form.Item name="limitStart" label="start">
+          <Input style={{ width: '45px' }} />
         </Form.Item>
-        <Form.Item
-          name="limitEnd"
-          label="end"
-        >
-          <InputNumber precision={0} style={{ width: '50%' }} />
+        <Form.Item name="limitEnd" label="end">
+          <Input style={{ width: '45px' }} />
         </Form.Item>
         <Form.Item
           label="类型"
@@ -117,9 +129,9 @@ export default function HomePage() {
           wrapperCol={{ span: 20 }}
         >
           <Radio.Group>
-            <Radio.Button value="post">作品</Radio.Button>
-            <Radio.Button value="like">喜欢</Radio.Button>
             <Radio.Button value="favorite_collection">收藏</Radio.Button>
+            <Radio.Button value="like">喜欢</Radio.Button>
+            <Radio.Button value="post">作品</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item>
