@@ -87,15 +87,15 @@ const feature_searchUsers = async function (params) {
         }
         eleList = eleList.map((el) => {
           const href = el.href;
-            const [like, title = ''] = el.innerText.split('\n\n');
-            return {
-              userType,
-              href,
-              like,
-              likeNum: stringToNum(like),
-              title,
-              filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
-            };
+          const [like, title = ''] = el.innerText.split('\n\n');
+          return {
+            userType,
+            href,
+            like,
+            likeNum: stringToNum(like),
+            title,
+            filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
+          };
         });
         return eleList;
       },
@@ -175,6 +175,7 @@ const feature_searchUsers = async function (params) {
               commentList.splice(-1, 1);
               console.log('commentList: ', commentList);
               commentList.forEach((el) => {
+                console.log(el);
                 const userInfoEl = el.querySelector('div:nth-child(2)');
                 // console.log('userInfoEl: ', userInfoEl);
                 if (userInfoEl) {
