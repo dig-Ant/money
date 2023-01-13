@@ -1,7 +1,7 @@
 const apiConfig = {
-  mock: '//localhost:8008',
-  test: '//localhost:8008',
-  prod: '//localhost:8008',
+  mock: '//localhost:8009',
+  test: '//localhost:8009',
+  prod: '//localhost:8009',
 };
 
 //当前环境

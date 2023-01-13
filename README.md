@@ -20,7 +20,7 @@ $ npm start
 ### 常用命令
 ```bash
 // 查看端口 删除占用端口
-$ lsof -i:8008
+$ lsof -i:8009
 $ kill pid
 ```
 

@@ -227,7 +227,7 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run(values);
+    run({ ...values, userType: 'aged' });
   };
   return (
     <div>

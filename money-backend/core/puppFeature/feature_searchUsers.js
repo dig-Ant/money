@@ -7,22 +7,7 @@ const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
-// TODO 抖音用户信息下载
-const feature_searchUsers = async function (params) {
-  /* 1.自己找一些热门视频链接
-
-2.软件去视频里，滚动 找500条评论，得到用户名+链接+赞数+评论内容+评论时间
-过滤出非好物的+且赞数5条以下的用户
-
-3.根据用户链接，得到用户的关注数+粉丝数+最新作品的文案
-过滤粉丝数小于150，获赞数小于350的，作品数量>0
-每次开5个chrome标签，发现不符合，就关闭chrome，符合，就拿到数据 push
-关闭
->10条
-从主页里拿到最新3条作品的文案
-
-4.生成产出的文件，每拿到10个用户，生成一个文件 
-*/
+const feature_searchUsers = async function (params = {}) {
   const {
     url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
     limitLen = 1,
@@ -30,8 +15,8 @@ const feature_searchUsers = async function (params) {
     downloadFilename = '',
     type = '',
     isLogin = false,
-    userType = 'user', // business同行 user用户
-  } = params || {};
+    userType = 'consumer', // business同行 consumer用户 aged大龄粉
+  } = params;
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
@@ -60,7 +45,6 @@ const feature_searchUsers = async function (params) {
     // 获取列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a';
     await page.waitForSelector(resultsSelector);
-
     const dataSource = await page.evaluate(
       async (resultsSelector, limitLen, userType) => {
         const stringToNum = (data, type = true) => {
@@ -290,7 +274,7 @@ const feature_searchUsers = async function (params) {
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
-                  console.log(fans,userType,gender);
+                  console.log(fans, userType, gender);
                   if (fans > 150 && userType === 'consumer') {
                     return null;
                   }

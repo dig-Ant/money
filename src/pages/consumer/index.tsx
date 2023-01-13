@@ -227,7 +227,7 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run(values);
+    run({ ...values, userType: 'consumer' });
   };
   return (
     <div>
@@ -241,7 +241,6 @@ export default function searchUser() {
           type: 'like',
           limitLen: 1,
           commentLimitLen: 100,
-          userType: 'consumer',
         }}
         colon={false}
       >

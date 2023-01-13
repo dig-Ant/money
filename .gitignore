@@ -6,4 +6,4 @@
 /src/.umi-production
 /src/.umi-test
 /dist
-/money-backend/downloadFiles
+/money-backend/downloadFiles/*
