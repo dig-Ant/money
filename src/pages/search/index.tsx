@@ -40,7 +40,6 @@ const columns: ColumnsType<DataType> = [
   {
     title: 'title',
     dataIndex: 'title',
-    // render: (text) => text,
     render: (val, render: any) => {
       const {
         user,
@@ -49,20 +48,31 @@ const columns: ColumnsType<DataType> = [
         title,
         createDate,
       } = render;
+      const textList = title.split(/[#|\s]/);
       return (
         <div>
-          <a href={userLink}>{user}</a>-{like}-{title}-{createDate}
+          <a href={userLink}>link</a>
+          {user}
+          {textList.map((e: string, i: number) => {
+            return (
+              <Button
+                type="link"
+                size="small"
+                style={{ padding: 0 }}
+                key={i}
+                onClick={() => {
+                  window.open(location.origin + '/search?v=' + e);
+                  copy(e);
+                }}
+              >
+                {e}
+              </Button>
+            );
+          })}
+          -{createDate}
         </div>
       );
     },
-  },
-  {
-    title: '评论数',
-    dataIndex: 'comment',
-  },
-  {
-    title: '视频链接',
-    dataIndex: 'videoSrc',
   },
   {
     title: '操作',

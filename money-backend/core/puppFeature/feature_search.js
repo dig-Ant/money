@@ -14,10 +14,11 @@ const feature_search = async function (params = {}) {
   });
 
   await page.setViewport({ width: 1080, height: 800 });
-  // 打开列表页 //publish_time=0&sort_type=1&source=tab_search&type=general
+  // 打开列表页 //
+  // `https://www.douyin.com/search/努力减肥?publish_time=0&sort_type=1&source=tab_search&type=video
   const gotoUrl = `https://www.douyin.com/search/${encodeURIComponent(
     keyword,
-  )}`;
+  )}?publish_time=0&sort_type=1&source=tab_search&type=video`;
   try {
     await page.goto(gotoUrl);
   } catch (error) {
@@ -26,59 +27,34 @@ const feature_search = async function (params = {}) {
   }
   // 获取列表数据
   const resultsSelector =
-    '[style="display:block"]>[data-e2e="scroll-list"]>li>div>div';
-  await page.waitForSelector('[data-e2e="scroll-list"] li>div>div>div a');
-
+    '.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"]>li>div';
+  await page.waitForSelector(
+    '.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"] li>div a',
+  );
+  // [...document.querySelectorAll('.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"]>li>div')]
   try {
     const dataSource = await page.evaluate(
       async (resultsSelector, limitLen) => {
         let eleList = [...document.querySelectorAll(resultsSelector)];
-        eleList = eleList.filter((el) => {
-          return el.children && el.children.length >= 3;
-        });
-        // 获取对应数量为止
         if (typeof limitLen !== 'undefined') {
           while (eleList.length < limitLen) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
             eleList = [...document.querySelectorAll(resultsSelector)];
-            eleList = eleList.filter((el) => {
-              return el.children && el.children.length >= 3;
-            });
           }
           eleList = eleList.slice(0, limitLen);
         }
+        console.log(eleList);
         eleList = eleList.map((el, i) => {
-          if (el.children && el.children.length < 3) {
-            return {};
-          }
           const payload = {};
-          // 如果长度是2 没有标题
           if (el.children[0]) {
-            const [user, createDate] = el.children[0].innerText.split('\n\n·');
-            payload.user = user;
-            payload.createDate = createDate;
+            payload.userLink = el.children[0].href;
+            payload.title = el.children[0].querySelector('.swoZuiEM').innerText;
+            payload.like = el.children[0].querySelector('.IcU0dfgd').innerText;
+            payload.user = el.children[0].querySelector('.OhTcPZd3').innerText;
+            payload.createDate =
+              el.children[0].querySelector('.bu9WFx2P').innerText;
           }
-          if (el.children[0] && el.children[0].querySelector('a')) {
-            payload.userLink = el.children[0].querySelector('a').href;
-          }
-          if (el.children[1]) {
-            payload.title = el.children[1].innerText;
-          }
-          // TODO 未播放的搜索不到视频 只有图片
-          // if (el.querySelector('video source')) {
-          //   payload.videoSrc = el.querySelector('video source').src;
-          //   console.log('payload:---- ', payload);
-          // }
-          if (el.querySelector('[data-rank] .positionBox>div')) {
-            const [like, comment, share] = el
-              .querySelector('[data-rank] .positionBox>div')
-              .innerText.split('\n');
-            payload.like = like;
-            payload.comment = comment;
-            payload.share = share;
-          }
-          payload.id = String(i);
           return payload;
         });
         return eleList;
@@ -86,7 +62,6 @@ const feature_search = async function (params = {}) {
       resultsSelector,
       limitLen,
     );
-
     // await downFile(dataSource);
     await browser.close();
     return dataSource;
