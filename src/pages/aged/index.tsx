@@ -128,7 +128,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'searchUserModal/batchLike',
-                  payload: { _id },
+                  payload: { userType: 'aged', _id },
                 });
               }}
             >
@@ -185,7 +185,7 @@ export default function searchUser() {
       width: 350,
       render: (val, record) => {
         const { videoTitles = [], firstVideoSrc } = val || {};
-        const text = videoTitles[0]?.split('\n').slice(-1)[0] || '';
+        const text = videoTitles[0].split('\n').slice(-1)[0] || '';
         const textList = text.split(/[#|\s]/);
         return (
           <Space>
@@ -195,8 +195,8 @@ export default function searchUser() {
             <Button
               type="link"
               onClick={() => {
-                window.open(location.origin + '/search?v=' + textList.join(''));
                 copy(textList.join(''));
+                window.open(location.origin + '/search?v=' + textList.join(''));
               }}
             >
               total
@@ -210,8 +210,8 @@ export default function searchUser() {
                   style={{ padding: 0 }}
                   key={i}
                   onClick={() => {
-                    window.open(location.origin + '/search?v=' + e);
                     copy(e);
+                    window.open(location.origin + '/search?v=' + e);
                   }}
                 >
                   {e}
@@ -241,7 +241,6 @@ export default function searchUser() {
           type: 'like',
           limitLen: 1,
           commentLimitLen: 100,
-          userType: 'aged',
         }}
         colon={false}
       >
@@ -306,6 +305,17 @@ export default function searchUser() {
           <Radio.Group>
             <Radio.Button value={true}>登录</Radio.Button>
             <Radio.Button value={false}>不登录</Radio.Button>
+          </Radio.Group>
+        </Form.Item> */}
+        {/* <Form.Item
+          label="筛选用户类型"
+          name="userType"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+        >
+          <Radio.Group>
+            <Radio.Button value={'business'}>同行</Radio.Button>
+            <Radio.Button value={'user'}>用户</Radio.Button>
           </Radio.Group>
         </Form.Item> */}
       </Form>

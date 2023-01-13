@@ -97,7 +97,7 @@ export default function searchUser() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'user',
+      title: 'business',
       dataIndex: 'commentList',
       render: (val, record: any) => {
         const num = (val && val.length) || 0;
@@ -128,7 +128,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'searchUserModal/batchLike',
-                  payload: { _id },
+                  payload: { userType: 'business', _id },
                 });
               }}
             >
@@ -305,6 +305,17 @@ export default function searchUser() {
           <Radio.Group>
             <Radio.Button value={true}>登录</Radio.Button>
             <Radio.Button value={false}>不登录</Radio.Button>
+          </Radio.Group>
+        </Form.Item> */}
+        {/* <Form.Item
+          label="筛选用户类型"
+          name="userType"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+        >
+          <Radio.Group>
+            <Radio.Button value={'business'}>同行</Radio.Button>
+            <Radio.Button value={'user'}>用户</Radio.Button>
           </Radio.Group>
         </Form.Item> */}
       </Form>
