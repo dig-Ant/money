@@ -4,7 +4,7 @@ const { EXEC_DY_USERS_LIKE } = api;
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
-  namespace: 'ConsumerPage',
+  namespace: 'consumerPage',
   state: {
     num: 0,
   },
@@ -15,7 +15,11 @@ export default {
   },
   effects: {
     *batchLike({ payload }: any, { call, put }: any) {
+      console.log(333);
+      
       yield call(() =>
+      console.log(2222),
+      
         request(EXEC_DY_USERS_LIKE, { method: 'post', data: payload }),
       );
     },

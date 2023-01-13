@@ -40,7 +40,7 @@ interface DataType {
 export default function searchUser() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const model = useSelector((state: any) => state.searchUserModal);
+  const model = useSelector((state: any) => state.searchPage);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState([]);
 
@@ -127,7 +127,7 @@ export default function searchUser() {
             <a
               onClick={() => {
                 dispatch({
-                  type: 'searchUserModal/batchLike',
+                  type: 'agedPage/batchLike',
                   payload: { userType: 'aged', _id },
                 });
               }}
@@ -323,6 +323,7 @@ export default function searchUser() {
         scroll={{ x: true }}
         columns={columns}
         dataSource={list}
+        rowKey="_id"
         // pagination={{
         //   total,
         //   pageSize,
@@ -348,6 +349,7 @@ export default function searchUser() {
         <Table
           scroll={{ y: '75vh' }}
           columns={commentCols}
+          rowKey="_id"
           dataSource={current}
         />
       </Modal>
