@@ -36,6 +36,14 @@ export default [
     }
   },
   {
+    path: '/comment',
+    component: './comment/index',
+    meta: {
+      icon: 'SearchOutlined',
+      name: '评论'
+    }
+  },
+  {
     path: '/download',
     component: './download/index',
     meta: {

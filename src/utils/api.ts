@@ -30,3 +30,5 @@ export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
 
 // 抖音搜索列表
 export const GET_DY_SEARCH = '/v1/getDySearch';
+// 评论列表
+export const GET_DY_COMMENT = '/v1/getDyComment';

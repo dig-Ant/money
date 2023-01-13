@@ -122,6 +122,17 @@ class WebInterface {
         data: { list },
       });
     });
+    // 搜索抖音评论列表
+    app.post('/v1/getDyComment', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      console.log(body);
+      const list = await this.pupp.start('feature_comment', body);
+      res.send({
+        code: 0,
+        data: { list },
+      });
+    });
 
     const resHandle = (res, err, list) => {
       if (err) {
