@@ -53,6 +53,16 @@ const columns: ColumnsType<DataType> = [
         <div>
           <a href={userLink}>link</a>
           {user}
+          <Button
+            type="link"
+            size="small"
+            style={{ padding: 0 }}
+            onClick={() => {
+              copy(textList.join(''));
+            }}
+          >
+            {textList.join('')}
+          </Button>
           {textList.map((e: string, i: number) => {
             return (
               <Button
@@ -61,7 +71,6 @@ const columns: ColumnsType<DataType> = [
                 style={{ padding: 0 }}
                 key={i}
                 onClick={() => {
-                  window.open(location.origin + '/search?v=' + e);
                   copy(e);
                 }}
               >

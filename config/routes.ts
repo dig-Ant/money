@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/consumer',
   },
   {
     path: '/consumer',
@@ -36,8 +36,8 @@ export default [
     }
   },
   {
-    path: '/home',
-    component: './home/index',
+    path: '/download',
+    component: './download/index',
     meta: {
       icon: 'UserOutlined',
       name: '下载视频'

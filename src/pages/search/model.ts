@@ -3,7 +3,7 @@
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
-  namespace: 'searchModal',
+  namespace: 'searchPage',
   state: {
     num: 0,
   },

@@ -3,7 +3,7 @@
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
-  namespace: 'homepage',
+  namespace: 'downloadPage',
   state: {
     num: 0,
   },

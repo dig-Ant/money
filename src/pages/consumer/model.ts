@@ -4,7 +4,7 @@ const { EXEC_DY_USERS_LIKE } = api;
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
-  namespace: 'searchConsumerModal',
+  namespace: 'ConsumerPage',
   state: {
     num: 0,
   },

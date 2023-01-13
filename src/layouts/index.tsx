@@ -99,7 +99,7 @@ export default function Layouts() {
             onClick={onMenuClick}
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={['/home']}
+            defaultSelectedKeys={['/download']}
             selectedKeys={[pathname]}
             // inlineCollapsed={collapsed}
             items={formatRoutesToMenus(routes)}
