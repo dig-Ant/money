@@ -1,4 +1,4 @@
-const { agedCommentList,businessCommentList } = require('../../utils/commentList');
+const { commentList } = require('../../utils/commentList');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
 
@@ -15,7 +15,6 @@ const feature_userLike = async function (params) {
     const { list = [], limitLen = 1 } = params || {};
     console.log('list: ', list);
     
-    let commentList = agedCommentList
     for (i = 0; i < list.length; i++) {
       const { userInfo } = list[i];
       const { firstVideoSrc } = userInfo || {};
@@ -49,6 +48,7 @@ const feature_userLike = async function (params) {
     await browser.close();
     return { code: 0, data: {} };
   } catch (error) {
+    console.log('error: 123', error);
     await browser.close();
     return { code: -1, errorMsg: error };
   }

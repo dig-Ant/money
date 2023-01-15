@@ -121,13 +121,13 @@ export default function searchUser() {
       // key: 'action',
       // fixed: 'right',
       render: (_, record) => {
-        // const { _id } = record || {};
+        const { _id } = record || {};
         return (
           <a
             onClick={() => {
               dispatch({
                 type: 'consumerPage/batchLike',
-                payload: { userType: 'consumer' },
+                payload: { userType: 'consumer', _id },
               });
             }}
           >
@@ -343,6 +343,25 @@ export default function searchUser() {
         }}
         footer={null}
       >
+        <Button
+          type="link"
+          onClick={() => {
+            copy(
+              JSON.stringify(
+                current.map((e: any) => {
+                  return e.userInfo.videoTitles[0]
+                    .split('\n')
+                    .slice(-1)[0]
+                    .split(/[#|\s]/)
+                    .join(' ');
+                }),
+              ),
+            );
+          }}
+          //
+        >
+          copyAll
+        </Button>
         <Table
           scroll={{ y: '75vh' }}
           columns={commentCols}

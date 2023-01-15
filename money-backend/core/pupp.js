@@ -8,7 +8,7 @@ const { downFile } = puppeteerUtils;
 class Pupp {
   constructor(props = {}) {
     this.allLaunch = {};
-    this.init()
+    this.init();
   }
 
   init() {
@@ -19,7 +19,7 @@ class Pupp {
     }
   }
 
-  // 启动 
+  // 启动
   async start(featureName, ...params) {
     const res = await features[featureName].call(this, ...params);
     return res;
@@ -32,6 +32,7 @@ class Pupp {
 
   // 生成browser
   async createBrowser(browserOptions) {
+    console.log('browserOptions: ', browserOptions);
     const { launchKey, ...ext } = browserOptions || {};
     const browser = await puppeteer.launch({
       headless: false,

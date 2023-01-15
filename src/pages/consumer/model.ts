@@ -16,10 +16,8 @@ export default {
   effects: {
     *batchLike({ payload }: any, { call, put }: any) {
       console.log(333);
-      
+
       yield call(() =>
-      console.log(2222),
-      
         request(EXEC_DY_USERS_LIKE, { method: 'post', data: payload }),
       );
     },

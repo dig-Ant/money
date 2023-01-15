@@ -212,6 +212,7 @@ class WebInterface {
       });
       const body = req.body;
       const { _id } = body || {};
+      console.log(_id);
       db.find({ _id }, async (err, docs) => {
         if (err) {
           return res.json({
@@ -219,6 +220,7 @@ class WebInterface {
             errorMsg: err,
           });
         }
+        console.log(err);
         const { code } = await this.pupp.start('feature_userLike', {
           list: docs[0].commentList,
         });
