@@ -52,6 +52,15 @@ const columns: ColumnsType<DataType> = [
       return (
         <div>
           <a href={userLink}>link</a>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              window.open(location.origin + '/comment?v=' + userLink);
+            }}
+          >
+            获取评论
+          </Button>
           {user}
           <Button
             type="link"
@@ -61,7 +70,7 @@ const columns: ColumnsType<DataType> = [
               copy(textList.join(''));
             }}
           >
-            {textList.join('')}
+           total
           </Button>
           {textList.map((e: string, i: number) => {
             return (

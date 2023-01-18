@@ -194,9 +194,18 @@ const feature_searchUsers = async function (params = {}) {
                   // 点赞小于5
                   const userLike =
                     userInfoEl.querySelector('.jtyFqENC').innerText;
+                  // 活跃评论时间1h内
+                  const activeTime =
+                    userInfoEl.querySelector('.L4ozKLf7').innerText;
+
                   if (stringToNum(userLike) > 5 && userType === 'consumer') {
                     return null;
                   }
+                  console.log(activeTime);
+                  if (!activeTime.includes('分钟')) {
+                    return null;
+                  }
+
                   const userCm = userInfoEl.querySelector('p').innerText;
                   const createDate =
                     userInfoEl.querySelector('.L4ozKLf7').innerText;
@@ -205,6 +214,7 @@ const feature_searchUsers = async function (params = {}) {
                     comment: userCm,
                     userName,
                     userLike,
+                    activeTime,
                     userLink,
                     createDate,
                   });
@@ -275,12 +285,12 @@ const feature_searchUsers = async function (params = {}) {
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
                   console.log(fans, userType, gender);
-                  if (fans > 150 && userType === 'consumer') {
-                    return null;
-                  }
-                  if (like > 950 && userType === 'consumer') {
-                    return null;
-                  }
+                  // if (fans > 150 && userType === 'consumer') {
+                  //   return null;
+                  // }
+                  // if (like > 950 && userType === 'consumer') {
+                  //   return null;
+                  // }
                   return {
                     gender: gender ? '女' : '未知',
                     age,
