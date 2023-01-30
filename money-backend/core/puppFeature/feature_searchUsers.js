@@ -278,7 +278,7 @@ const feature_searchUsers = async function (params = {}) {
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
                   const gender = document.querySelector('.N4QS6RJT');
-                  // console.log( gender);
+                  console.log( gender);
                   if (!gender) {
                     return null;
                   }

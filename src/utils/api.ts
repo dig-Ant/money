@@ -32,3 +32,5 @@ export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
 export const GET_DY_SEARCH = '/v1/getDySearch';
 // 评论列表
 export const GET_DY_COMMENT = '/v1/getDyComment';
+// 点赞收藏文案
+export const GET_DY_TEXT = '/v1/getDyText';

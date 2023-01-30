@@ -160,7 +160,7 @@ class WebInterface {
         timestampData: true,
       });
       const list = await this.pupp.start('feature_searchUsers', body);
-      console.log('list',list)
+      console.log('list', list);
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
@@ -200,6 +200,16 @@ class WebInterface {
             });
           }
         });
+    });
+
+    app.post('/v1/getDyText', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const dataSource = await this.pupp.start('feature_getText', body);
+      res.send({
+        code: 0,
+        data: { list: dataSource },
+      });
     });
 
     // 给用户点赞
