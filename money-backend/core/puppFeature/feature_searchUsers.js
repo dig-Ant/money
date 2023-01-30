@@ -277,10 +277,11 @@ const feature_searchUsers = async function (params = {}) {
                   const firstVideoSrc = videoList[0].querySelector('a').href;
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
-                  const gender = document.querySelector('.woman_svg__a');
-                  // if (!gender) {
-                  //   return null;
-                  // }
+                  const gender = document.querySelector('.N4QS6RJT');
+                  // console.log( gender);
+                  if (!gender) {
+                    return null;
+                  }
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
