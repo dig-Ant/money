@@ -202,7 +202,7 @@ const feature_searchUsers = async function (params = {}) {
                     return null;
                   }
                   console.log(activeTime);
-                  if (!activeTime.includes('分钟')) {
+                  if (!activeTime.includes('分钟') && userType === 'consumer') {
                     return null;
                   }
 
@@ -274,12 +274,13 @@ const feature_searchUsers = async function (params = {}) {
                   }
                   videoList = videoList.slice(0, 6);
                   const videoTitles = videoList.map((v) => v.innerText);
-                  const firstVideoSrc = videoList[0].querySelector('a').href;
+                  const firstVideoSrc = videoList
+                    .filter((e) => !e.innerText.includes('置顶'))[0]
+                    .querySelector('a').href;
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
                   const gender = document.querySelector('.N4QS6RJT');
-                  console.log( gender);
-                  if (!gender) {
+                  if (!gender && userType !== 'business') {
                     return null;
                   }
                   const [follow, fans, like] = [
