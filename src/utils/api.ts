@@ -27,6 +27,8 @@ export const GET_DY_USERS = '/v1/getDyUsers';
 export const GET_DY_USERS_LIST = '/v1/getDyUsersList';
 // 批量点赞
 export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
+// 给最近的点赞做评论
+export const EXEC_DY_LIKE = '/v1/execDyLike';
 
 // 抖音搜索列表
 export const GET_DY_SEARCH = '/v1/getDySearch';

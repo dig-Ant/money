@@ -62,6 +62,14 @@ export default [
     },
   },
   {
+    path: '/like',
+    component: './like/index',
+    meta: {
+      icon: 'SearchOutlined',
+      name: '给点赞评论',
+    },
+  },
+  {
     path: '/download',
     component: './download/index',
     meta: {

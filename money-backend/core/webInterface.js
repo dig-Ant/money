@@ -247,6 +247,17 @@ class WebInterface {
       });
     });
 
+    // 给最近的点赞做评论
+    app.post('/v1/execDyLike', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const dataSource = await this.pupp.start('feature_like', body);
+      res.send({
+        code: 0,
+        data: { list: dataSource },
+      });
+    });
+
     // TODO 以下是不用接口 map 规则相关接口
     // 获取规则列表
     app.get('/api/getRuleList', (req, res) => {
