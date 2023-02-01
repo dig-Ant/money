@@ -86,9 +86,10 @@ const feature_downloadVideo = async function (params) {
     );
 
     // 按照点赞排序 高->低
-    dataSource.sort((a, b) => {
-      return b.likeNum - a.likeNum;
-    });
+    // dataSource
+    // .sort((a, b) => {
+    //   return b.likeNum - a.likeNum;
+    // });
 
     //  获取无水印 src
     await limitExec(
@@ -105,7 +106,7 @@ const feature_downloadVideo = async function (params) {
           // const src = await videoPage.$eval(videoSelect, (source) => {
           //   return source.src;
           // });
-          const { src, user } = await videoPage.evaluate(
+          const { src, user, time } = await videoPage.evaluate(
             (videoSelect, userSelect) => {
               const stringToNum = (data, type = true) => {
                 let res = data;
@@ -119,6 +120,7 @@ const feature_downloadVideo = async function (params) {
                 }
               };
               const videoSrc = document.querySelector(videoSelect).src;
+              const time = document.querySelector('.aQoncqRg').innerText;
               const user = document.querySelector(userSelect);
               const userSrc = user.children[1].querySelector('a').innerText;
               const userName = user.children[1].querySelector('a').innerText;
@@ -128,6 +130,7 @@ const feature_downloadVideo = async function (params) {
                 .split('获赞');
               return {
                 src: videoSrc,
+                time,
                 user: {
                   fans,
                   like,
@@ -147,6 +150,7 @@ const feature_downloadVideo = async function (params) {
           // }
           item.src = src;
           item.user = user;
+          item.time = time;
           item.filename = `${user.name}-${item.like}-${
             item.title.split(' ')[0]
           }`;
