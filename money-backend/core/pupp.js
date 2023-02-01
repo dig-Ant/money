@@ -44,7 +44,7 @@ class Pupp {
         defaultViewport: { width: 1080, height: 900 },
         devtools: true,
         // args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        // args: ["--window-size=1920,1080", "--window-position=1921,0"]
+        args: ["--window-size=1920,1080", "--window-position=1921,0"],
         ...ext,
       });
       console.log(111);

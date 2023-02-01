@@ -26,11 +26,14 @@ const feature_userLike = async function (params) {
         ? consumer
         : business;
     console.log(comments);
-    function getComment(i) {
-      if (i >= comments.length) {
-        i = i % comments.length;
+    comments = miss;
+    let commenti = -1;
+    function getComment() {
+      commenti++;
+      if (commenti >= comments.length) {
+        commenti = commenti % comments.length;
       }
-      return comments[i];
+      return comments[commenti];
     }
     for (i = 0; i < list.length; i++) {
       const { userInfo } = list[i];
