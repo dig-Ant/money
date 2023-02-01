@@ -6,7 +6,14 @@ const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
-const { commentList } = require('../../utils/commentList');
+const {
+  aged,
+  business,
+  consumer,
+  girls,
+  miss,
+} = require('../../utils/comments');
+const comments = consumer;
 const feature_like = async function (params = {}) {
   const {
     url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
@@ -16,9 +23,15 @@ const feature_like = async function (params = {}) {
     isLogin = true,
   } = params;
 
+  function getComment(i) {
+    if (i >= comments.length) {
+      i = i % comments.length;
+    }
+    return comments[i];
+  }
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_like',
-    devtools: true,
+    devtools: false,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -85,7 +98,7 @@ const feature_like = async function (params = {}) {
         await newPage.click('.public-DraftStyleDefault-block');
 
         await delay(1000);
-        await newPage.keyboard.type(commentList[i]);
+        await newPage.keyboard.type(getComment(i));
         await delay(5000);
         await newPage.keyboard.press('Enter'); // 回车
         await delay(3000);
