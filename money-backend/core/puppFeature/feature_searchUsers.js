@@ -26,7 +26,7 @@ const feature_searchUsers = async function (params = {}) {
 
   await page.setViewport({ width: 1080, height: 800 });
 
-  // 打开列表页
+  // 打开喜欢或收藏的列表页
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
     if (url.includes('showTab')) {
@@ -103,9 +103,15 @@ const feature_searchUsers = async function (params = {}) {
           const videoSelect = '.xg-video-container video source';
           const userSelect = '[data-e2e="user-info"]';
           const commentSelect = '[data-e2e="comment-list"]';
-          await videoPage.waitForSelector(videoSelect, {
-            timeout: 5000,
-          });
+          if (href.includes('video')) {
+            await videoPage.waitForSelector(videoSelect, {
+              timeout: 5000,
+            });
+          } else {
+            await videoPage.waitForSelector('.o7y5Jors', {
+              timeout: 5000,
+            });
+          }
           // const src = await videoPage.$eval(videoSelect, (source) => {
           //   return source.src;
           // });
@@ -277,6 +283,12 @@ const feature_searchUsers = async function (params = {}) {
                   const firstVideoSrc = videoList
                     .filter((e) => !e.innerText.includes('置顶'))[0]
                     .querySelector('a').href;
+                  const secondVideoSrc = videoList
+                    .filter((e) => !e.innerText.includes('置顶'))[1]
+                    .querySelector('a').href;
+                  const thirdVideoSrc = videoList
+                    .filter((e) => !e.innerText.includes('置顶'))[2]
+                    .querySelector('a').href;
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
                   const gender = document.querySelector('.N4QS6RJT');
@@ -287,12 +299,12 @@ const feature_searchUsers = async function (params = {}) {
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => stringToNum(v.innerText));
                   console.log(fans, userType, gender);
-                  // if (fans > 150 && userType === 'consumer') {
-                  //   return null;
-                  // }
-                  // if (like > 950 && userType === 'consumer') {
-                  //   return null;
-                  // }
+                  if (fans > 550 && userType === 'consumer') {
+                    return null;
+                  }
+                  if (like > 1050 && userType === 'consumer') {
+                    return null;
+                  }
                   return {
                     gender: gender ? '女' : '未知',
                     age,
@@ -301,6 +313,8 @@ const feature_searchUsers = async function (params = {}) {
                     like,
                     videoTitles,
                     firstVideoSrc,
+                    secondVideoSrc,
+                    thirdVideoSrc,
                   };
                 }, userType);
                 if (userInfo) {
