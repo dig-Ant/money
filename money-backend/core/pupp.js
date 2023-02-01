@@ -32,24 +32,30 @@ class Pupp {
 
   // 生成browser
   async createBrowser(browserOptions) {
-    console.log('browserOptions: ', browserOptions);
-    const { launchKey, ...ext } = browserOptions || {};
-    const browser = await puppeteer.launch({
-      headless: false,
-      userDataDir: path.resolve(__dirname, '../tmp/myChromeSession'),
-      // 解决视频等文件不支持 调用系统内的chrome浏览器
-      executablePath:
-        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-      defaultViewport: { width: 1080, height: 900 },
-      devtools: true,
-      // args: ["--window-size=1920,1080", "--window-position=1921,0"]
-      ...ext,
-    });
-    const page = await browser.newPage();
-    if (launchKey) {
-      this.allLaunch[launchKey].browser = browser;
+    try {
+      const { launchKey, ...ext } = browserOptions || {};
+      console.log(launchKey, ext);
+      const browser = await puppeteer.launch({
+        headless: false,
+        userDataDir: path.resolve(__dirname, '../tmp/myChromeSession'),
+        // 解决视频等文件不支持 调用系统内的chrome浏览器
+        executablePath:
+          '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        defaultViewport: { width: 1080, height: 900 },
+        devtools: true,
+        // args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // args: ["--window-size=1920,1080", "--window-position=1921,0"]
+        ...ext,
+      });
+      console.log(111);
+      const page = await browser.newPage();
+      if (launchKey) {
+        this.allLaunch[launchKey].browser = browser;
+      }
+      return { browser, page };
+    } catch (error) {
+      console.log(1111, error);
     }
-    return { browser, page };
   }
 }
 
