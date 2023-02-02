@@ -86,10 +86,10 @@ const feature_downloadVideo = async function (params) {
     );
 
     // 按照点赞排序 高->低
-    // dataSource
-    // .sort((a, b) => {
-    //   return b.likeNum - a.likeNum;
-    // });
+    dataSource
+    .sort((a, b) => {
+      return b.likeNum - a.likeNum;
+    });
 
     //  获取无水印 src
     await limitExec(
