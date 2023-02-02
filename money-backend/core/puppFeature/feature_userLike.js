@@ -25,7 +25,6 @@ const feature_userLike = async function (params) {
         : userType === 'consumer'
         ? consumer
         : business;
-    console.log(comments);
     comments = miss;
     let commenti = -1;
     function getComment() {
