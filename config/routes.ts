@@ -8,7 +8,7 @@ export default [
     // component: './consumer/index',
     meta: {
       icon: 'RedditOutlined',
-      name: '粉',
+      name: '找粉',
     },
     routes: [
       {
@@ -38,28 +38,37 @@ export default [
     ],
   },
   {
-    path: '/search',
-    component: './search/index',
-    meta: {
-      icon: 'SearchOutlined',
-      name: '搜索',
-    },
-  },
-  {
-    path: '/comment',
-    component: './comment/index',
-    meta: {
-      icon: 'SearchOutlined',
-      name: '评论',
-    },
-  },
-  {
     path: '/text',
-    component: './text/index',
     meta: {
       icon: 'SearchOutlined',
-      name: '文案',
+      name: '找文案',
     },
+    routes: [
+      {
+        path: '/text/keyword',
+        component: './search/index',
+        meta: {
+          icon: 'SearchOutlined',
+          name: '关键字搜索',
+        },
+      },
+      {
+        path: '/text/comment',
+        component: './comment/index',
+        meta: {
+          icon: 'SearchOutlined',
+          name: '获取评论文案',
+        },
+      },
+      {
+        path: '/text/mycollectionTitle',
+        component: './text/index',
+        meta: {
+          icon: 'SearchOutlined',
+          name: '收藏作品文案',
+        },
+      },
+    ],
   },
   {
     path: '/like',
