@@ -47,7 +47,6 @@ class Pupp {
         args: ["--window-size=1920,1080", "--window-position=1921,0"],
         ...ext,
       });
-      console.log(111);
       const page = await browser.newPage();
       if (launchKey) {
         this.allLaunch[launchKey].browser = browser;
