@@ -31,7 +31,7 @@ const feature_like = async function (params = {}) {
   }
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_like',
-    devtools: false,
+    devtools: true,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -68,23 +68,26 @@ const feature_like = async function (params = {}) {
           }
           eleList = eleList.slice(0, limitLen);
         }
+        // console.log(eleList);
         eleList = eleList.map((el) => {
           const href = el.href;
+          // const like = el.querySelector('.HKFI7GBq').innerText
           const [like, title = ''] = el.innerText.split('\n\n');
           return {
             href,
             title,
+            like: like.includes('万') ? 10000 : like - 0,
             filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
           };
         });
-        console.log(eleList);
-        debugger;
-        return eleList;
+        const res = eleList.filter((e) => e.like < 100);
+        return res;
       },
       resultsSelector,
       limitLen,
     );
-    console.log('dataSource' + dataSource);
+    console.log(dataSource.length);
+    console.log(dataSource);
     for (i = 0; i < dataSource.length; i++) {
       try {
         const newPage = await browser.newPage();
