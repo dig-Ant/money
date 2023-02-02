@@ -90,6 +90,17 @@ class WebInterface {
       });
     });
 
+    // 获取账号作品信息
+    app.post('/v1/getProductmsg', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const dataSource = await this.pupp.start('feature_productmsg', body);
+      res.send({
+        code: 0,
+        data: { list: dataSource },
+      });
+    });
+
     // 打开chromium浏览器
     app.post('/v1/loginPup', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');

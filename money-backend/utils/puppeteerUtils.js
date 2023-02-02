@@ -160,6 +160,18 @@ const downFile = async (arr, file) => {
     i++;
   }
 };
+const downProductmsg = async (arr, file) => {
+  const { downloadPath, pathname } = file || {};
+  const [mkdirPath] = createDownloadPath(pathname, downloadPath);
+  try {
+    fs.writeFileSync(
+      path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
+      JSON.stringify(arr),
+    );
+  } catch (error) {
+    console.log(pathname + '的账号作品信息下载失败', error);
+  }
+};
 
 module.exports = {
   hrefClassMap,
@@ -167,5 +179,6 @@ module.exports = {
   getKeyboardHref,
   getSrc,
   downFile,
+  downProductmsg,
   createDownloadPath,
 };

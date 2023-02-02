@@ -79,12 +79,29 @@ export default [
     },
   },
   {
-    path: '/download',
-    component: './download/index',
+    path: '/select',
     meta: {
       icon: 'UserOutlined',
-      name: '下载视频',
+      name: '选品',
     },
+    routes: [
+      {
+        path: '/select/download',
+        component: './download/index',
+        meta: {
+          icon: 'UserOutlined',
+          name: '下载视频',
+        },
+      },
+      {
+        path: '/select/productmsg',
+        component: './productmsg/index',
+        meta: {
+          icon: 'UserOutlined',
+          name: '获取账号作品信息',
+        },
+      },
+    ],
   },
   // {
   //   path: '/test',
