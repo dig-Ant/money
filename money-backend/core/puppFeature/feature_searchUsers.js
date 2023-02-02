@@ -3,15 +3,19 @@ const qs = require('qs');
 const { limitExec } = require('../../utils/common');
 const fs = require('fs');
 const moment = require('moment');
-const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
-const { downFile, createDownloadPath } = puppeteerUtils;
-
+const {
+  MY_USER_LINK,
+  VIDEO_SELECTOR,
+  LIMIT,
+  INIT_VIEWPORT,
+} = require('../../utils/constance');
+const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
   const {
-    url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
+    url = MY_USER_LINK,
     limitLen = 1,
-    commentLimitLen = 100,
+    commentLimitLen = LIMIT,
     downloadFilename = '',
     type = '',
     isLogin = false,
@@ -24,7 +28,7 @@ const feature_searchUsers = async function (params = {}) {
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
-  await page.setViewport({ width: 1080, height: 800 });
+  await page.setViewport(INIT_VIEWPORT);
 
   // 1.打开我的主页里，喜欢/收藏的列表页
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
@@ -44,11 +48,10 @@ const feature_searchUsers = async function (params = {}) {
 
   // 2.获取我的主页里，喜欢/收藏的列表页的数据
   try {
-    const resultsSelector = '[data-e2e="scroll-list"] li a';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(VIDEO_SELECTOR);
     const dataSource = await page.evaluate(
-      async (resultsSelector, limitLen, userType) => {
-        const stringToNum = (data, type = true) => {
+      async (VIDEO_SELECTOR, limitLen, userType) => {
+        const stringToNum = function (data, type = true) {
           let res = data;
           if (type) {
             if (res.includes('万')) {
@@ -60,13 +63,13 @@ const feature_searchUsers = async function (params = {}) {
           }
         };
 
-        let eleList = [...document.querySelectorAll(resultsSelector)];
+        let eleList = [...document.querySelectorAll(VIDEO_SELECTOR)];
         // 获取到对应数量的视频为止
         if (typeof limitLen !== 'undefined') {
           while (eleList.length < limitLen) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
-            eleList = [...document.querySelectorAll(resultsSelector)];
+            eleList = [...document.querySelectorAll(VIDEO_SELECTOR)];
           }
           eleList = eleList.slice(0, limitLen);
         }
@@ -84,7 +87,7 @@ const feature_searchUsers = async function (params = {}) {
         });
         return eleList;
       },
-      resultsSelector,
+      VIDEO_SELECTOR,
       limitLen,
       userType,
     );
