@@ -66,7 +66,7 @@ module.exports = {
     if (commenti1 >= comments.length) {
       commenti1 = commenti1 % comments.length;
     }
-    console.log(111+comments[commenti1]);
+    console.log(commenti1+111+comments[commenti1]);
     return comments[commenti1];
   },
   GET_COMMENT2: function (userType) {
@@ -80,7 +80,7 @@ module.exports = {
     if (commenti2 >= comments.length) {
       commenti2 = commenti2 % comments.length;
     }
-    console.log(222+comments[commenti2]);
+    console.log(commenti1+222+comments[commenti2]);
     return comments[commenti2];
   },
 };

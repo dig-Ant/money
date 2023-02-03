@@ -101,6 +101,7 @@ async function download(video, file, i) {
           console.log('获取远端数据完毕，发生了错误,错误信息==>', err);
         });
         const videoFilename = video.filename.replace('/', '-');
+        i = i < 10 ? '0' + i : i;
         const writeFile = readSteam.pipe(
           fs.createWriteStream(
             path.resolve(
