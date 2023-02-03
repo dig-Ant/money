@@ -1,15 +1,15 @@
-const qs = require('qs');
 const { limitExec } = require('../../utils/common');
+const { INIT_VIEWPORT, STRINGNUM } = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downProductmsg, createDownloadPath } = puppeteerUtils;
 
 const feature_productmsg = async function (params) {
   const { url } = params || {};
+  console.log(url);
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_productmsg',
   });
-  await page.setViewport({ width: 1080, height: 800 });
-  // 1.打开url用户主页
+  await page.setViewport(INIT_VIEWPORT);
   try {
     await page.goto(url);
     console.log('用户主页打开成功');
@@ -24,17 +24,8 @@ const feature_productmsg = async function (params) {
       '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
     await page.waitForSelector(resultsSelector);
     const [user, eleList] = await page.evaluate(async (resultsSelector) => {
-      const stringToNum = (data, type = true) => {
-        let res = data;
-        if (type) {
-          if (res.includes('万')) {
-            const [num] = res.split('万');
-            return Number((+num * 10000).toFixed(0));
-          } else {
-            return Number(res);
-          }
-        }
-      };
+      let StringToNum = new Function(STRINGNUM);
+      let StringToNumFun = new StringToNum();
       let user = document.querySelector('.Nu66P_ba').innerText;
       let totalNum = document.querySelector('.J6IbfgzH').innerText - 0;
       totalNum = Math.min(1000, totalNum);
@@ -61,20 +52,18 @@ const feature_productmsg = async function (params) {
           return {
             href,
             like,
-            likeNum: stringToNum(like),
+            likeNum: StringToNumFun.eval(like),
             title,
             // filename: `${like}-${title.split(' ')[0]}`,
           };
         })
-        .sort((a, b) => {
-          return b.likeNum - a.likeNum;
-        });
+        .sort((a, b) => b.likeNum - a.likeNum);
       return [user, eleList];
     }, resultsSelector);
     console.log(eleList);
     await downProductmsg(eleList, {
       pathname: user,
-      downloadPath: '../downloadFiles/账号作品信息'
+      downloadPath: '../downloadFiles/账号作品信息',
     });
     await browser.close();
     return eleList;

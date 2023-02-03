@@ -244,7 +244,7 @@ class WebInterface {
         console.log(err);
         const { code } = await this.pupp.start('feature_userLike', {
           list: docs[0].commentList,
-          userType
+          userType,
         });
         if (code !== 0) {
           return res.json({
@@ -255,6 +255,35 @@ class WebInterface {
         return res.json({
           code: 1,
           data: '成功',
+        });
+      });
+    });
+
+    // execDyVidelMsg
+    app.post('/v1/execDyVidelMsg', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/userComment.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      const body = req.body;
+      const { _id, userType } = body || {};
+      console.log(_id);
+      db.find({ _id }, async (err, docs) => {
+        if (err) {
+          return res.json({
+            code: -1,
+            errorMsg: err,
+          });
+        }
+        console.log(err);
+        const dataSource = await this.pupp.start('feature_getVideoMsg', {
+          list: docs[0].commentList,
+        });
+        res.send({
+          code: 0,
+          data: dataSource,
         });
       });
     });

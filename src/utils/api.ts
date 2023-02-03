@@ -29,6 +29,8 @@ export const GET_DY_USERS = '/v1/getDyUsers';
 export const GET_DY_USERS_LIST = '/v1/getDyUsersList';
 // 批量点赞
 export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
+// 批量获取主页视频信息
+export const EXEC_DY_VIDEPMSG = '/v1/execDyVidelMsg';
 // 给最近的点赞做评论
 export const EXEC_DY_LIKE = '/v1/execDyLike';
 

@@ -1,4 +1,5 @@
 import { request, api } from '@/utils';
+import { EXEC_DY_VIDEPMSG } from '@/utils/api';
 
 const { EXEC_DY_USERS_LIKE } = api;
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -17,6 +18,11 @@ export default {
     *batchLike({ payload }: any, { call, put }: any) {
       yield call(() =>
         request(EXEC_DY_USERS_LIKE, { method: 'post', data: payload }),
+      );
+    },
+    *getVideoMsg({ payload }: any, { call, put }: any) {
+      yield call(() =>
+        request(EXEC_DY_VIDEPMSG, { method: 'post', data: payload }),
       );
     },
   },

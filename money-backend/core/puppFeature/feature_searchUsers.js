@@ -143,6 +143,8 @@ const feature_searchUsers = async function (params = {}) {
               }
 
               commentList.splice(-1, 1);
+              console.log('fasdf');
+              console.log(commentList);
               commentList = commentList.map((el) => {
                 const userInfoEl = el.querySelector('div:nth-child(2)');
                 if (!userInfoEl) return {};
@@ -164,6 +166,8 @@ const feature_searchUsers = async function (params = {}) {
                   userLink,
                 };
               });
+              console.log('fasdf1');
+              console.log(commentList);
 
               // await new Promise((res) => setTimeout(() => res(), 50000));
 
@@ -184,7 +188,7 @@ const feature_searchUsers = async function (params = {}) {
             commentLimitLen,
             STRINGNUM,
           );
-          console.log(111, commentList.length);
+          console.log('111过滤前的个数', commentList.length);
           // console.log(commentList);
           // 根据用户名是否含有好物关键字过滤，评论过滤
           commentList = commentList.filter(({ userName, userLike }) => {
@@ -203,8 +207,11 @@ const feature_searchUsers = async function (params = {}) {
             //   return null;
             // }
           });
+          console.log(
+            '222根据用户名是否含有好物关键字过滤，评论过滤，还剩个数',
+            commentList.length,
+          );
           console.log(commentList);
-          console.log(commentList.length);
           await limitExec(async (comment) => {
             const videoPage = await browser.newPage();
             try {
@@ -239,7 +246,7 @@ const feature_searchUsers = async function (params = {}) {
                     .querySelector('a').href;
                   const age = (document.querySelector('.N4QS6RJT') || {})
                     .innerText;
-                  const gender = document.querySelector('.N4QS6RJT');
+                  const gender = document.querySelector('.N4QS6RJT').innerText;
                   if (!gender && userType === 'business') return false;
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),

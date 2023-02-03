@@ -134,6 +134,16 @@ export default function searchUser() {
             >
               赞
             </a>
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'businessPage/getVideoMsg',
+                  payload: { userType: 'business', _id },
+                });
+              }}
+            >
+              获取主页视频信息
+            </a>
             {/* <a>删除</a> */}
           </Space>
         );
