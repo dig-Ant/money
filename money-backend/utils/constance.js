@@ -1,3 +1,14 @@
+const {
+  consumer1,
+  consumer2,
+  business1,
+  business2,
+  aged1,
+  aged2,
+  girls,
+} = require('./comments');
+let commenti1 = -1;
+let commenti2 = -1;
 const BUSINESS_NAME = [
   '好物',
   '分享',
@@ -43,6 +54,34 @@ module.exports = {
         return Number(like);
       }
     }
+  },
+  GET_COMMENT1: function (userType) {
+    let comments =
+      userType === 'aged'
+        ? aged1
+        : userType === 'business'
+        ? business1
+        : consumer1;
+    commenti1++;
+    if (commenti1 >= comments.length) {
+      commenti1 = commenti1 % comments.length;
+    }
+    console.log(111+comments[commenti1]);
+    return comments[commenti1];
+  },
+  GET_COMMENT2: function (userType) {
+    let comments =
+      userType === 'aged'
+        ? aged2
+        : userType === 'business'
+        ? business2
+        : consumer2;
+    commenti2++;
+    if (commenti2 >= comments.length) {
+      commenti2 = commenti2 % comments.length;
+    }
+    console.log(222+comments[commenti2]);
+    return comments[commenti2];
   },
 };
 /**

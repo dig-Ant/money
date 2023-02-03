@@ -206,6 +206,19 @@ export default function searchUser() {
         <Form.Item name="commentLimitLen" label="的文案">
           {/* <Input style={{ width: '55px' }} /> */}
         </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(list);
+              
+              copy(JSON.stringify(list.map((e: any) => e.title)));
+            }}
+          >
+            copy
+          </Button>
+        </Form.Item>
       </Form>
       <Table
         scroll={{ x: true }}
