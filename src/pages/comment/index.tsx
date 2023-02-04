@@ -127,7 +127,12 @@ export default function HomePage() {
   const { list = [] } = data;
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run(values);
+    let keyword = values.keyword;
+    if (keyword) {
+      keyword = 'http' + keyword.split('http')[1];
+    }
+
+    run({...values,keyword});
   };
   return (
     <div>
@@ -137,7 +142,11 @@ export default function HomePage() {
         form={form}
         className="list-filter"
         onFinish={onFinish}
-        initialValues={{ isLogin: false }}
+        initialValues={{
+          // keyword: 'https://www.douyin.com/video/7195088865739296061',
+          limitLen: 200,
+          isLogin: false,
+        }}
         colon={false}
       >
         {/* <Form.Item
@@ -179,6 +188,20 @@ export default function HomePage() {
             }}
           >
             重置
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            htmlType="button"
+            onClick={() => {
+              const res = list.map(({ content }) => {
+                const textList = content.split(/[#|\s]/);
+                return textList.join();
+              });
+              copy(JSON.stringify(res));
+            }}
+          >
+            copy
           </Button>
         </Form.Item>
       </Form>

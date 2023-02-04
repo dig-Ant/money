@@ -26,6 +26,7 @@ const BUSINESS_NAME = [
 ];
 module.exports = {
   // searchUser
+  // https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v
   MY_USER_LINK:
     'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
   VIDEO_LIST_SELECTOR: '[data-e2e="scroll-list"] li a',
@@ -66,7 +67,7 @@ module.exports = {
     if (commenti1 >= comments.length) {
       commenti1 = commenti1 % comments.length;
     }
-    console.log(commenti1+111+comments[commenti1]);
+    console.log(commenti1+'-111-'+comments[commenti1]);
     return comments[commenti1];
   },
   GET_COMMENT2: function (userType) {
@@ -80,7 +81,7 @@ module.exports = {
     if (commenti2 >= comments.length) {
       commenti2 = commenti2 % comments.length;
     }
-    console.log(commenti1+222+comments[commenti2]);
+    console.log(commenti1+'-222-'+comments[commenti2]);
     return comments[commenti2];
   },
 };

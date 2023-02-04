@@ -224,7 +224,12 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userType: 'consumer' });
+    let url = values.url;
+    if (url) {
+      url = 'http' + url.split('http')[1];
+    }
+
+    run({ ...values, url, userType: 'consumer' });
   };
   return (
     <div>
@@ -281,9 +286,9 @@ export default function searchUser() {
             重置
           </Button>
         </Form.Item> */}
-        {/* <Form.Item name="url" label="link">
+        <Form.Item name="url" label="link">
           <Input />
-        </Form.Item> */}
+        </Form.Item>
 
         {/* <Form.Item name="filter" label="包含文字筛选">
           <Input />
