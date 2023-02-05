@@ -9,11 +9,11 @@ const feature_userLike = async function (params) {
   });
   try {
     const { list = [], userType } = params || {};
-    // console.log('list: ', list);
+    console.log('list: ', list);
 
     for (i = 0; i < list.length; i++) {
-      const { userInfo } = list[i];
-      const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = userInfo || {};
+      // const { userInfo } = list[i];
+      const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
       if (firstVideoSrc && firstVideoSrc.includes('video')) {
         try {
           const newPage = await browser.newPage();
@@ -44,8 +44,8 @@ const feature_userLike = async function (params) {
       }
     }
     for (i = 0; i < list.length; i++) {
-      const { userInfo } = list[i];
-      const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = userInfo || {};
+      // const { userInfo } = list[i];
+      const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
       if (secondVideoSrc && secondVideoSrc.includes('video')) {
         try {
           const newPage = await browser.newPage();

@@ -27,6 +27,12 @@ export const GET_DY_PRODUCTMSG = '/v1/getProductmsg';
 export const GET_DY_USERS = '/v1/getDyUsers';
 // 搜索目标用户
 export const GET_DY_USERS_LIST = '/v1/getDyUsersList';
+
+// 下载直播间用户
+export const GET_DY_LIVE_USERS = '/v1/getDyLiveUsers';
+// 搜索直播间用户
+export const GET_DY_LIVE_USERLIST = '/v1/getDyLiveUserList';
+
 // 批量点赞
 export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
 // 批量获取主页视频信息

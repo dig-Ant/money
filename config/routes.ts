@@ -12,6 +12,14 @@ export default [
     },
     routes: [
       {
+        path: '/fans/live',
+        component: './live/index',
+        meta: {
+          icon: 'RedditOutlined',
+          name: '直播',
+        },
+      },
+      {
         path: '/fans/consumer',
         component: './consumer/index',
         meta: {

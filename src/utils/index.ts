@@ -6,5 +6,5 @@ import * as common from "./common";
 export {
   api,
   request,
-  common
+  common,
 }

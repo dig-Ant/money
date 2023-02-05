@@ -213,6 +213,60 @@ class WebInterface {
         });
     });
 
+    // 获取直播间用户
+    app.post('/v1/getDyLiveUsers', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const list = await this.pupp.start('feature_liveusers', body);
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/liveUsers.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      db.insert(list, (err, docs) => {
+        resHandle(res, err, docs);
+      });
+      // res.send({
+      //   code: 0,
+      //   data: { list },
+      // });
+    });
+    // 搜索直播间用户
+    app.post('/v1/getDyLiveUserList', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const db = new Datastore({
+        filename: path.resolve(__dirname, '../db/liveUsers.json'),
+        autoload: true,
+        timestampData: true,
+      });
+      const body = req.body;
+      const { page = 1, pageSize = 10 } = body || {};
+      const start = Math.floor((Number(page) - 1) * Number(pageSize));
+      const end = Math.floor(start + Number(pageSize));
+      db.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
+          if (err) {
+            res.end({
+              code: -1,
+              status: 'error',
+              errorMsg: err.toString(),
+            });
+          } else {
+            res.json({
+              status: 'success',
+              code: 0,
+              data: {
+                total: docs.length,
+                list: docs.slice(start, end),
+                page: Number(page),
+                pageSize: Number(pageSize),
+              },
+            });
+          }
+        });
+    });
+
     app.post('/v1/getDyText', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
@@ -226,13 +280,14 @@ class WebInterface {
     // 给用户点赞
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { _id, userType, type } = body || {};
+      const dbType = type == 'live' ? 'liveUsers' : 'userComment';
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/userComment.json'),
+        filename: path.resolve(__dirname, `../db/${dbType}.json`),
         autoload: true,
         timestampData: true,
       });
-      const body = req.body;
-      const { _id, userType } = body || {};
       console.log(_id);
       db.find({ _id }, async (err, docs) => {
         if (err) {

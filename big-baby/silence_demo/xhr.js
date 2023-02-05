@@ -9,7 +9,7 @@ function sleep(time) {
 function ajax(url) {
   return new Promise((resolve) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
+    xhr.open('GET', url);
     xhr.send();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -22,7 +22,7 @@ function ajax(url) {
 }
 async function getInfo(promotion) {
   return await ajax(
-    `/pc/decision/promotion/data?promotion_id=${promotion.promotion_id}&msToken=${msToken}`
+    `/pc/decision/promotion/data?promotion_id=${promotion.promotion_id}&msToken=${msToken}`,
   );
 }
 function getNum(info) {
@@ -74,13 +74,13 @@ function getNum(info) {
 }
 // ======================================================
 let msToken =
-  "YJes3H4rxsyCwG4HgVpcjzRMglglFPfjguaR4jLDdigYphHL2lyshVFcU0GEssH56HhrcbVMIWPUbP1lDGAWkZtjKoauQf9J2t56HibaC4qgKJZ-j6KKrsDh5iJ8_xQ=";
+  'YJes3H4rxsyCwG4HgVpcjzRMglglFPfjguaR4jLDdigYphHL2lyshVFcU0GEssH56HhrcbVMIWPUbP1lDGAWkZtjKoauQf9J2t56HibaC4qgKJZ-j6KKrsDh5iJ8_xQ=';
 // &msToken=${msToken}&_signature=_02B4Z6wo00001rA13bgAAIDBJOOGtOlp.FKwNdkAAM-5yjv5CX5C.SnJX73lGAD9UqTZhCVcGd0dPrJD7G0JfsWRMlwf6HzAXNqoQ8daQyqzQDTf6NQCBkX9zsvHw0iCsAwNXWPtWDfCdj-Qae
-let urlList = [
+let commentList = [
   // 0爆款榜-实时
-  "/pc/leaderboard/get_leaderboard_pmt?tab_id=4&type=0&cursor=0&count=20&msToken=BwaKGmM7vfhY6g3FTBXAS4Ptr12J10dakUPiLC3yixGpxw7aG43nLoJCamhX5CdPqUdQ7pQcVcAMqnOAXsZN2LoZsHpnPnw7bzaDDn-e75uo7JYavswWxQ==&X-Bogus=DFSzswVLWl2ANnrASk27937TlqCa&_signature=_02B4Z6wo00001FNhZ1AAAIDDx7c8XPPDmoBTYWPAAHeCq0pobgzyh-24PteDdWOdRIzjEXtOms0kl1b80aFExzH4zBazFUfq5zWprrwIv.ZG4MVJFTgJ7zBYkWUReWNP4syPuyRNMX5vYSh9b2",
+  '/pc/leaderboard/get_leaderboard_pmt?tab_id=4&type=0&cursor=0&count=20&msToken=BwaKGmM7vfhY6g3FTBXAS4Ptr12J10dakUPiLC3yixGpxw7aG43nLoJCamhX5CdPqUdQ7pQcVcAMqnOAXsZN2LoZsHpnPnw7bzaDDn-e75uo7JYavswWxQ==&X-Bogus=DFSzswVLWl2ANnrASk27937TlqCa&_signature=_02B4Z6wo00001FNhZ1AAAIDDx7c8XPPDmoBTYWPAAHeCq0pobgzyh-24PteDdWOdRIzjEXtOms0kl1b80aFExzH4zBazFUfq5zWprrwIv.ZG4MVJFTgJ7zBYkWUReWNP4syPuyRNMX5vYSh9b2',
   // 1爆款榜-昨日
-  "/pc/leaderboard/get_leaderboard_pmt?tab_id=1&type=0&cursor=0&count=50&msToken=FO5fptbC_0BQYarxwPJPWNMQbLBpoVlp3GN1-mweUd3Pat4jTxgOxmu4NGtNYkS1Ds5Oy-4CHvO-MOlFyzgH1raMsFWViE4EVydUaAV2cPPs8kq_z1J4-g==&X-Bogus=DFSzswVLMeUANnrASk2app7TlqSV&_signature=_02B4Z6wo00001f6vkOAAAIDCannL7vR1HDX-r5RAABwL2zhDMyMl.fsp9NOnvxKauWTELamCil0subaJ8VmlS0xhWrLV5TGp.uI.SYu4q6uM-bUCJridxCFImoRPmGtdQxq4C-4VGkxVK9Mm3c",
+  '/pc/leaderboard/get_leaderboard_pmt?tab_id=1&type=0&cursor=0&count=50&msToken=FO5fptbC_0BQYarxwPJPWNMQbLBpoVlp3GN1-mweUd3Pat4jTxgOxmu4NGtNYkS1Ds5Oy-4CHvO-MOlFyzgH1raMsFWViE4EVydUaAV2cPPs8kq_z1J4-g==&X-Bogus=DFSzswVLMeUANnrASk2app7TlqSV&_signature=_02B4Z6wo00001f6vkOAAAIDCannL7vR1HDX-r5RAABwL2zhDMyMl.fsp9NOnvxKauWTELamCil0subaJ8VmlS0xhWrLV5TGp.uI.SYu4q6uM-bUCJridxCFImoRPmGtdQxq4C-4VGkxVK9Mm3c',
   // 2首页-为你精选
   `/pc/selection/feed/pmt?page=1&page_size=60&msToken=${msToken}`,
   // 3热卖推荐-成交巨头
@@ -94,23 +94,23 @@ let urlList = [
   `/pc/picking/pool/promotions?picking_pool_id=3471903237135850815&filter_type=10&sort_type=0&gid=376&cursor=0&count=60&session_id=7179199182517829926`,
   `/pc/decision/promotion/data?promotion_id=3477667244534822045`,
   //   猜你想搜
-  "/pc/selection/search/query/recommend?msToken=G6Kih8vxwvriICM27fUCftKNnzImFBg5GTQVME4SBVjb_VeeHYhWe9rJbcGaebPRnBImjtXEGQlPndjHoNqsYffL_UMTGYBcQAHfYnRhi4IGLg1VlJZ6hhxeHNCbVa8=&X-Bogus=DFSzswVYucGANt1kSk5Ji37Tlqtg&_signature=_02B4Z6wo000014EkxKQAAIDAFfKfq.ibOFuBJMAAAIPz64Lg1qqJd2oZ47wHxusGIwxRorJ2nqNYQ9Pl6bXnORV1gRulbEh-pKipAzROeeZkEc09B.OSBJTTZ.pnIou3tIIh7kbgnp8jAcDC01",
+  '/pc/selection/search/query/recommend?msToken=G6Kih8vxwvriICM27fUCftKNnzImFBg5GTQVME4SBVjb_VeeHYhWe9rJbcGaebPRnBImjtXEGQlPndjHoNqsYffL_UMTGYBcQAHfYnRhi4IGLg1VlJZ6hhxeHNCbVa8=&X-Bogus=DFSzswVYucGANt1kSk5Ji37Tlqtg&_signature=_02B4Z6wo000014EkxKQAAIDAFfKfq.ibOFuBJMAAAIPz64Lg1qqJd2oZ47wHxusGIwxRorJ2nqNYQ9Pl6bXnORV1gRulbEh-pKipAzROeeZkEc09B.OSBJTTZ.pnIou3tIIh7kbgnp8jAcDC01',
   `/pc/leaderboard/get_leaderboard_pmt?tab_id=4&type=0&cursor=0&count=20`,
 ];
-ajax(urlList[0]).then(async ({ promotions }) => {
+ajax(commentList[0]).then(async ({ promotions }) => {
   let data = promotions;
   let i = 0,
     res = [];
   console.log(promotions);
   while (i < data.length) {
-    console.log("请求" + i);
+    console.log('请求' + i);
     try {
       let info = await getInfo(promotions[i]);
       if (info) {
         res.push({ ...info, ...promotions[i] });
         i++;
-      }else {
-        sleep(1000)
+      } else {
+        sleep(1000);
       }
       console.log(info);
     } catch (error) {
@@ -141,7 +141,7 @@ ajax(urlList[0]).then(async ({ promotions }) => {
   //     }
   //   }
   let 排序后的数据 = Logdata.filter(
-    (e) => e.昨日.推广达人数 > 0 && e.月.月销量 > 20000
+    (e) => e.昨日.推广达人数 > 0 && e.月.月销量 > 20000,
   ).sort((c, v) => c.昨日.人均销量 - v.昨日.人均销量);
   console.log(res);
   console.log(排序后的数据);

@@ -16,7 +16,13 @@ export function copy(text: string) {
   document.body.removeChild(el);
   message.info('复制成功');
 }
-
+export function transformUrl(values: Object) {
+  let url = values.url || '';
+  if (url) {
+    url = 'http' + url.split('http')[1];
+  }
+  return url;
+}
 // export default {
 //   copy,
 // };
