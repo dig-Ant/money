@@ -157,11 +157,11 @@ export default function searchUser() {
           href = 'javaScript:void(0);',
           title = '',
           likeNum = '',
-          user = {},
+          name = '',
         } = record || {};
         return (
           <a href={href}>
-            {user.name || ''}-{likeNum}-{title}
+            {name || ''}-{likeNum}-{title}
           </a>
         );
       },
@@ -179,22 +179,22 @@ export default function searchUser() {
       dataIndex: 'userName',
       width: 60,
       render: (val, render: any) => {
-        const { userInfo } = render;
+        const { gender, fans, age, like } = render;
         return (
           <div>
-            <a href={render?.userLink}>{val}</a>-性别{userInfo?.gender}-
-            {userInfo?.age}-粉丝{userInfo?.fans}个-获
-            {userInfo?.like}赞
+            <a href={render?.userLink}>{val}</a>-性别{gender}-{age}-粉丝{fans}
+            个-获
+            {like}赞
           </div>
         );
       },
     },
     {
       title: '第一条视频',
-      dataIndex: 'userInfo',
+      dataIndex: 'firstVideoSrc',
       width: 350,
-      render: (val, record) => {
-        const { videoTitles = [], firstVideoSrc } = val || {};
+      render: (val, record: any) => {
+        const { videoTitles = [], firstVideoSrc } = record || {};
         const text = videoTitles[0].split('\n').slice(-1)[0] || '';
         const textList = text.split(/[#|\s]/);
         return (
@@ -250,7 +250,8 @@ export default function searchUser() {
           isLogin: false,
           type: 'like',
           limitLen: 1,
-          commentLimitLen: 100,
+          // url: 'https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v',
+          commentLimitLen: 12,
         }}
         colon={false}
       >
@@ -294,8 +295,8 @@ export default function searchUser() {
             重置
           </Button>
         </Form.Item> */}
-        <Form.Item name="url" label="link">
-          <Input />
+        <Form.Item name="url">
+          <Input placeholder="link" />
         </Form.Item>
 
         {/* <Form.Item name="filter" label="包含文字筛选">

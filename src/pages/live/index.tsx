@@ -178,7 +178,7 @@ export default function searchUser() {
     },
     {
       title: '第一条视频',
-      dataIndex: 'userInfo',
+      dataIndex: 'firstVideoSrc',
       width: 350,
       render: (val, record: any) => {
         const { videoTitles = [], firstVideoSrc } = record || {};

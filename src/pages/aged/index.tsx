@@ -169,22 +169,22 @@ export default function searchUser() {
       dataIndex: 'userName',
       width: 60,
       render: (val, render: any) => {
-        const { userInfo } = render;
+        const { gender, fans, age, like } = render;
         return (
           <div>
-            <a href={render?.userLink}>{val}</a>-性别{userInfo?.gender}-
-            {userInfo?.age}-粉丝{userInfo?.fans}个-获
-            {userInfo?.like}赞
+            <a href={render?.userLink}>{val}</a>-性别{gender}-{age}-粉丝{fans}
+            个-获
+            {like}赞
           </div>
         );
       },
     },
     {
       title: '第一条视频',
-      dataIndex: 'userInfo',
+      dataIndex: 'firstVideoSrc',
       width: 350,
-      render: (val, record) => {
-        const { videoTitles = [], firstVideoSrc } = val || {};
+      render: (val, record: any) => {
+        const { videoTitles = [], firstVideoSrc } = record || {};
         const text = videoTitles[0].split('\n').slice(-1)[0] || '';
         const textList = text.split(/[#|\s]/);
         return (

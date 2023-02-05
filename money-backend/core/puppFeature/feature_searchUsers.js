@@ -34,7 +34,7 @@ const feature_searchUsers = async function (params = {}) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
-    devtools: DEVTOOLS,
+    devtools: false,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -43,6 +43,7 @@ const feature_searchUsers = async function (params = {}) {
   // 1.打开我的主页里，喜欢/收藏的列表页
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
+    console.log('url: ', url);
     if (url.includes('showTab')) {
       await page.goto(url);
     } else {
@@ -92,8 +93,8 @@ const feature_searchUsers = async function (params = {}) {
       userType,
       STRINGNUM,
     );
-    console.log('myFavorateVideos: ');
-    console.log(myFavorateVideos);
+    // console.log('myFavorateVideos: ');
+    // console.log(myFavorateVideos);
 
     await limitExec(async (item) => {
       const { href } = item;
@@ -188,6 +189,7 @@ const feature_searchUsers = async function (params = {}) {
             commentLimitLen,
             STRINGNUM,
           );
+          // console.log('src, user: ', src, user);
           console.log('111过滤前的个数', commentList.length);
           // console.log(commentList);
           // 根据用户名是否含有好物关键字过滤，评论过滤
@@ -207,11 +209,13 @@ const feature_searchUsers = async function (params = {}) {
             //   return null;
             // }
           });
+          item.src = src;
+          Object.assign(item, user);
           console.log(
             '222根据用户名是否含有好物关键字过滤，评论过滤，还剩个数',
             commentList.length,
           );
-          console.log(commentList);
+          // console.log(commentList);
           await limitExec(async (comment) => {
             const videoPage = await browser.newPage();
             try {
@@ -234,7 +238,7 @@ const feature_searchUsers = async function (params = {}) {
 
                   if (videoList.length <= 0) return null;
                   videoList = videoList.slice(0, 6);
-                  const videoTitles = videoList.map((v) => v.innerText);
+                  const videoTitles = videoList.map((v) => v.innerText || '');
                   const firstVideoSrc = videoList
                     .filter((e) => !e.innerText.includes('置顶'))[0]
                     .querySelector('a').href;
@@ -244,15 +248,17 @@ const feature_searchUsers = async function (params = {}) {
                   const thirdVideoSrc = videoList
                     .filter((e) => !e.innerText.includes('置顶'))[2]
                     .querySelector('a').href;
-                  const age = (document.querySelector('.N4QS6RJT') || {})
-                    .innerText;
-                  const gender = document.querySelector('.N4QS6RJT').innerText;
-                  if (!gender && userType === 'business') return false;
+                  const gender = (age = (
+                    document.querySelector('.N4QS6RJT') || {}
+                  ).innerText||'');
+                  if (gender.includes('男')) return { errMsg: '男，不考虑' };
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
                   ].map((v) => StringToNumFun.eval(v.innerText));
-                  if (fans > 550 && userType === 'consumer') return false;
-                  if (like > 1050 && userType === 'consumer') return false;
+                  if (fans > 550 && userType === 'consumer')
+                    return { errMsg: '消费粉粉丝数大于550，不考虑' };
+                  if (like > 1050 && userType === 'consumer')
+                    return { errMsg: '消费粉点赞数大于1050，不考虑' };
                   return {
                     gender,
                     age,
@@ -269,7 +275,7 @@ const feature_searchUsers = async function (params = {}) {
                 STRINGNUM,
               );
               if (userInfo) {
-                comment.userInfo = userInfo;
+                Object.assign(comment, userInfo);
               }
               videoPage.close();
             } catch (error) {
@@ -278,7 +284,9 @@ const feature_searchUsers = async function (params = {}) {
             }
           }, commentList);
           if (commentList) {
-            item.commentList = commentList.filter((v) => v.userInfo);
+            item.commentList = commentList.filter(
+              (v) => v.videoTitles.length > 0 && !v.errMsg,
+            );
           }
           item.src = src;
           item.user = user;

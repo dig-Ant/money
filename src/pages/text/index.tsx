@@ -115,19 +115,19 @@ export default function searchUser() {
       dataIndex: 'userName',
       width: 60,
       render: (val, render: any) => {
-        const { userInfo } = render;
+        const { gender, fans, age, like } = render;
         return (
           <div>
-            <a href={render?.userLink}>{val}</a>-性别{userInfo?.gender}-
-            {userInfo?.age}-粉丝{userInfo?.fans}个-获
-            {userInfo?.like}赞
+            <a href={render?.userLink}>{val}</a>-性别{gender}-{age}-粉丝{fans}
+            个-获
+            {like}赞
           </div>
         );
       },
     },
     {
       title: '第一条视频',
-      dataIndex: 'userInfo',
+      dataIndex: 'firstVideoSrc',
       width: 350,
       render: (val, record) => {
         const { videoTitles = [], firstVideoSrc } = val || {};
@@ -212,7 +212,7 @@ export default function searchUser() {
             type="primary"
             onClick={() => {
               console.log(list);
-              
+
               copy(JSON.stringify(list.map((e: any) => e.title)));
             }}
           >
