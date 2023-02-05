@@ -41,8 +41,12 @@ const liveUrlList = [
     url: 'https://live.douyin.com/706461293346',
   },
   {
-    title: '倪先生之昭昭美甲DIY配饰 https://v.douyin.com/BBUGF5B/',
+    title: '倪先生之昭昭美甲DIY配饰 ',
     url: 'https://live.douyin.com/115093247972',
+  },
+  {
+    title: '兔哥设计穿戴甲',
+    url: 'https://live.douyin.com/558822492122',
   },
 ];
 
