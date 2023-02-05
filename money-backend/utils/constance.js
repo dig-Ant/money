@@ -81,7 +81,7 @@ module.exports = {
     if (commenti2 >= comments.length) {
       commenti2 = commenti2 % comments.length;
     }
-    console.log(commenti1+'-222-'+comments[commenti2]);
+    console.log(commenti2+'-222-'+comments[commenti2]);
     return comments[commenti2];
   },
 };

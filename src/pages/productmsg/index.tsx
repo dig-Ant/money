@@ -108,46 +108,9 @@ export default function HomePage() {
         <Form.Item name="url" label="link">
           <Input />
         </Form.Item>
-
-        {/* <Form.Item name="filter" label="包含文字筛选">
-          <Input />
-        </Form.Item> */}
-
-        <Form.Item name="downloadFilename" label="文件夹名">
-          <Input />
-        </Form.Item>
-
-        <Form.Item name="limitStart" label="start">
-          <Input style={{ width: '45px' }} />
-        </Form.Item>
-        <Form.Item name="limitEnd" label="end">
-          <Input style={{ width: '45px' }} />
-        </Form.Item>
-        <Form.Item
-          label="类型"
-          name="type"
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 20 }}
-        >
-          <Radio.Group>
-            <Radio.Button value="favorite_collection">收藏</Radio.Button>
-            <Radio.Button value="like">喜欢</Radio.Button>
-            <Radio.Button value="post">作品</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             提交
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button
-            htmlType="button"
-            onClick={() => {
-              form.resetFields();
-            }}
-          >
-            重置
           </Button>
         </Form.Item>
       </Form>

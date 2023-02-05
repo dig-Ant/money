@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_LIVE_USERS, GET_DY_LIVE_USERLIST } from '@/utils/api';
-import { copy, transformUrl } from '@/utils/common';
+import { copy, transformUrl, liveUrl } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -232,6 +232,7 @@ export default function searchUser() {
       type: 'live',
     });
   };
+  const { url, title } = liveUrl(2);
   return (
     <div>
       <Form
@@ -240,7 +241,8 @@ export default function searchUser() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
-          url: 'https://live.douyin.com/896737105098?room_id=7196446024209140517',
+          url,
+          title,
           // url: 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
           isLogin: false,
           type: 'like',

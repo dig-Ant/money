@@ -23,6 +23,27 @@ export function transformUrl(values: Object) {
   }
   return url;
 }
+const liveUrlList = [
+  {
+    title: '佛山市南海区幻月蓝化妆品店',
+    url: 'https://live.douyin.com/877401283807',
+  },
+  {
+    title: '北大满哥-早6：50直播',
+    url: 'https://live.douyin.com/896737105098',
+  },
+  {
+    title: '睿文同学加油',
+    url: 'https://live.douyin.com/455397898090',
+  },
+];
+
+// 9- #在抖音，记录美好生活#【歌霓丝服饰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/BkSBbc1/
+// 生活#【长沙甜甜园长呀🥰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/Bk94pCH/ https://live.douyin.com/216666217971?room_id=7196290829210618624
+// url = 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
+export function liveUrl(i: number) {
+  return liveUrlList[i];
+}
 // export default {
 //   copy,
 // };

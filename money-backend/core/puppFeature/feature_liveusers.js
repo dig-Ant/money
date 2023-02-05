@@ -3,21 +3,21 @@ const qs = require('qs');
 const { limitExec } = require('../../utils/common');
 const fs = require('fs');
 const moment = require('moment');
+
+const Datastore = require('nedb');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const {
   GET_COMMENT1,
   GET_COMMENT2,
   INIT_VIEWPORT,
-  STRINGNUM,
 } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_liveusers = async function (params = {}) {
   const {
-    // 9- #在抖音，记录美好生活#【歌霓丝服饰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/BkSBbc1/
-    // 生活#【长沙甜甜园长呀🥰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/Bk94pCH/ https://live.douyin.com/216666217971?room_id=7196290829210618624
-    url = 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
+    url,
+    title,
     limitLen = 1,
     commentLimitLen = 100,
     type = '',
@@ -29,7 +29,7 @@ const feature_liveusers = async function (params = {}) {
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
-  await page.setViewport({ width: 780, height: 1000 });
+  await page.setViewport({ width: 980, height: 1000 });
   //   await page.setViewport(INIT_VIEWPORT);
   try {
     await page.goto(url);
@@ -50,31 +50,34 @@ const feature_liveusers = async function (params = {}) {
     await page.evaluate(async () => {
       document
         .querySelector('.hWQYk3Pc')
-        .scrollBy({ left: 0, top: 1 * window.innerHeight });
+        .scrollBy({ left: 0, top: 0.7 * window.innerHeight });
     });
     await delay(2000);
-    let { x, y, userListLen } = await page.evaluate(async () => {
+    let { x, y } = await page.evaluate(async () => {
       const rect = document.querySelector('.k3ybpzRL').getBoundingClientRect();
-      let userListLen =
-        document.querySelector('[data-e2e="live-room-audience"]').innerText - 0;
+      //   let userListLen =
+      //     document.querySelector('[data-e2e="live-room-audience"]').innerText - 0;
       console.log('rect: ', rect);
-      console.log('userListLen: ', userListLen);
+      //   console.log('userListLen: ', userListLen);
 
-      document.querySelector('.webcast-chatroom').style.height = 0;
-      return { x: rect.x, y: rect.y, userListLen };
+      //   document.querySelector('.webcast-chatroom').style.height = 0;
+      // debugger
+      return { x: rect.x, y: rect.y };
     });
     console.log(' x, y : ', x, y);
-    let index = 4;
+    let index = 1;
     let commentList = [];
+    // while开始
     while (index <= 100) {
       try {
         await page.evaluate(async () => {
-          document.querySelector('.webcast-chatroom').style.height = 0;
+          //   document.querySelector('.webcast-chatroom').style.height = 0;
         });
-        await page.mouse.move(x + 27, y + 43 + 48 * 3);
+        // 1.鼠标移动到用户列表区域
+        await page.mouse.move(x + 27, y + 43);
         await page.mouse.wheel({ deltaY: 48 });
         await delay(200);
-
+        // 2.点击用户，获取用户名、关注、粉丝的信息
         await page.click(
           '#audiencePanelScrollId >.lazyload-wrapper:nth-child(' + index + ')',
         );
@@ -104,27 +107,29 @@ const feature_liveusers = async function (params = {}) {
           other2,
           other1,
         );
+        // 3.基本信息符合的，点进主页
         if (guanzhu < 1000 && fans < 500 && name !== '琴琴好物') {
           await page.waitForSelector('#portal .SllfYJTY button:nth-child(2)');
           await page.click('#portal .SllfYJTY button:nth-child(2)');
           await delay(1000);
+          // 4.再点一次隐藏弹框
           await page.click(
             '#audiencePanelScrollId >.lazyload-wrapper:nth-child(' +
               index +
               ')',
           );
           await delay(1000);
-          userListLen = await page.evaluate(async () => {
-            var list = document.querySelector('.k3ybpzRL').children;
-            return list.length;
-          });
-          console.log('userListLen: ', userListLen);
+          //   userListLen = await page.evaluate(async () => {
+          //     var list = document.querySelector('.k3ybpzRL').children;
+          //     return list.length;
+          //   });
+          //   console.log('userListLen: ', userListLen);
           // console.log(await browser.pages());
-          let pages = await browser.pages();
-          let url = await pages[2].url();
+          // 5.获取主页视频信息
+          const pages = await browser.pages();
           const videoPage = pages[2];
           await videoPage.waitForSelector('.Nu66P_ba');
-          const userInfo = await videoPage.evaluate(async (STRINGNUM) => {
+          const userInfo = await videoPage.evaluate(async () => {
             let videoList = [
               ...(
                 document.querySelector(
@@ -158,19 +163,40 @@ const feature_liveusers = async function (params = {}) {
               thirdVideoSrc,
             };
           });
-          await pages[2].close();
-          const urlItem = {
-            url,
-            name,
-            guanzhu,
-            fans,
-            desc: other2,
-            other1,
-            ...userInfo,
-          };
-          commentList.push(urlItem);
-          console.log(urlItem);
-          console.log(index);
+          // 6.如果主页有视频，保存url等信息
+          if (userInfo.videoTitles&&userInfo.videoTitles.length > 0) {
+            let url = await videoPage.url();
+            const urlItem = {
+              url,
+              name,
+              guanzhu,
+              fans,
+              desc: other2,
+              other1,
+              ...userInfo,
+            };
+            commentList.push(urlItem);
+            if (commentList.length % 10 == 2) {
+              const db = new Datastore({
+                filename: path.resolve(__dirname, '../../db/liveUsers.json'),
+                autoload: true,
+                timestampData: true,
+              });
+              db.insert({ commentList, title, url }, (err, docs) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
+            }
+            console.log(urlItem);
+            console.log(index);
+          } else {
+            console.log(`第--${index}--个用户--${name}--的主页没有视频`);
+          }
+          // 7.关闭用户主页
+          await videoPage.close();
+        } else {
+          console.log(`第--${index}--个用户--${name}--数据不符合`);
         }
 
         index++;
@@ -179,6 +205,7 @@ const feature_liveusers = async function (params = {}) {
         console.log('error: ', error);
       }
     }
+    // while结束
     console.log('commentList', commentList);
     // page.click('#portal .SllfYJTY button:nth-child(2)');
     // page.click('#portal .erb1HJvb');
@@ -187,7 +214,7 @@ const feature_liveusers = async function (params = {}) {
     // let value = newPage.url(); //获取新页面的链接
 
     await browser.close();
-    return { commentList, live: '', url };
+    return { commentList, title, url };
   } catch (error) {
     console.log('error: ', error);
     // await browser.close();
