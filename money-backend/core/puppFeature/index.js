@@ -11,11 +11,13 @@ const { delay, getToday } = require('../../utils/index');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 // 自动批量导入puppFeature文件夹下的文件
-var allFeature = {}
-const puppFeatureList = fs.readdirSync(path.resolve(__dirname, "../puppFeature"))
+var allFeature = {};
+const puppFeatureList = fs.readdirSync(
+  path.resolve(__dirname, '../puppFeature'),
+);
 puppFeatureList.forEach((filename) => {
-  if (filename.includes(".") && !["index.js"].includes(filename)) {
-    allFeature[filename.split(".")[0]] = require(`../puppFeature/${filename}`);
+  if (filename.includes('.') && !['index.js', '.DS_Store'].includes(filename)) {
+    allFeature[filename.split('.')[0]] = require(`../puppFeature/${filename}`);
   }
 });
 
@@ -24,7 +26,6 @@ puppFeatureList.forEach((filename) => {
 //   { arrayFormat: 'repeat', addQueryPrefix: true },
 // );
 // let queryObj = qs.parse(query, { arrayFormat: 'repeat' , ignoreQueryPrefix: true });
-
 
 // 登录
 const feature_login = async function () {
@@ -61,14 +62,10 @@ const feature_logout = async function () {
   }
 };
 
-
-
-
-
 const features = {
   feature_login,
   feature_logout,
-  ...allFeature
+  ...allFeature,
 };
 // TODO
 // 作品
