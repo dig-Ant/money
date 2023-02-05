@@ -40,6 +40,10 @@ const liveUrlList = [
     title: '【依蝶美甲】https://v.douyin.com/BBUGF5B/',
     url: 'https://live.douyin.com/706461293346',
   },
+  {
+    title: '倪先生之昭昭美甲DIY配饰 https://v.douyin.com/BBUGF5B/',
+    url: 'https://live.douyin.com/115093247972',
+  },
 ];
 
 // 9- #在抖音，记录美好生活#【歌霓丝服饰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/BkSBbc1/
