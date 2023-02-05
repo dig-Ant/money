@@ -41,6 +41,14 @@ const liveUrlList = [
     url: 'https://live.douyin.com/706461293346',
   },
   {
+    title: '壹心美甲工作室',
+    url: 'https://live.douyin.com/297233999915',
+  },
+  {
+    title: '兔哥设计穿戴甲',
+    url: 'https://live.douyin.com/558822492122',
+  },
+  {
     title: '倪先生之昭昭美甲DIY配饰 https://v.douyin.com/BBUGF5B/',
     url: 'https://live.douyin.com/115093247972',
   },
