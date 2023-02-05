@@ -36,6 +36,10 @@ const liveUrlList = [
     title: '睿文同学加油',
     url: 'https://live.douyin.com/455397898090',
   },
+  {
+    title: '【依蝶美甲】https://v.douyin.com/BBUGF5B/',
+    url: 'https://live.douyin.com/706461293346',
+  },
 ];
 
 // 9- #在抖音，记录美好生活#【歌霓丝服饰】正在直播，来和我一起支持Ta吧。复制下方链接，打开【抖音】，直接观看直播！ https://v.douyin.com/BkSBbc1/
