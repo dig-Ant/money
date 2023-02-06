@@ -248,9 +248,9 @@ const feature_searchUsers = async function (params = {}) {
                   const thirdVideoSrc = videoList
                     .filter((e) => !e.innerText.includes('置顶'))[2]
                     .querySelector('a').href;
-                  const gender = (age = (
-                    document.querySelector('.N4QS6RJT') || {}
-                  ).innerText||'');
+                  const gender = (age =
+                    (document.querySelector('.N4QS6RJT') || {}).innerText ||
+                    '');
                   if (gender.includes('男')) return { errMsg: '男，不考虑' };
                   const [follow, fans, like] = [
                     ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
@@ -285,7 +285,7 @@ const feature_searchUsers = async function (params = {}) {
           }, commentList);
           if (commentList) {
             item.commentList = commentList.filter(
-              (v) => v.videoTitles.length > 0 && !v.errMsg,
+              (v) => v.videoTitles && v.videoTitles.length > 0 && !v.errMsg,
             );
           }
           item.src = src;
