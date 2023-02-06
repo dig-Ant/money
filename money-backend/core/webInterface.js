@@ -186,10 +186,13 @@ class WebInterface {
         timestampData: true,
       });
       const body = req.body;
-      const { page = 1, pageSize = 10 } = body || {};
+      const { page = 1, pageSize = 10, userType = 'consumer' } = body || {};
       const start = Math.floor((Number(page) - 1) * Number(pageSize));
       const end = Math.floor(start + Number(pageSize));
-      db.find({})
+
+      db.find({
+        userType,
+      })
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {

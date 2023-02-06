@@ -20,7 +20,7 @@ import { copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
-
+const userType = 'aged';
 const layout = {
   labelCol: { span: 10 },
   wrapperCol: { span: 14 },
@@ -92,7 +92,7 @@ export default function searchUser() {
     },
   );
   useEffect(() => {
-    listRun({});
+    listRun({ userType });
   }, []);
 
   const columns: ColumnsType<DataType> = [
@@ -128,7 +128,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'agedPage/batchLike',
-                  payload: { userType: 'aged', _id },
+                  payload: { userType, _id },
                 });
               }}
             >
@@ -177,22 +177,22 @@ export default function searchUser() {
       title: '性别',
       dataIndex: 'gender',
       width: 25,
-      render: (val) => {
-        let gender = '';
-        if (val && val.includes('男')) gender = '男';
-        if (val && val.includes('女')) gender = '女';
-        return <div>{gender}</div>;
-      },
+      // render: (val) => {
+      //   let gender = '';
+      //   if (val && val.includes('男')) gender = '男';
+      //   if (val && val.includes('女')) gender = '女';
+      //   return <div>{gender}</div>;
+      // },
     },
     {
       title: '年龄',
       dataIndex: 'age',
       width: 25,
-      render: (val) => {
-        return (
-          <div>{val.replace('男', '').replace('女', '').replace('岁', '')}</div>
-        );
-      },
+      // render: (val) => {
+      //   return (
+      //     <div>{val.replace('男', '').replace('女', '').replace('岁', '')}</div>
+      //   );
+      // },
     },
     {
       title: '粉丝-赞',
@@ -213,7 +213,7 @@ export default function searchUser() {
       width: 350,
       render: (val, record: any) => {
         const { videoTitles = [], firstVideoSrc } = record || {};
-        const text = videoTitles[0].split('\n').slice(-1)[0] || '';
+        const text = (videoTitles[0] || '').split('\n').slice(-1)[0] || '';
         const textList = text.split(/[#|\s]/);
         return (
           <Space>
@@ -251,11 +251,17 @@ export default function searchUser() {
       },
     },
   ];
-  const { list = [], total, pageSize, page } = listData;
+  let { list = [], total, pageSize, page } = listData;
+  list = list.map((e: any) => {
+    e.commentList = e.commentList.filter((e: any) => {
+      return e.age && e.age.replace('岁', '') - 0 < 40;
+    });
+    return e;
+  });
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userType: 'aged' });
+    run({ ...values, userType });
   };
   return (
     <div>
@@ -295,7 +301,7 @@ export default function searchUser() {
             type="primary"
             onClick={() => {
               form.validateFields().then((value) => {
-                listRun({});
+                listRun({ userType });
               });
             }}
           >

@@ -20,7 +20,7 @@ import { copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
-
+const userType = 'business';
 const layout = {
   labelCol: { span: 10 },
   wrapperCol: { span: 14 },
@@ -128,7 +128,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'businessPage/batchLike',
-                  payload: { userType: 'business', _id },
+                  payload: { userType, _id },
                 });
               }}
             >
@@ -138,7 +138,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'businessPage/getVideoMsg',
-                  payload: { userType: 'business', _id },
+                  payload: { userType, _id },
                 });
               }}
             >
@@ -257,11 +257,19 @@ export default function searchUser() {
       },
     },
   ];
-  const { list = [], total, pageSize, page } = listData;
+  let { list = [], total, pageSize, page } = listData;
+  list = list
+    .filter((e: any) => e.commentLimitLen && e.commentLimitLen.length > 0)
+    .map((e: any) => {
+      e.commentList = e.commentList.filter((e: any) => {
+        return e.age && e.age.replace('岁', '') - 0 < 40;
+      });
+      return e;
+    });
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userType: 'business' });
+    run({ ...values, userType });
   };
   return (
     <div>
@@ -302,7 +310,7 @@ export default function searchUser() {
             type="primary"
             onClick={() => {
               form.validateFields().then((value) => {
-                listRun({});
+                listRun({ userType });
               });
             }}
           >
