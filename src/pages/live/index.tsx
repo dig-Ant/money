@@ -117,6 +117,10 @@ export default function searchUser() {
       },
     },
     {
+      title: '_id',
+      dataIndex: '_id',
+    },
+    {
       title: 'action',
       // key: 'action',
       // fixed: 'right',
@@ -155,7 +159,7 @@ export default function searchUser() {
     },
     {
       title: 'createdAt',
-      dataIndex: 'createdAt',
+      dataIndex: 'createdAt', //val//
       render: (val) => moment(val).format('YYYY-MM-DD HH:mm:ss').slice(5, 16),
     },
   ];
@@ -182,41 +186,45 @@ export default function searchUser() {
       width: 350,
       render: (val, record: any) => {
         const { videoTitles = [], firstVideoSrc } = record || {};
-        const text = videoTitles[0].split('\n').slice(-1)[0] || '';
-        const textList = text.split(/[#|\s]/);
-        return (
-          <Space>
-            <a href={firstVideoSrc} target="_blank">
-              link
-            </a>
-            <Button
-              type="link"
-              onClick={() => {
-                copy(textList.join(''));
-                window.open(location.origin + '/search?v=' + textList.join(''));
-              }}
-            >
-              total
-            </Button>
-            {/* {text} */}
-            {textList.map((e: string, i: number) => {
-              return (
-                <Button
-                  type="link"
-                  size="small"
-                  style={{ padding: 0 }}
-                  key={i}
-                  onClick={() => {
-                    copy(e);
-                    window.open(location.origin + '/search?v=' + e);
-                  }}
-                >
-                  {e}
-                </Button>
-              );
-            })}
-          </Space>
-        );
+        if (videoTitles && videoTitles.length > 0) {
+          const text = videoTitles[0].split('\n').slice(-1)[0] || '';
+          const textList = text.split(/[#|\s]/);
+          return (
+            <Space>
+              <a href={firstVideoSrc} target="_blank">
+                link
+              </a>
+              <Button
+                type="link"
+                onClick={() => {
+                  copy(textList.join(''));
+                  window.open(
+                    location.origin + '/search?v=' + textList.join(''),
+                  );
+                }}
+              >
+                total
+              </Button>
+              {/* {text} */}
+              {textList.map((e: string, i: number) => {
+                return (
+                  <Button
+                    type="link"
+                    size="small"
+                    style={{ padding: 0 }}
+                    key={i}
+                    onClick={() => {
+                      copy(e);
+                      window.open(location.origin + '/search?v=' + e);
+                    }}
+                  >
+                    {e}
+                  </Button>
+                );
+              })}
+            </Space>
+          );
+        }
       },
     },
   ];
@@ -251,6 +259,11 @@ export default function searchUser() {
         }}
         colon={false}
       >
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            获取
+          </Button>
+        </Form.Item>
         <Form.Item name="url">
           <Input placeholder="link" />
         </Form.Item>
@@ -264,11 +277,6 @@ export default function searchUser() {
             }}
           >
             查询
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            获取
           </Button>
         </Form.Item>
       </Form>

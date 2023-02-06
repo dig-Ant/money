@@ -163,9 +163,11 @@ const feature_liveusers = async function (params = {}) {
               thirdVideoSrc,
             };
           });
+          // 6.主页url去重
+          const url = await videoPage.url();
+          if (commentList.find((e) => e.url === url)) return;
           // 6.如果主页有视频，保存url等信息
-          if (userInfo.videoTitles&&userInfo.videoTitles.length > 0) {
-            let url = await videoPage.url();
+          if (userInfo.videoTitles && userInfo.videoTitles.length > 0) {
             const urlItem = {
               url,
               name,

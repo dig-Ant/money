@@ -1,4 +1,8 @@
-const { GET_COMMENT1, GET_COMMENT2 } = require('../../utils/constance');
+const {
+  GET_COMMENT1,
+  GET_COMMENT2,
+  COMMENT_LIST_SELECTOR,
+} = require('../../utils/constance');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
 
@@ -55,6 +59,39 @@ const feature_userLike = async function (params) {
           await newPage.goto(secondVideoSrc);
           // 检测到有视频为止
           await newPage.waitForSelector('.xg-video-container video source');
+
+          // 获取评论区用户的信息
+          let { hasQin } = await videoPage.evaluate(
+            async (COMMENT_LIST_SELECTOR) => {
+              let commentList = [
+                ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+              ];
+              while (
+                commentList.length < commentLimitLen &&
+                !commentList.at(-1).innerText.includes('没有')
+              ) {
+                window.scrollBy({ left: 0, top: 2 * window.innerHeight });
+                await new Promise((res) => setTimeout(() => res(), 600));
+                commentList = [
+                  ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+                ];
+              }
+              commentList.splice(-1, 1);
+              hasQin = commentList.find((el) => {
+                const userInfoEl = el.querySelector('div:nth-child(2)');
+                if (!userInfoEl) return false;
+                const isQin =
+                  userInfoEl.querySelector('a').innerText == '琴琴好物';
+                return isQin;
+              });
+              return hasQin;
+            },
+            VIDEO_SRC_SELECTOR,
+            USER_INFO_LIST_SELECTOR,
+            COMMENT_LIST_SELECTOR,
+            commentLimitLen,
+            STRINGNUM,
+          );
           //类名 点赞kr4MM4DQ 有红心的NILc2fGS
           await newPage.click('.kr4MM4DQ:nth-child(1):not(.NILc2fGS)');
           await delay(3000);
