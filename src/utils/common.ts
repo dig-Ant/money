@@ -41,6 +41,10 @@ const liveUrlList = [
     url: 'https://live.douyin.com/706461293346',
   },
   {
+    title: '珍好物',
+    url: 'https://live.douyin.com/634068884032',
+  },
+  {
     title: '壹心美甲工作室',
     url: 'https://live.douyin.com/297233999915',
   },

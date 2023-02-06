@@ -167,7 +167,7 @@ export default function searchUser() {
   const commentCols: ColumnsType<DataType> = [
     {
       title: '用户名',
-      dataIndex: 'userName',
+      dataIndex: 'name',
       width: 25,
     },
     {
@@ -187,7 +187,9 @@ export default function searchUser() {
       width: 25,
       render: (val) => {
         return (
-          <div>{val.replace('男', '').replace('女', '').replace('岁', '')}</div>
+          <div>
+            {(val || '').replace('男', '').replace('女', '').replace('岁', '')}
+          </div>
         );
       },
     },
@@ -264,7 +266,7 @@ export default function searchUser() {
       type: 'live',
     });
   };
-  const { url, title } = liveUrl(4);
+  const { url, title } = liveUrl(0);
   return (
     <div>
       <Form
@@ -290,6 +292,9 @@ export default function searchUser() {
         </Form.Item>
         <Form.Item name="url">
           <Input placeholder="link" />
+        </Form.Item>
+        <Form.Item name="title">
+          <Input placeholder="title" />
         </Form.Item>
         <Form.Item>
           <Button

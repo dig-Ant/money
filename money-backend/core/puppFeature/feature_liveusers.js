@@ -11,6 +11,7 @@ const {
   GET_COMMENT1,
   GET_COMMENT2,
   INIT_VIEWPORT,
+  IS_BUSINESS_USER,
 } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
@@ -108,7 +109,12 @@ const feature_liveusers = async function (params = {}) {
           other1,
         );
         // 3.基本信息符合的，点进主页
-        if (guanzhu < 1000 && fans < 500 && name !== '琴琴好物') {
+        if (
+          guanzhu < 1000 &&
+          fans < 500 &&
+          name !== '琴琴好物' &&
+          !IS_BUSINESS_USER(name)
+        ) {
           await page.waitForSelector('#portal .SllfYJTY button:nth-child(2)');
           await page.click('#portal .SllfYJTY button:nth-child(2)');
           await delay(1000);
