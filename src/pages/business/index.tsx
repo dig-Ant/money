@@ -92,7 +92,7 @@ export default function searchUser() {
     },
   );
   useEffect(() => {
-    listRun({});
+    listRun({ userType });
   }, []);
 
   const columns: ColumnsType<DataType> = [
@@ -259,7 +259,7 @@ export default function searchUser() {
   ];
   let { list = [], total, pageSize, page } = listData;
   list = list
-    .filter((e: any) => e.commentLimitLen && e.commentLimitLen.length > 0)
+    .filter((e: any) => e.commentList && e.commentList.length > 0)
     .map((e: any) => {
       e.commentList = e.commentList.filter((e: any) => {
         return e.age && e.age.replace('岁', '') - 0 < 40;

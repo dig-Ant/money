@@ -3,7 +3,7 @@ const { delay, getToday } = require('../../utils/index');
 
 // TODO 搜索列表功能
 const feature_search = async function (params = {}) {
-  const { keyword, limitLen, isLogin = false } = params;
+  const { keyword, limitLen, isLogin = true } = params;
   if (!keyword) {
     throw new Error('keyword 搜索关键字 必填');
   }
