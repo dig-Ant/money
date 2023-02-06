@@ -157,6 +157,10 @@ export default function searchUser() {
       },
     },
     {
+      title: '_id',
+      dataIndex: '_id',
+    },
+    {
       title: 'createdAt',
       dataIndex: 'createdAt',
       render: (val) => moment(val).format('YYYY-MM-DD HH:mm:ss').slice(5, 16),
@@ -167,14 +171,38 @@ export default function searchUser() {
     {
       title: '用户名',
       dataIndex: 'userName',
-      width: 60,
+      width: 25,
+    },
+    {
+      title: '性别',
+      dataIndex: 'gender',
+      width: 25,
+      render: (val) => {
+        let gender = '';
+        if (val && val.includes('男')) gender = '男';
+        if (val && val.includes('女')) gender = '女';
+        return <div>{gender}</div>;
+      },
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+      width: 25,
+      render: (val) => {
+        return (
+          <div>{val.replace('男', '').replace('女', '').replace('岁', '')}</div>
+        );
+      },
+    },
+    {
+      title: '粉丝-赞',
+      dataIndex: 'userName',
+      width: 55,
       render: (val, render: any) => {
         const { gender, fans, age, like } = render;
         return (
           <div>
-            <a href={render?.userLink}>{val}</a>-性别{gender}-{age}-粉丝{fans}
-            个-获
-            {like}赞
+            粉丝{fans}个，获{like}个赞
           </div>
         );
       },
