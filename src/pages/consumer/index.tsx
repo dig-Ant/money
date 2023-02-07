@@ -272,7 +272,7 @@ export default function searchUser() {
           isLogin: false,
           type: 'like',
           limitLen: 1,
-          commentLimitLen: 100,
+          commentLimitLen: 270,
         }}
         colon={false}
       >

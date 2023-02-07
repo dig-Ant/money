@@ -3,7 +3,20 @@
 // [V5][666][给力][红包][屎][发][我太难了][18禁][炸弹][去污粉][西瓜][加鸡腿][我酸了][握爪][太阳][月亮][给跪了][蕉绿][扎心][胡瓜][yyds][emo][打call][栓Q][无语][雪人][雪花][圣诞树][平安果][圣诞帽][气球][干杯][烟花][福][candy][糖葫芦][虎头][饺子][鞭炮][元宝][灯笼][锦鲤][汤圆][情书][iloveyou][戒指]
 // ',
 // #.+
-// const a = require('./weekily/周一.js');
-// const a = require('./weekily/周二');
-const weekily = require('./weekily');
-module.exports = [...weekily.可可爱爱文案, ...weekily.周二];
+module.exports = [
+  ' 与每天密谋邂逅 ༷ With the daily intrigue ༈ ',
+  ' 一些被打散的美丽时光 ༷ Some beautiful time scattered ༈ ',
+  ' 城市慷慨整夜光，如同少年不惧岁月长 ༷ The city glows all night like a young man unafraid of the years ༈ ',
+  //   ' 感受生活的慢节奏 ༷ Feel the slow pace of life ༈ ',
+  //   ' 逛街小片段 ༷ A short clip of shopping ༈ ',
+//   ' 爱上这季节的窗外 ༷ Fall in love with the season outside the window ༈ ',
+  ' 苦短甜长 ༷ The Sweet is short and the bitter is long ༈ ',
+  ' 好运加满100% ༷ 100% luck ༈',
+  ' 把温柔碾碎放入生活的缝隙中 ༷ Put the gentle crushing into the gaps of life ༈ ',
+//   ' 旅途中的美好 ༷ The beauty of the journey ༈ ',
+  ' 正在上岸，很慢，但很坚定 ༷ Coming ashore, slowly but surely ༈ ',
+//   ' 周末采购计划 ༷ Weekend purchasing plan ༈ ',
+  ' 记得要给生活加点甜哦 ༷ Remember to sweeten your life ༈ ',
+  ' 慢也好，步子小也好，是在往前走就行 ༷ Slow or small steps, it is in the forward line ༈ ',
+  ' 上班是为了下班的快乐 ༷  Going to work is for the pleasure of leaving work ༈',
+];

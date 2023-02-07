@@ -25,6 +25,10 @@ export function transformUrl(values: Object) {
 }
 const liveUrlList = [
   {
+    title: '乔乔好物',
+    url: 'https://live.douyin.com/147613255084',
+  },
+  {
     title: '佛山市南海区幻月蓝化妆品店',
     url: 'https://live.douyin.com/877401283807',
   },
@@ -55,10 +59,6 @@ const liveUrlList = [
   {
     title: '倪先生之昭昭美甲DIY配饰',
     url: 'https://live.douyin.com/115093247972',
-  },
-  {
-    title: '兔哥设计穿戴甲',
-    url: 'https://live.douyin.com/558822492122',
   },
 ];
 

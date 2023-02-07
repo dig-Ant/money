@@ -283,7 +283,7 @@ export default function searchUser() {
           type: 'like',
           limitLen: 1,
           // url: 'https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v',
-          commentLimitLen: 12,
+          commentLimitLen: 270,
         }}
         colon={false}
       >

@@ -181,9 +181,10 @@ export default function searchUser() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
+          url: 'https://www.douyin.com/user/MS4wLjABAAAAXceYJEb9XGH8zmgd8FSurkqWCZVeHRzycGB0LHmuiaP0ewYxT20MuOQBwXsw1soV/',
           isLogin: false,
-          type: 'like',
-          limitLen: 10,
+          type: 'post',
+          limitLen: 100,
           commentLimitLen: 100,
         }}
         colon={false}
@@ -198,13 +199,16 @@ export default function searchUser() {
         </Form.Item>
         <Form.Item name="type" label="条">
           <Radio.Group>
-            {/* <Radio.Button value="post">作品</Radio.Button> */}
+            <Radio.Button value="post">作品</Radio.Button>
             <Radio.Button value="like">喜欢</Radio.Button>
             <Radio.Button value="favorite_collection">收藏</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="commentLimitLen" label="的文案">
           {/* <Input style={{ width: '55px' }} /> */}
+        </Form.Item>
+        <Form.Item name="url" label="url">
+          <Input style={{ width: '55px' }} />
         </Form.Item>
 
         <Form.Item>
