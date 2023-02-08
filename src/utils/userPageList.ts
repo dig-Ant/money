@@ -1,5 +1,10 @@
 export const consumerUserPageList = [
   {
+    label: '白十七是志强',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
+  },
+  {
     label: '小盛夏👧🏼',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAr_FGd1QaMJdIM-BsZYb4xOPkGtYmUkW5av4ldq6bKK8',
@@ -44,42 +49,17 @@ export const consumerUserPageList = [
     value:
       'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
   },
-  {
-    label: '白十七是志强',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
-  },
 ];
 export const businessUserPageList = [
   {
-    label: '沐言开心酱',
+    label: '乔乔好物',
     value:
-      'https://www.douyin.com/user/MS4wLjABAAAA5HhsD-onh_O8HDqpra58UYvLz6tNKsFtlm1u5NyvFjpjkWyqeq36gbkyghG3OuVc',
+      'https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v',
   },
   {
-    label: '是个甜仔',
+    label: '云云好物',
     value:
-      'https://www.douyin.com/user/MS4wLjABAAAAAX6oWNDz8kvU5d97d1ODLNDPlPCPmiMKQiZQqjsl-3c',
-  },
-  {
-    label: '程十安',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAbxmiV504fzKsys2Fw9qzn2iJWJyzxVbk1mDzAnurQV8',
-  },
-  {
-    label: '饭饭麻麻菜菜',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAtjfh3enYvD4fxtuznB_zDEMdNEG332fD-qloHjlox3c',
-  },
-  {
-    label: '米迪爸爸',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
-  },
-  {
-    label: '白十七是志强',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
+      'https://www.douyin.com/user/MS4wLjABAAAA2i1AhWAcPVZX3j5uwmcCuNmCYx6XOkvC5FXJYZxHDr8',
   },
 ];
 export const agedUserPageList = [

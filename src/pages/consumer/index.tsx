@@ -247,9 +247,11 @@ export default function searchUser() {
   ];
   let { list = [], total, pageSize, page } = listData;
   list = list.map((e: any) => {
-    e.commentList = e.commentList.filter((e: any) => {
-      return e.age && e.age.replace('岁', '') - 0 < 40;
-    });
+    if (e.commentList) {
+      e.commentList = e.commentList.filter((e: any) => {
+        return e.age && e.age.replace('岁', '') - 0 < 40;
+      });
+    }
     return e;
   });
   console.log('list: ', list, listError);

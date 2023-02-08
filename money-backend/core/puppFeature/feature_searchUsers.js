@@ -87,7 +87,7 @@ const feature_searchUsers = async function (params = {}) {
               filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
             };
           })
-          .filter((e) => !e.title.includes('置顶'));
+          .filter((e) => !e.like.includes('置顶'));
         return eleList;
       },
       VIDEO_LIST_SELECTOR,
@@ -97,7 +97,6 @@ const feature_searchUsers = async function (params = {}) {
     );
     console.log('myFavorateVideos: ');
     console.log(myFavorateVideos);
-    return;
     await limitExec(async (item) => {
       const { href } = item;
       const videoPage = await browser.newPage();
