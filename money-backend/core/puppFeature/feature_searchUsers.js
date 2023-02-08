@@ -74,18 +74,20 @@ const feature_searchUsers = async function (params = {}) {
           }
           eleList = eleList.slice(0, limitLen);
         }
-        eleList = eleList.map((el) => {
-          const href = el.href;
-          const [like, title = ''] = el.innerText.split('\n\n');
-          return {
-            userType,
-            href,
-            like,
-            likeNum: StringToNumFun.eval(like),
-            title,
-            filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
-          };
-        });
+        eleList = eleList
+          .map((el) => {
+            const href = el.href;
+            const [like, title = ''] = el.innerText.split('\n\n');
+            return {
+              userType,
+              href,
+              like,
+              likeNum: StringToNumFun.eval(like),
+              title,
+              filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
+            };
+          })
+          .filter((e) => !e.title.includes('置顶'));
         return eleList;
       },
       VIDEO_LIST_SELECTOR,
@@ -93,9 +95,9 @@ const feature_searchUsers = async function (params = {}) {
       userType,
       STRINGNUM,
     );
-    // console.log('myFavorateVideos: ');
-    // console.log(myFavorateVideos);
-
+    console.log('myFavorateVideos: ');
+    console.log(myFavorateVideos);
+    return;
     await limitExec(async (item) => {
       const { href } = item;
       const videoPage = await browser.newPage();

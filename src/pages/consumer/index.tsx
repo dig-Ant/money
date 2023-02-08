@@ -9,6 +9,7 @@ import {
   Button,
   Input,
   InputNumber,
+  Select,
   message,
   notification,
   Radio,
@@ -16,7 +17,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
-import { copy } from '@/utils/common';
+import { consumerUserPageList, copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -281,6 +282,13 @@ export default function searchUser() {
             获取
           </Button>
         </Form.Item>
+        <Form.Item name="url" label="link">
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            options={consumerUserPageList}
+          />
+        </Form.Item>
         <Form.Item label="前" name="limitLen">
           <Input style={{ width: '42px' }} />
         </Form.Item>
@@ -316,9 +324,6 @@ export default function searchUser() {
             重置
           </Button>
         </Form.Item> */}
-        <Form.Item name="url" label="link">
-          <Input />
-        </Form.Item>
 
         {/* <Form.Item name="filter" label="包含文字筛选">
           <Input />

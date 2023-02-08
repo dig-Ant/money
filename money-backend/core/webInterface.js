@@ -165,8 +165,9 @@ class WebInterface {
     app.post('/v1/getDyUsers', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
+      const { userType } = body;
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/userComment.json'),
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
         timestampData: true,
       });
@@ -180,13 +181,13 @@ class WebInterface {
     // 搜索目标用户
     app.post('/v1/getDyUsersList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { page = 1, pageSize = 10, userType = 'consumer' } = body || {};
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/userComment.json'),
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
         timestampData: true,
       });
-      const body = req.body;
-      const { page = 1, pageSize = 10, userType = 'consumer' } = body || {};
       const start = Math.floor((Number(page) - 1) * Number(pageSize));
       const end = Math.floor(start + Number(pageSize));
 
@@ -222,7 +223,7 @@ class WebInterface {
       const body = req.body;
       const list = await this.pupp.start('feature_liveusers', body);
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/liveUsers.json'),
+        filename: path.resolve(__dirname, '../db/liveUser.json'),
         autoload: true,
         timestampData: true,
       });
@@ -238,7 +239,7 @@ class WebInterface {
     app.post('/v1/getDyLiveUserList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/liveUsers.json'),
+        filename: path.resolve(__dirname, '../db/liveUser.json'),
         autoload: true,
         timestampData: true,
       });
@@ -284,10 +285,9 @@ class WebInterface {
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const { _id, userType, type } = body || {};
-      const dbType = type == 'live' ? 'liveUsers' : 'userComment';
+      const { _id, userType } = body || {};
       const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${dbType}.json`),
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
         timestampData: true,
       });
@@ -299,7 +299,7 @@ class WebInterface {
             errorMsg: err,
           });
         }
-        console.log(err);
+        console.log(docs);
         const { code } = await this.pupp.start('feature_userLike', {
           list: docs[0].commentList,
           userType,

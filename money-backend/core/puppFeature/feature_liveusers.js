@@ -186,7 +186,7 @@ const feature_liveusers = async function (params = {}) {
             commentList.push(urlItem);
             if (commentList.length % 10 == 2) {
               const db = new Datastore({
-                filename: path.resolve(__dirname, '../../db/liveUsers.json'),
+                filename: path.resolve(__dirname, '../../db/liveUser.json'),
                 autoload: true,
                 timestampData: true,
               });

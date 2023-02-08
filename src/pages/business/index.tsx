@@ -8,6 +8,7 @@ import {
   Form,
   Button,
   Input,
+  Select,
   InputNumber,
   message,
   notification,
@@ -16,7 +17,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
-import { copy } from '@/utils/common';
+import { businessUserPageList, copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -25,6 +26,7 @@ const layout = {
   labelCol: { span: 10 },
   wrapperCol: { span: 14 },
 };
+
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
@@ -328,7 +330,11 @@ export default function searchUser() {
           </Button>
         </Form.Item> */}
         <Form.Item name="url">
-          <Input placeholder="link" />
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            options={businessUserPageList}
+          />
         </Form.Item>
 
         {/* <Form.Item name="filter" label="包含文字筛选">

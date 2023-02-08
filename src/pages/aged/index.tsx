@@ -8,6 +8,7 @@ import {
   Form,
   Button,
   Input,
+  Select,
   InputNumber,
   message,
   notification,
@@ -16,7 +17,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
-import { copy } from '@/utils/common';
+import { agedUserPageList, copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -319,7 +320,11 @@ export default function searchUser() {
           </Button>
         </Form.Item> */}
         <Form.Item name="url" label="link">
-          <Input />
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            options={agedUserPageList}
+          />
         </Form.Item>
 
         {/* <Form.Item name="filter" label="包含文字筛选">

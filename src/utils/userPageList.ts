@@ -1,0 +1,129 @@
+export const consumerUserPageList = [
+  {
+    label: '小盛夏👧🏼',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAr_FGd1QaMJdIM-BsZYb4xOPkGtYmUkW5av4ldq6bKK8',
+  },
+  {
+    label: '爱做美甲的小鹿',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAoarhuIcVxPFcG7BeBtBss0Pe7QFsU1yVVxIFNGv8xUq70FOxWPGdaOA4PPvlub4Q',
+  },
+  {
+    label: '爱着黎明前',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAyG9KBIIFAdd4gGpM1A7oYcItQtp8cuORhnz1ahPJK89VdlS15GQgaD2YcUjb4t-6',
+  },
+  {
+    label: '爱着黎明前',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAyG9KBIIFAdd4gGpM1A7oYcItQtp8cuORhnz1ahPJK89VdlS15GQgaD2YcUjb4t-6',
+  },
+  {
+    label: '沐言开心酱',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA5HhsD-onh_O8HDqpra58UYvLz6tNKsFtlm1u5NyvFjpjkWyqeq36gbkyghG3OuVc',
+  },
+  {
+    label: '是个甜仔',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAAX6oWNDz8kvU5d97d1ODLNDPlPCPmiMKQiZQqjsl-3c',
+  },
+  {
+    label: '程十安',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAbxmiV504fzKsys2Fw9qzn2iJWJyzxVbk1mDzAnurQV8',
+  },
+  {
+    label: '饭饭麻麻菜菜',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAtjfh3enYvD4fxtuznB_zDEMdNEG332fD-qloHjlox3c',
+  },
+  {
+    label: '米迪爸爸',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
+  },
+  {
+    label: '白十七是志强',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
+  },
+];
+export const businessUserPageList = [
+  {
+    label: '沐言开心酱',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA5HhsD-onh_O8HDqpra58UYvLz6tNKsFtlm1u5NyvFjpjkWyqeq36gbkyghG3OuVc',
+  },
+  {
+    label: '是个甜仔',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAAX6oWNDz8kvU5d97d1ODLNDPlPCPmiMKQiZQqjsl-3c',
+  },
+  {
+    label: '程十安',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAbxmiV504fzKsys2Fw9qzn2iJWJyzxVbk1mDzAnurQV8',
+  },
+  {
+    label: '饭饭麻麻菜菜',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAtjfh3enYvD4fxtuznB_zDEMdNEG332fD-qloHjlox3c',
+  },
+  {
+    label: '米迪爸爸',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
+  },
+  {
+    label: '白十七是志强',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
+  },
+];
+export const agedUserPageList = [
+  {
+    label: '兰兰音乐',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA6mIvOmAFmzw7-3KxelgzEsBcAnvixrvMDg6wrXUg4fGIvUTpKEdRmDR_jrteAj3e',
+  },
+];
+export const liveUserPageList = [
+  {
+    label: '乔乔好物',
+    value: 'https://live.douyin.com/147613255084',
+  },
+  {
+    label: '佛山市南海区幻月蓝化妆品店',
+    value: 'https://live.douyin.com/877401283807',
+  },
+  {
+    label: '北大满哥-早6：50直播',
+    value: 'https://live.douyin.com/896737105098',
+  },
+  {
+    label: '睿文同学加油',
+    value: 'https://live.douyin.com/455397898090',
+  },
+  {
+    label: '依蝶美甲',
+    value: 'https://live.douyin.com/706461293346',
+  },
+  {
+    label: '珍好物',
+    value: 'https://live.douyin.com/634068884032',
+  },
+  {
+    label: '壹心美甲工作室',
+    value: 'https://live.douyin.com/297233999915',
+  },
+  {
+    label: '兔哥设计穿戴甲',
+    value: 'https://live.douyin.com/558822492122',
+  },
+  {
+    label: '倪先生之昭昭美甲DIY配饰',
+    value: 'https://live.douyin.com/115093247972',
+  },
+];

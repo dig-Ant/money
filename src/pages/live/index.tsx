@@ -5,6 +5,7 @@ import {
   Space,
   Table,
   Tag,
+  Select,
   Form,
   Button,
   Input,
@@ -16,7 +17,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_LIVE_USERS, GET_DY_LIVE_USERLIST } from '@/utils/api';
-import { copy, transformUrl, liveUrl } from '@/utils/common';
+import { copy, transformUrl, liveUrl, liveUserPageList } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
@@ -266,7 +267,6 @@ export default function searchUser() {
       type: 'live',
     });
   };
-  const { url, title } = liveUrl(0);
   return (
     <div>
       <Form
@@ -275,8 +275,6 @@ export default function searchUser() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
-          url,
-          title,
           // url: 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
           isLogin: false,
           type: 'like',
@@ -291,10 +289,11 @@ export default function searchUser() {
           </Button>
         </Form.Item>
         <Form.Item name="url">
-          <Input placeholder="link" />
-        </Form.Item>
-        <Form.Item name="title">
-          <Input placeholder="title" />
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            options={liveUserPageList}
+          />
         </Form.Item>
         <Form.Item>
           <Button
