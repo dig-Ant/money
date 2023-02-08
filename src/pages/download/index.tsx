@@ -100,7 +100,11 @@ export default function HomePage() {
         className={styles.filter}
         // size="small"
         onFinish={onFinish}
-        initialValues={{ type: 'favorite_collection' }}
+        initialValues={{
+          type: 'favorite_collection',
+          limitStart: 0,
+          limitEnd: 10,
+        }}
         // wrapperCol={{span: 0, offset: 0}}
         // labelCol={{ span: 0, offset: 0 }}
         colon={false}
