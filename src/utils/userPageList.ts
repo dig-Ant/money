@@ -68,6 +68,11 @@ export const agedUserPageList = [
     value:
       'https://www.douyin.com/user/MS4wLjABAAAA6mIvOmAFmzw7-3KxelgzEsBcAnvixrvMDg6wrXUg4fGIvUTpKEdRmDR_jrteAj3e',
   },
+  {
+    label: '周姐',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA6tn5qhmpIB2PaHhGUQxZN8at2dkw30cM_vwPAt61AAcrx6kMpfBmYHOHsxgaGop_',
+  },
 ];
 export const liveUserPageList = [
   {
