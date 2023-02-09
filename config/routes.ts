@@ -94,6 +94,14 @@ export default [
     },
     routes: [
       {
+        path: '/select/yunyun',
+        component: './download/index',
+        meta: {
+          icon: 'UserOutlined',
+          name: '云云选品',
+        },
+      },
+      {
         path: '/select/download',
         component: './download/index',
         meta: {

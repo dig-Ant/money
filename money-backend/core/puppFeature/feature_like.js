@@ -5,12 +5,16 @@ const fs = require('fs');
 const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
-const { GET_COMMENT1, GET_COMMENT2 } = require('../../utils/constance');
+const {
+  GET_COMMENT1,
+  GET_COMMENT2,
+  MY_USER_LINK,
+} = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_like = async function (params = {}) {
   const {
-    url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
+    url = MY_USER_LINK,
     limitLen = 1,
     commentLimitLen = 100,
     type = '',

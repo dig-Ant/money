@@ -89,7 +89,17 @@ class WebInterface {
         data: { list: dataSource },
       });
     });
-
+    // 获取下载抖音收藏列表
+    app.post('/v1/getDyYunyun', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const dataSource = await this.pupp.start('feature_yunyun', body);
+      res.send({
+        code: 0,
+        data: { list: dataSource },
+      });
+    });
+    
     // 获取账号作品信息
     app.post('/v1/getProductmsg', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');

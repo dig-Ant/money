@@ -299,7 +299,7 @@ const feature_searchUsers = async function (params = {}) {
         console.log('获取评论报错----', error);
       }
       videoPage.close();
-    }, myFavorateVideos);
+    }, myFavorateVideos.slice(0,2));
     const [_, partPath] = createDownloadPath(downloadFilename);
 
     fs.writeFileSync(

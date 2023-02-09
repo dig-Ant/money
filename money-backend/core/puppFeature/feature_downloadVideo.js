@@ -1,12 +1,18 @@
 const qs = require('qs');
 const { limitExec } = require('../../utils/common');
+const {
+  INIT_VIEWPORT,
+  STRINGNUM,
+  MY_USER_LINK,
+  VIDEO_LIST_SELECTOR,
+} = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 // TODO 抖音收藏列表下载抖音无损视频资源
 const feature_downloadVideo = async function (params) {
   const {
-    url = 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
+    url = MY_USER_LINK,
     limitStart,
     limitEnd,
     downloadFilename = '',
@@ -17,7 +23,7 @@ const feature_downloadVideo = async function (params) {
     launchKey: 'feature_downloadVideo',
   });
 
-  await page.setViewport({ width: 1080, height: 800 });
+  await page.setViewport(INIT_VIEWPORT);
 
   // 打开列表页
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
@@ -35,26 +41,14 @@ const feature_downloadVideo = async function (params) {
 
   try {
     // 获取列表数据
-    const resultsSelector =
-      '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
-    // const resultsSelector = '[data-e2e="scroll-list"] li a';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(VIDEO_LIST_SELECTOR);
 
     const dataSource = await page.evaluate(
-      async (resultsSelector, limitStart, limitEnd) => {
-        const stringToNum = (data, type = true) => {
-          let res = data;
-          if (type) {
-            if (res.includes('万')) {
-              const [num] = res.split('万');
-              return Number((+num * 10000).toFixed(0));
-            } else {
-              return Number(res);
-            }
-          }
-        };
+      async (VIDEO_LIST_SELECTOR, limitStart, limitEnd, STRINGNUM) => {
+        let StringToNum = new Function(STRINGNUM);
+        let StringToNumFun = new StringToNum();
 
-        let eleList = [...document.querySelectorAll(resultsSelector)];
+        let eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
         // 获取对应数量为止
         if (
           typeof limitStart !== 'undefined' &&
@@ -63,7 +57,7 @@ const feature_downloadVideo = async function (params) {
           while (eleList.length < limitEnd) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
-            eleList = [...document.querySelectorAll(resultsSelector)];
+            eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
           }
           eleList = eleList.slice(limitStart, limitEnd);
         }
@@ -73,21 +67,21 @@ const feature_downloadVideo = async function (params) {
           return {
             href,
             like,
-            likeNum: stringToNum(like),
+            likeNum: StringToNumFun.eval(like),
             title,
             // filename: `${like}-${title.split(' ')[0]}`,
           };
         });
         return eleList;
       },
-      resultsSelector,
+      VIDEO_LIST_SELECTOR,
       limitStart,
       limitEnd,
+      STRINGNUM,
     );
 
     // 按照点赞排序 高->低
-    dataSource
-    .sort((a, b) => {
+    dataSource.sort((a, b) => {
       return b.likeNum - a.likeNum;
     });
 
@@ -107,18 +101,9 @@ const feature_downloadVideo = async function (params) {
           //   return source.src;
           // });
           const { src, user, time } = await videoPage.evaluate(
-            (videoSelect, userSelect) => {
-              const stringToNum = (data, type = true) => {
-                let res = data;
-                if (type) {
-                  if (res.includes('万')) {
-                    const [num] = res.split('万');
-                    return Number((+num * 10000).toFixed(0));
-                  } else {
-                    return Number(res);
-                  }
-                }
-              };
+            (videoSelect, userSelect, STRINGNUM) => {
+              let StringToNum = new Function(STRINGNUM);
+              let StringToNumFun = new StringToNum();
               const videoSrc = document.querySelector(videoSelect).src;
               const time = document.querySelector('.aQoncqRg').innerText;
               const user = document.querySelector(userSelect);
@@ -134,7 +119,7 @@ const feature_downloadVideo = async function (params) {
                 user: {
                   fans,
                   like,
-                  likeNum: stringToNum(like),
+                  likeNum: StringToNumFun.eval(like),
                   src: userSrc,
                   name: userName,
                 },
@@ -142,6 +127,7 @@ const feature_downloadVideo = async function (params) {
             },
             videoSelect,
             userSelect,
+            STRINGNUM,
           );
 
           // if(user){
