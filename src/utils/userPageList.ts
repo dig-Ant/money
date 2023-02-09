@@ -1,5 +1,10 @@
 export const consumerUserPageList = [
   {
+    label: '于 兜兜',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAkSvQGYOPPnmnfvcW9Tlp400XL9MUYNAmIgIbUOVsF-uh4-QE36Q0qnon0Gn5UFHT',
+  },
+  {
     label: '白十七是志强',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
