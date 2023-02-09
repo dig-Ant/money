@@ -21,7 +21,7 @@ import { copy, transformUrl, liveUrl, liveUserPageList } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import styles from './index.less';
-
+const userType = 'live';
 const layout = {
   labelCol: { span: 10 },
   wrapperCol: { span: 14 },
@@ -93,7 +93,7 @@ export default function searchUser() {
     },
   );
   useEffect(() => {
-    listRun({});
+    listRun({ userType });
   }, []);
 
   const columns: ColumnsType<DataType> = [
@@ -132,7 +132,7 @@ export default function searchUser() {
             onClick={() => {
               dispatch({
                 type: 'consumerPage/batchLike',
-                payload: { userType: 'consumer', _id, type: 'live' },
+                payload: { userType, _id, type: 'live' },
               });
             }}
           >

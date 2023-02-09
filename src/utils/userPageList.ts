@@ -81,6 +81,10 @@ export const agedUserPageList = [
 ];
 export const liveUserPageList = [
   {
+    label: '老孙学长',
+    value: 'https://live.douyin.com/17289264420',
+  },
+  {
     label: '乔乔好物',
     value: 'https://live.douyin.com/147613255084',
   },
