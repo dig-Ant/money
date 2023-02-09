@@ -44,7 +44,7 @@ const feature_yunyun = async function (params) {
     // const resultsSelector = '[data-e2e="scroll-list"] li a';
     await page.waitForSelector(resultsSelector);
 
-    const dataSource = await page.evaluate(
+    const myFavorateVideos = await page.evaluate(
       async (resultsSelector, limitStart, limitEnd, STRINGNUM) => {
         let StringToNum = new Function(STRINGNUM);
         let StringToNumFun = new StringToNum();
@@ -80,8 +80,9 @@ const feature_yunyun = async function (params) {
       limitEnd,
       STRINGNUM,
     );
-
-    //  获取无水印 src
+    console.log('myFavorateVideos: ');
+    console.log(myFavorateVideos);
+    // 获取用户主页信息
     await limitExec(async (item) => {
       const { href } = item;
       const videoPage = await browser.newPage();
@@ -92,55 +93,46 @@ const feature_yunyun = async function (params) {
         await videoPage.waitForSelector(videoSelect, {
           timeout: 5000,
         });
-        const { src, user, time } = await videoPage.evaluate(
+        const userInfo = await videoPage.evaluate(
           (videoSelect, userSelect, STRINGNUM) => {
             let StringToNum = new Function(STRINGNUM);
             let StringToNumFun = new StringToNum();
             const videoSrc = document.querySelector(videoSelect).src;
             const time = document.querySelector('.aQoncqRg').innerText;
             const user = document.querySelector(userSelect);
-            const userSrc = user.children[1].querySelector('a').innerText;
+            const userSrc = user.children[1].querySelector('a').href;
             const userName = user.children[1].querySelector('a').innerText;
             const [fans, like] = user.children[1]
               .querySelector('p')
               .innerText.slice(2)
               .split('获赞');
             return {
-              src: videoSrc,
+              videoSrc,
               time,
-              user: {
-                fans,
-                like,
-                likeNum: StringToNumFun.eval(like),
-                src: userSrc,
-                name: userName,
-              },
+              fans,
+              like,
+              likeNum: StringToNumFun.eval(like),
+              userSrc,
+              userName,
             };
           },
           videoSelect,
           userSelect,
           STRINGNUM,
         );
-
-        // if(user){
-        //   item.user = user.substring(1).split('· ')[0];
-        //   item.createDate = user.substring(1).split('· ')[1];
-        // }
-        item.src = src;
-        item.user = user;
-        item.time = time;
-        item.filename = `${user.name}-${item.like}-${item.title.split(' ')[0]}`;
+        Object.assign(item, userInfo);
       } catch (error) {
         console.log('获取无水印视频报错----', error);
       }
       videoPage.close();
-    }, dataSource);
+    }, myFavorateVideos);
 
-    await downFile(dataSource, {
-      pathname: downloadFilename,
-    });
+    // await downFile(myFavorateVideos, {
+    //   pathname: downloadFilename,
+    // });
     await browser.close();
-    return dataSource;
+    console.log(myFavorateVideos);
+    return myFavorateVideos;
   } catch (error) {
     console.log('error:--- ', error);
     await browser.close();

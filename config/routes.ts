@@ -95,7 +95,7 @@ export default [
     routes: [
       {
         path: '/select/yunyun',
-        component: './download/index',
+        component: './yunyun/index',
         meta: {
           icon: 'UserOutlined',
           name: '云云选品',

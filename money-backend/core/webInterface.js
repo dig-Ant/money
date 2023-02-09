@@ -93,13 +93,52 @@ class WebInterface {
     app.post('/v1/getDyYunyun', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const dataSource = await this.pupp.start('feature_yunyun', body);
-      res.send({
-        code: 0,
-        data: { list: dataSource },
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/yunyunUser.json`),
+        autoload: true,
+        timestampData: true,
+      });
+      const list = await this.pupp.start('feature_yunyun', body);
+      console.log('list', list);
+      db.insert(list, (err, docs) => {
+        resHandle(res, err, docs);
       });
     });
-    
+    app.post('/v1/getDyYunyunList', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/yunyunUser.json`),
+        autoload: true,
+        timestampData: true,
+      });
+      const { page = 1, pageSize = 10 } = body || {};
+      const start = Math.floor((Number(page) - 1) * Number(pageSize));
+      const end = Math.floor(start + Number(pageSize));
+      db.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
+          if (err) {
+            res.end({
+              code: -1,
+              status: 'error',
+              errorMsg: err.toString(),
+            });
+          } else {
+            res.json({
+              status: 'success',
+              code: 0,
+              data: {
+                total: docs.length,
+                list: docs.slice(start, end),
+                page: Number(page),
+                pageSize: Number(pageSize),
+              },
+            });
+          }
+        });
+    });
+
     // 获取账号作品信息
     app.post('/v1/getProductmsg', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');

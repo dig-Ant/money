@@ -23,6 +23,7 @@ export const GET_DY_RESOURCE = '/v1/getDyResource';
 
 // 获取前n条收藏视频的视频信息和作者信息
 export const GET_DY_YUNYUN = '/v1/getDyYunyun';
+export const GET_DY_YUNYUN_LIST = '/v1/getDyYunyunList';
 
 // 获取账号作品信息
 export const GET_DY_PRODUCTMSG = '/v1/getProductmsg';

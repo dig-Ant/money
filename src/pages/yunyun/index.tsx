@@ -1,32 +1,11 @@
-import React, { useState } from 'react';
-import { connect, useSelector, useRequest, useDispatch } from 'umi';
-
-import {
-  Space,
-  Table,
-  Tag,
-  Form,
-  Button,
-  Input,
-  InputNumber,
-  message,
-  notification,
-  Select,
-  Radio,
-} from 'antd';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useRequest, useDispatch } from 'umi';
+import { Table, Form, Button, Input, Radio, Space } from 'antd';
 import request from '@/utils/request';
-import { GET_DY_YUNYUN } from '@/utils/api';
+import { GET_DY_YUNYUN, GET_DY_YUNYUN_LIST } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy } from '@/utils/common';
-
-const layout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 14 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 interface DataType {
   key: string;
@@ -48,14 +27,34 @@ export default function HomePage() {
     {
       manual: true,
       onSuccess: (result, params) => {
-        console.log('result, params: ', result, params);
         return;
-        if (result.success) {
-          message.success(`The username was changed to "${params[0]}" !`);
-        }
       },
     },
   );
+
+  const {
+    run: listRun,
+    data: listData = {},
+    error: listError,
+    loading: listLoading,
+  } = useRequest(
+    (data) => {
+      return request(GET_DY_YUNYUN_LIST, {
+        method: 'post',
+        data,
+      }).then((res) => res?.data);
+    },
+    {
+      manual: true,
+      onSuccess: (result, params) => {
+        return;
+      },
+    },
+  );
+  useEffect(() => {
+    listRun({});
+  }, []);
+  let { list = [] } = listData;
   console.log('data: ', loading, data);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
@@ -65,7 +64,24 @@ export default function HomePage() {
   const columns: ColumnsType<DataType> = [
     {
       title: '用户',
-      dataIndex: ['user', 'name'],
+      dataIndex: 'userName',
+      width: 100,
+      render: (val, record: Record<string, any>) => {
+        const { userSrc = 'javaScript:void(0);' } = record || {};
+        return (
+          <a href={userSrc} target="_blank">
+            {val}
+          </a>
+        );
+      },
+    },
+    {
+      title: '发布时间',
+      dataIndex: 'time',
+      width: 150,
+      render: (val) => {
+        return <span>{val.slice(7)}</span>;
+      },
     },
     {
       title: '标题',
@@ -73,19 +89,29 @@ export default function HomePage() {
       render: (val, record: Record<string, any>) => {
         const {
           href = 'javaScript:void(0);',
-          name = '',
-          likeNum,
+          time = '',
+          like = '',
         } = record || {};
         return (
-          <a
-            href={href}
-            target="_blank"
-            onClick={() => {
-              copy(val);
-            }}
-          >
-            {likeNum}-{val}
-          </a>
+          <Space>
+            <a
+              target="_blank"
+              onClick={() => {
+                copy(val);
+              }}
+            >
+              total
+            </a>
+            <a
+              href={href}
+              target="_blank"
+              onClick={() => {
+                copy(val);
+              }}
+            >
+              {like}-{val}
+            </a>
+          </Space>
         );
       },
     },
@@ -94,7 +120,6 @@ export default function HomePage() {
   return (
     <div>
       <Form
-        // {...layout}
         layout="inline"
         form={form}
         className={styles.filter}
@@ -103,24 +128,15 @@ export default function HomePage() {
         initialValues={{
           type: 'favorite_collection',
           limitStart: 0,
-          limitEnd: 10,
+          limitEnd: 2,
         }}
-        // wrapperCol={{span: 0, offset: 0}}
-        // labelCol={{ span: 0, offset: 0 }}
         colon={false}
       >
-        <Form.Item name="url" label="link">
-          <Input />
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            获取
+          </Button>
         </Form.Item>
-
-        {/* <Form.Item name="filter" label="包含文字筛选">
-          <Input />
-        </Form.Item> */}
-
-        <Form.Item name="downloadFilename" label="文件夹名">
-          <Input />
-        </Form.Item>
-
         <Form.Item name="limitStart" label="start">
           <Input style={{ width: '45px' }} />
         </Form.Item>
@@ -140,22 +156,17 @@ export default function HomePage() {
           </Radio.Group>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
-        </Form.Item>
-        <Form.Item>
           <Button
-            htmlType="button"
+            type="primary"
             onClick={() => {
-              form.resetFields();
+              listRun({});
             }}
           >
-            重置
+            查询
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data?.data.list || []} />
+      <Table columns={columns} dataSource={list || []} />
     </div>
   );
 }
