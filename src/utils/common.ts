@@ -24,7 +24,7 @@ export function copy(text: string) {
 }
 
 export function transformUrl(values: any) {
-  let url = values.userURL || '';
+  let url = values.userURL || undefined;
   if (url) {
     url = 'http' + url.split('http')[1];
   }
