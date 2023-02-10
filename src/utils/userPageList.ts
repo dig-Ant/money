@@ -55,11 +55,12 @@ export const consumerUserPageList = [
       'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
   },
 ];
-export const businessUserPageList = [{
-  label: '袁妹妹',
-  value:
-    'https://www.douyin.com/user/MS4wLjABAAAAxph_xYxXF1qd3tdm4BctBUzu-1w5bTtdwzPLayvyoCY',
-},
+export const businessUserPageList = [
+  {
+    label: '袁妹妹',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAxph_xYxXF1qd3tdm4BctBUzu-1w5bTtdwzPLayvyoCY',
+  },
   {
     label: '思娇好物',
     value:
@@ -89,6 +90,10 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
+  {
+    label: '歌霓丝服饰',
+    value: 'https://v.douyin.com/B5VvVDD/',
+  },
   {
     label: '老孙学长',
     value: 'https://live.douyin.com/17289264420',
