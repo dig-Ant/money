@@ -76,11 +76,19 @@ export default function HomePage() {
       },
     },
     {
+      title: '类型',
+      dataIndex: 'href',
+      width: 100,
+      render: (val) => {
+        return <span>{val.includes('video') ? '视频' : '图文'}</span>;
+      },
+    },
+    {
       title: '发布时间',
       dataIndex: 'time',
       width: 150,
       render: (val) => {
-        return <span>{val.slice(7)}</span>;
+        return <span>{val && val.slice(7)}</span>;
       },
     },
     {

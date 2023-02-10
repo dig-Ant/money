@@ -88,38 +88,67 @@ const feature_yunyun = async function (params) {
       const videoPage = await browser.newPage();
       try {
         await videoPage.goto(href);
-        const videoSelect = '.xg-video-container video source';
         const userSelect = '[data-e2e="user-info"]';
-        await videoPage.waitForSelector(videoSelect, {
-          timeout: 5000,
-        });
-        const userInfo = await videoPage.evaluate(
-          (videoSelect, userSelect, STRINGNUM) => {
-            let StringToNum = new Function(STRINGNUM);
-            let StringToNumFun = new StringToNum();
-            const videoSrc = document.querySelector(videoSelect).src;
-            const time = document.querySelector('.aQoncqRg').innerText;
-            const user = document.querySelector(userSelect);
-            const userSrc = user.children[1].querySelector('a').href;
-            const userName = user.children[1].querySelector('a').innerText;
-            const [fans, like] = user.children[1]
-              .querySelector('p')
-              .innerText.slice(2)
-              .split('获赞');
-            return {
-              videoSrc,
-              time,
-              fans,
-              like,
-              likeNum: StringToNumFun.eval(like),
-              userSrc,
-              userName,
-            };
-          },
-          videoSelect,
-          userSelect,
-          STRINGNUM,
-        );
+        let userInfo = {};
+        if (href.includes('video')) {
+          const videoSelect = '.xg-video-container video source';
+          await videoPage.waitForSelector(videoSelect, {
+            timeout: 5000,
+          });
+          userInfo = await videoPage.evaluate(
+            (videoSelect, userSelect, STRINGNUM) => {
+              let StringToNum = new Function(STRINGNUM);
+              let StringToNumFun = new StringToNum();
+              const videoSrc = document.querySelector(videoSelect).src;
+              const time = document.querySelector('.aQoncqRg').innerText;
+              const user = document.querySelector(userSelect);
+              const userSrc = user.children[1].querySelector('a').href;
+              const userName = user.children[1].querySelector('a').innerText;
+              const [fans, like] = user.children[1]
+                .querySelector('p')
+                .innerText.slice(2)
+                .split('获赞');
+              return {
+                videoSrc,
+                time,
+                fans,
+                like,
+                likeNum: StringToNumFun.eval(like),
+                userSrc,
+                userName,
+              };
+            },
+            videoSelect,
+            userSelect,
+            STRINGNUM,
+          );
+        } else if (href.includes('note')) {
+          userInfo = await videoPage.evaluate(
+            (userSelect, STRINGNUM) => {
+              let StringToNum = new Function(STRINGNUM);
+              let StringToNumFun = new StringToNum();
+              const time = document.querySelector('.giPD3AqJ').innerText;
+              const user = document.querySelector(userSelect);
+              const userSrc = user.children[1].querySelector('a').href;
+              const userName = user.children[1].querySelector('a').innerText;
+              const [fans, like] = user.children[1]
+                .querySelector('p')
+                .innerText.slice(2)
+                .split('获赞');
+              return {
+                // videoSrc,
+                time,
+                fans,
+                like,
+                likeNum: StringToNumFun.eval(like),
+                userSrc,
+                userName,
+              };
+            },
+            userSelect,
+            STRINGNUM,
+          );
+        }
         Object.assign(item, userInfo);
       } catch (error) {
         console.log('获取无水印视频报错----', error);
