@@ -55,7 +55,16 @@ export const consumerUserPageList = [
       'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
   },
 ];
-export const businessUserPageList = [
+export const businessUserPageList = [{
+  label: '袁妹妹',
+  value:
+    'https://www.douyin.com/user/MS4wLjABAAAAxph_xYxXF1qd3tdm4BctBUzu-1w5bTtdwzPLayvyoCY',
+},
+  {
+    label: '思娇好物',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAOw8CezlYWY9b5x_NAvzYgv1CRWgF01CzjXieZ18yifRaWuBhPHPZN6xDC5k7gM8Z',
+  },
   {
     label: '乔乔好物',
     value:

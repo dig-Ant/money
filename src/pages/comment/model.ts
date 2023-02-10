@@ -1,5 +1,3 @@
-
-
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
@@ -24,9 +22,7 @@ export default {
       const { history, dispatch } = action;
 
       // history.listen((location) => {
-       
       // });
     },
-  }
+  },
 };
-        

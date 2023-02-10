@@ -70,7 +70,7 @@ const columns: ColumnsType<DataType> = [
               copy(textList.join(''));
             }}
           >
-           total
+            total
           </Button>
           {textList.map((e: string, i: number) => {
             return (
