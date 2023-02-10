@@ -55,6 +55,16 @@ export const consumerUserPageList = [
       'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
   },
 ];
+export const videoNote = [
+  {
+    label: '视频',
+    value: 'video',
+  },
+  {
+    label: '图文',
+    value: 'note',
+  },
+];
 export const businessUserPageList = [
   {
     label: '袁妹妹',

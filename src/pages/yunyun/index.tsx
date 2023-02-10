@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useRequest, useDispatch } from 'umi';
-import { Table, Form, Button, Input, Radio, Space } from 'antd';
+import { Table, Form, Button, Input, Radio, Space, Select } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_YUNYUN, GET_DY_YUNYUN_LIST } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy } from '@/utils/common';
+import { videoNote } from '@/utils/userPageList';
 
 interface DataType {
   key: string;
@@ -80,7 +81,7 @@ export default function HomePage() {
       dataIndex: 'href',
       width: 100,
       render: (val) => {
-        return <span>{val.includes('video') ? '视频' : '图文'}</span>;
+        return <span>{val && val.includes('video') ? '视频' : '图文'}</span>;
       },
     },
     {
@@ -140,6 +141,9 @@ export default function HomePage() {
         }}
         colon={false}
       >
+        <Form.Item label="类型" name="videoNote">
+          <Select defaultValue="" style={{ width: 120 }} options={videoNote} />
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             获取

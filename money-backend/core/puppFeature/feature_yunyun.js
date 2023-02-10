@@ -67,8 +67,8 @@ const feature_yunyun = async function (params) {
           const [like, title = ''] = el.innerText.split('\n\n');
           return {
             href,
-            like,
-            likeNum: StringToNumFun.eval(like),
+            userlike:like,
+            userlikeNum: StringToNumFun.eval(like),
             title,
             // filename: `${like}-${title.split(' ')[0]}`,
           };
@@ -131,10 +131,11 @@ const feature_yunyun = async function (params) {
               const user = document.querySelector(userSelect);
               const userSrc = user.children[1].querySelector('a').href;
               const userName = user.children[1].querySelector('a').innerText;
-              const [fans, like] = user.children[1]
+              let [fans, like] = user.children[1]
                 .querySelector('p')
                 .innerText.slice(2)
                 .split('获赞');
+                like =like.replace('图文\n','')
               return {
                 // videoSrc,
                 time,
@@ -160,7 +161,7 @@ const feature_yunyun = async function (params) {
     //   pathname: downloadFilename,
     // });
     await browser.close();
-    console.log(myFavorateVideos);
+    // console.log(myFavorateVideos);
     return myFavorateVideos;
   } catch (error) {
     console.log('error:--- ', error);
