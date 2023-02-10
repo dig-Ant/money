@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
-import { agedUserPageList, copy } from '@/utils/common';
+import { agedUserPageList, copy, transformUrl } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 
@@ -220,12 +220,7 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    let userURL = values.userURL;
-    if (userURL) {
-      userURL = 'http' + userURL.split('http')[1];
-    }
-
-    run({ ...values, userURL, userType });
+    run({ ...values, userURL: transformUrl(values), userType });
   };
   return (
     <div>

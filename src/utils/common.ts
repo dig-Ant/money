@@ -22,8 +22,9 @@ export function copy(text: string) {
   document.body.removeChild(el);
   message.info('复制成功');
 }
-export function transformUrl(values: Object) {
-  let url = values.url || '';
+
+export function transformUrl(values: any) {
+  let url = values.userURL || '';
   if (url) {
     url = 'http' + url.split('http')[1];
   }

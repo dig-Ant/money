@@ -23,7 +23,7 @@ const {
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
   const {
-    url = MY_USER_LINK,
+    userURL = MY_USER_LINK,
     limitLen = 1,
     commentLimitLen = LIMIT,
     downloadFilename = '',
@@ -43,11 +43,10 @@ const feature_searchUsers = async function (params = {}) {
   // 1.打开我的主页里，喜欢/收藏的列表页
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
-    console.log('url: ', url);
-    if (url.includes('showTab')) {
-      await page.goto(url);
+    if (userURL.includes('showTab')) {
+      await page.goto(userURL);
     } else {
-      const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
+      const gotoUrl = userURL.includes('?') ? `${userURL}&${query}` : `${userURL}?${query}`;
       await page.goto(gotoUrl);
     }
     console.log('主页打开成功');
