@@ -100,6 +100,11 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
+  
+  {
+    label: '任白',
+    value: 'https://live.douyin.com/463889443552/',
+  },
   {
     label: '老爸评测',
     value: 'https://live.douyin.com/833509330429/',
