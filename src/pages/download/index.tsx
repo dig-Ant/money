@@ -20,14 +20,6 @@ import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy } from '@/utils/common';
 
-const layout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 14 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
 interface DataType {
   key: string;
   name: string;
@@ -101,9 +93,10 @@ export default function HomePage() {
         // size="small"
         onFinish={onFinish}
         initialValues={{
+          downloadFilename: '巧克力',
           type: 'favorite_collection',
           limitStart: 0,
-          limitEnd: 10,
+          limitEnd: 20,
         }}
         // wrapperCol={{span: 0, offset: 0}}
         // labelCol={{ span: 0, offset: 0 }}

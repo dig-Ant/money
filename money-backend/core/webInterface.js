@@ -84,11 +84,7 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const dataSource = await this.pupp.start('feature_downloadVideo', body);
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/myProduct/yunyunUser.json`),
-        autoload: true,
-        timestampData: true,
-      });
+
       res.send({
         code: 0,
         data: { list: dataSource },

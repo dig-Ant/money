@@ -1,17 +1,17 @@
-const qs = require('qs');
 const { limitExec } = require('../../utils/common');
 const {
   INIT_VIEWPORT,
   STRINGNUM,
   MY_USER_LINK,
   VIDEO_LIST_SELECTOR,
+  GET_URL,
 } = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 // TODO 抖音收藏列表下载抖音无损视频资源
 const feature_downloadVideo = async function (params) {
-  const {
+  let {
     url = MY_USER_LINK,
     limitStart,
     limitEnd,
@@ -22,19 +22,14 @@ const feature_downloadVideo = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_downloadVideo',
   });
-
   await page.setViewport(INIT_VIEWPORT);
-
   // 打开列表页
-  let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
-    if (url.includes('showTab')) {
-      await page.goto(url);
-    } else {
-      const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl);
-    }
+    url = GET_URL(url, type);
+    console.log(url);
+    await page.goto(url);
   } catch (error) {
+    console.log(error);
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
   }

@@ -259,10 +259,11 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
+    console.log(transformUrl(values));
 
     run({
       ...values,
-      url: transformUrl(values),
+      userURL: transformUrl(values),
       userType: 'consumer',
       type: 'live',
     });
@@ -275,7 +276,7 @@ export default function searchUser() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
-          // url: 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
+          // userURL: 'https://live.douyin.com/216666217971?room_id=7196290829210618624',
           isLogin: false,
           type: 'like',
           limitLen: 1,
@@ -288,7 +289,7 @@ export default function searchUser() {
             获取
           </Button>
         </Form.Item>
-        <Form.Item name="url">
+        <Form.Item name="userURL">
           <Select
             defaultValue=""
             style={{ width: 120 }}

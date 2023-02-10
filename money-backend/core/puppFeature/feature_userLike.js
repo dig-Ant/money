@@ -16,7 +16,7 @@ const feature_userLike = async function (params) {
     console.log('userType: ', userType);
     // console.log('list: ', list);
 
-    for (i = 0; i < list.length; i++) {
+    for (i = 47; i < list.length; i++) {
       // const { userInfo } = list[i];
       const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
       console.log('firstVideoSrc: ', firstVideoSrc);

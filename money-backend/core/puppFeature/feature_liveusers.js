@@ -17,7 +17,7 @@ const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_liveusers = async function (params = {}) {
   const {
-    url,
+    userURL,
     title,
     limitLen = 1,
     commentLimitLen = 100,
@@ -33,7 +33,7 @@ const feature_liveusers = async function (params = {}) {
   await page.setViewport({ width: 980, height: 1000 });
   //   await page.setViewport(INIT_VIEWPORT);
   try {
-    await page.goto(url);
+    await page.goto(userURL);
   } catch (error) {
     console.log('直播页打开失败', error);
     await browser.close();

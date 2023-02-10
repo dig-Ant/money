@@ -101,6 +101,10 @@ export const agedUserPageList = [
 ];
 export const liveUserPageList = [
   {
+    label: '老爸评测',
+    value: 'https://live.douyin.com/833509330429/',
+  },
+  {
     label: '歌霓丝服饰',
     value: 'https://v.douyin.com/B5VvVDD/',
   },
