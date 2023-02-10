@@ -30,3 +30,11 @@ export function transformUrl(values: any) {
   }
   return url;
 }
+export function stringToNum(like: any) {
+  if (like.includes('万')) {
+    const [num] = like.split('万');
+    return Number((+num * 10000).toFixed(0));
+  } else {
+    return Number(like);
+  }
+}

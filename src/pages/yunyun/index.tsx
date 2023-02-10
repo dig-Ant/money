@@ -5,7 +5,7 @@ import request from '@/utils/request';
 import { GET_DY_YUNYUN, GET_DY_YUNYUN_LIST } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
-import { copy } from '@/utils/common';
+import { copy, stringToNum } from '@/utils/common';
 import { videoNote } from '@/utils/userPageList';
 
 interface DataType {
@@ -55,8 +55,17 @@ export default function HomePage() {
   useEffect(() => {
     listRun({});
   }, []);
+
   let { list = [] } = listData;
-  console.log('data: ', loading, data);
+  list = list.map((e: any) => {
+    e.likeNum = (e.like || '').replace('图文\n', '');
+    e.likeNum = stringToNum(e.likeNum);
+    e.publishTime = new Date(e.time.slice(5)).getTime();
+    return e;
+  });
+  //   .filter((e: any) => e.href && e.href.includes('video'))
+  //   .sort((e: any, b: any) => e.createdAt - b.createdAt);
+  // console.log('list: ', list);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
     run(values);
@@ -87,20 +96,23 @@ export default function HomePage() {
     {
       title: '发布时间',
       dataIndex: 'time',
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.publishTime - b.publishTime,
       width: 150,
-      render: (val) => {
-        return <span>{val && val.slice(7)}</span>;
-      },
+      render: (val) => <span>{val && val.slice(7)}</span>,
+    },
+    {
+      title: '点赞数',
+      dataIndex: 'likeNum',
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.likeNum - b.likeNum,
+      width: 150,
     },
     {
       title: '标题',
       dataIndex: 'title',
       render: (val, record: Record<string, any>) => {
-        const {
-          href = 'javaScript:void(0);',
-          time = '',
-          like = '',
-        } = record || {};
+        const { href = 'javaScript:void(0);' } = record || {};
         return (
           <Space>
             <a
@@ -118,7 +130,7 @@ export default function HomePage() {
                 copy(val);
               }}
             >
-              {like}-{val}
+              {val}
             </a>
           </Space>
         );
@@ -137,7 +149,7 @@ export default function HomePage() {
         initialValues={{
           type: 'favorite_collection',
           limitStart: 0,
-          limitEnd: 2,
+          limitEnd: 9,
         }}
         colon={false}
       >
