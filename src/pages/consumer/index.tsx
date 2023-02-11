@@ -7,6 +7,7 @@ import {
   Button,
   Input,
   Select,
+  Cascader,
   message,
   Radio,
   Modal,
@@ -220,7 +221,7 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userURL: transformUrl(values), userType });
+    run({ ...values, userURL: transformUrl(values.userURL[1]), userType });
   };
   return (
     <div>
@@ -243,11 +244,7 @@ export default function searchUser() {
           </Button>
         </Form.Item>
         <Form.Item name="userURL">
-          <Select
-            defaultValue=""
-            style={{ width: 120 }}
-            options={consumerUserPageList}
-          />
+          <Cascader options={consumerUserPageList} placeholder="userURL" />
         </Form.Item>
         <Form.Item label="主页前" name="limitLen">
           <Input style={{ width: '42px' }} />

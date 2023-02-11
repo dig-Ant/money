@@ -23,8 +23,8 @@ export function copy(text: string) {
   message.info('复制成功');
 }
 
-export function transformUrl(values: any) {
-  let url = values.userURL || undefined;
+export function transformUrl(userURL: any) {
+  let url = userURL || undefined;
   if (url) {
     url = 'http' + url.split('http')[1];
   }
