@@ -222,7 +222,7 @@ const feature_liveusers = async function (params = {}) {
     // let value = newPage.url(); //获取新页面的链接
 
     await browser.close();
-    return { commentList, title, url };
+    return { commentList, title, userURL };
   } catch (error) {
     console.log('error: ', error);
     // await browser.close();

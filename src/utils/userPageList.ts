@@ -66,6 +66,12 @@ export const videoNote = [
   },
 ];
 export const businessUserPageList = [
+  // 2- 长按复制此条消息，打开抖音搜索，查看TA的更多作品。 https://v.douyin.com/Bu5wmpQ/
+  {
+    label: '雨淼淼好物',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAD9YaF2w63nxhkoXGoEKhMX7ofVmZNS3O1735go_gnaM',
+  },
   {
     label: '袁妹妹',
     value:
@@ -100,6 +106,10 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
+  {
+    label: '交个朋友母婴生活',
+    value: 'https://live.douyin.com/206031013417/',
+  },
   {
     label: '兰姐孕婴',
     value: 'https://live.douyin.com/937804427532/',
