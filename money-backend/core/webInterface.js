@@ -1,6 +1,7 @@
-'use strict';
+('use strict');
 
 const express = require('express'),
+  fs = require('fs'),
   Datastore = require('nedb'),
   ip = require('ip'),
   juicer = require('juicer'),
@@ -148,6 +149,58 @@ class WebInterface {
       res.send({
         code: 0,
         data: { list: dataSource },
+      });
+    });
+    // 获取账号作品信息列表
+    app.post('/v1/getProductmsgList', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      // const db = new Datastore({
+      //   filename: path.resolve(__dirname, `../db/${userType}User.json`),
+      //   autoload: true,
+      //   timestampData: true,
+      // });
+      var allJSON = {};
+      const jsonList = fs.readdirSync(
+        path.resolve(__dirname, '../downloadFiles/账号作品信息'),
+      );
+      jsonList.forEach((filename) => {
+        if (
+          filename.includes('.') &&
+          !['index.js', '.DS_Store'].includes(filename)
+        ) {
+          allJSON[
+            filename.split('.')[0]
+          ] = require(`../downloadFiles/账号作品信息/${filename}`);
+        }
+      });
+      // db.find({
+      //   userType,
+      // })
+      //   .sort({ createdAt: -1 })
+      //   .exec((err, docs) => {
+      //     if (err) {
+      //       res.end({
+      //         code: -1,
+      //         status: 'error',
+      //         errorMsg: err.toString(),
+      //       });
+      //     } else {
+      //       res.json({
+      //         status: 'success',
+      //         code: 0,
+      //         data: {
+      //           total: docs.length,
+      //           list: docs.slice(start, end),
+      //           page: Number(page),
+      //           pageSize: Number(pageSize),
+      //         },
+      //       });
+      //     }
+      //   });
+      res.send({
+        code: 0,
+        data: allJSON,
       });
     });
 

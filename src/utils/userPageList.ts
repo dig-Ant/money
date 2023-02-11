@@ -106,7 +106,11 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
-  
+  {
+    label: '贝亲蒂拉品牌母婴',
+    value: 'https://live.douy1in.com/292133672322',
+  },
+
   {
     label: '交个朋友母婴生活',
     value: 'https://live.douyin.com/206031013417/',

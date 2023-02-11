@@ -27,6 +27,8 @@ export const GET_DY_YUNYUN_LIST = '/v1/getDyYunyunList';
 
 // 获取账号作品信息
 export const GET_DY_PRODUCTMSG = '/v1/getProductmsg';
+// 搜索目标用户
+export const GET_DY_PRODUCT_MSG_LIST = '/v1/getProductmsgList';
 
 // 下载目标用户
 export const GET_DY_USERS = '/v1/getDyUsers';

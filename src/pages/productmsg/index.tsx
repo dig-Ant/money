@@ -1,32 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
 
-import {
-  Space,
-  Table,
-  Tag,
-  Form,
-  Button,
-  Input,
-  InputNumber,
-  message,
-  notification,
-  Select,
-  Radio,
-} from 'antd';
+import { Table, Tag, Form, Button, Input, Space, Modal } from 'antd';
 import request from '@/utils/request';
-import { GET_DY_PRODUCTMSG } from '@/utils/api';
+import { GET_DY_PRODUCTMSG, GET_DY_PRODUCT_MSG_LIST } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy } from '@/utils/common';
-
-const layout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 14 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 interface DataType {
   key: string;
@@ -48,44 +28,91 @@ export default function HomePage() {
     {
       manual: true,
       onSuccess: (result, params) => {
-        console.log('result, params: ', result, params);
         return;
-        if (result.success) {
-          message.success(`The username was changed to "${params[0]}" !`);
-        }
       },
     },
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [current, setCurrent] = useState([]);
   console.log('data: ', loading, data);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
     run(values);
   };
+  let { run: listRun, data: listData = {} } = useRequest(
+    (data) => {
+      return request(GET_DY_PRODUCT_MSG_LIST, {
+        method: 'post',
+        data,
+      }).then((res) => res?.data);
+    },
+    {
+      manual: true,
+      onSuccess: (result, params) => {
+        return;
+      },
+    },
+  );
+  // console.log(listData);
+  console.log('listData: ', listData);
+  listData = Object.keys(listData).map((username) => {
+    return {
+      username,
+      videoList: listData[username],
+      num: listData[username].length,
+    };
+  });
+  useEffect(() => {
+    listRun({});
+  }, []);
 
   const columns: ColumnsType<DataType> = [
     {
       title: '用户',
-      dataIndex: ['user', 'name'],
-    },
-    {
-      title: '标题',
-      dataIndex: 'title',
-      render: (val, record: Record<string, any>) => {
-        const {
-          href = 'javaScript:void(0);',
-          name = '',
-          likeNum,
-        } = record || {};
+      dataIndex: 'username',
+      render: (val, record: any) => {
         return (
-          <a
-            href={href}
-            target="_blank"
+          <div
             onClick={() => {
-              copy(val);
+              record.num && setIsModalOpen(true);
+              setCurrent(record.videoList);
             }}
           >
-            {likeNum}-{val}
-          </a>
+            {val}
+          </div>
+        );
+      },
+    },
+    {
+      title: '视频数量',
+      dataIndex: 'num',
+    },
+  ];
+  const videoCols: ColumnsType<DataType> = [
+    {
+      title: '视频标题',
+      dataIndex: 'title',
+      width: 285,
+      render: (val, render: any) => {
+        const { fans, like } = render;
+        return <a href={render.href}>{val}</a>;
+      },
+    },
+    {
+      title: 'like',
+      dataIndex: 'like',
+      width: 65,
+    },
+    {
+      title: '粉丝-赞',
+      dataIndex: 'userName',
+      width: 55,
+      render: (val, render: any) => {
+        const { fans, like } = render;
+        return (
+          <div>
+            粉丝{fans}个，获{like}个赞
+          </div>
         );
       },
     },
@@ -94,15 +121,11 @@ export default function HomePage() {
   return (
     <div>
       <Form
-        // {...layout}
         layout="inline"
         form={form}
         className={styles.filter}
-        // size="small"
         onFinish={onFinish}
         initialValues={{ type: 'favorite_collection' }}
-        // wrapperCol={{span: 0, offset: 0}}
-        // labelCol={{ span: 0, offset: 0 }}
         colon={false}
       >
         <Form.Item name="url" label="link">
@@ -113,8 +136,37 @@ export default function HomePage() {
             提交
           </Button>
         </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            onClick={() => {
+              listRun({});
+            }}
+          >
+            获取
+          </Button>
+        </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data?.data.list || []} />
+      <Table columns={columns} dataSource={listData || []} />
+      <Modal
+        title=""
+        width="85%"
+        open={isModalOpen}
+        onOk={() => {
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+        footer={null}
+      >
+        <Table
+          scroll={{ y: '75vh' }}
+          columns={videoCols}
+          rowKey="_id"
+          dataSource={current}
+        />
+      </Modal>
     </div>
   );
 }

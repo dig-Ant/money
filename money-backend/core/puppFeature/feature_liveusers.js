@@ -76,7 +76,7 @@ const feature_liveusers = async function (params = {}) {
         });
         // 1.鼠标移动到用户列表区域
         await page.mouse.move(x + 27, y + 43);
-        await page.mouse.wheel({ deltaY: 48 });
+        await page.mouse.wheel({ deltaY: 40 });
         await delay(200);
         // 2.点击用户，获取用户名、关注、粉丝的信息
         await page.click(
