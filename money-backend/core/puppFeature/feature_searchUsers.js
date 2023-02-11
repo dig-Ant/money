@@ -19,6 +19,7 @@ const {
   USER_INFO_LIST_SELECTOR,
   IS_BUSINESS_USER,
   STRING_TO_NUM_FUN,
+  GET_URL,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
@@ -41,15 +42,9 @@ const feature_searchUsers = async function (params = {}) {
   await page.setViewport(INIT_VIEWPORT);
 
   // 1.打开我的主页里，喜欢/收藏的列表页
-  let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
-    if (userURL.includes('showTab')) {
-      await page.goto(userURL);
-    } else {
-      const gotoUrl = userURL.includes('?') ? `${userURL}&${query}` : `${userURL}?${query}`;
-      await page.goto(gotoUrl);
-    }
-    console.log('主页打开成功');
+    userURL = GET_URL(userURL, type);
+    await page.goto(userURL);
   } catch (error) {
     console.log('主页打开失败', error);
     await browser.close();
@@ -144,7 +139,6 @@ const feature_searchUsers = async function (params = {}) {
               }
 
               commentList.splice(-1, 1);
-              console.log('fasdf');
               console.log(commentList);
               commentList = commentList.map((el) => {
                 const userInfoEl = el.querySelector('div:nth-child(2)');
@@ -298,7 +292,7 @@ const feature_searchUsers = async function (params = {}) {
         console.log('获取评论报错----', error);
       }
       videoPage.close();
-    }, myFavorateVideos.slice(0,2));
+    }, myFavorateVideos.slice(0, 2));
     const [_, partPath] = createDownloadPath(downloadFilename);
 
     fs.writeFileSync(
