@@ -17,6 +17,7 @@ import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
 import { businessUserPageList, copy, transformUrl } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
+import { modeOptions } from '@/utils/userPageList';
 
 const userType = 'business';
 interface DataType {
@@ -285,6 +286,17 @@ export default function searchUser() {
           >
             查询
           </Button>
+        </Form.Item>
+        <Form.Item name="mode">
+          <Radio.Group>
+            {modeOptions.map((e: any) => {
+              return (
+                <Radio value={e.value} key={e.value}>
+                  {e.label}
+                </Radio>
+              );
+            })}
+          </Radio.Group>
         </Form.Item>
       </Form>
       <Table

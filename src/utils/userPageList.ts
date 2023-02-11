@@ -1,3 +1,13 @@
+export const modeOptions = [
+  {
+    label: '点赞关注模式',
+    value: '点赞关注模式',
+  },
+  {
+    label: '点赞评论模式',
+    value: '点赞关注模式',
+  },
+];
 interface Option {
   value: string | number;
   label: string;
