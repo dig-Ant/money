@@ -100,7 +100,6 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
-  
   {
     label: '任白',
     value: 'https://live.douyin.com/463889443552/',
