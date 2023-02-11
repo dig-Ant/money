@@ -371,13 +371,13 @@ class WebInterface {
     // execDyVidelMsg
     app.post('/v1/execDyVidelMsg', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { _id, userType } = body || {};
       const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/userComment.json'),
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
         timestampData: true,
       });
-      const body = req.body;
-      const { _id, userType } = body || {};
       console.log(_id);
       db.find({ _id }, async (err, docs) => {
         if (err) {
@@ -386,7 +386,7 @@ class WebInterface {
             errorMsg: err,
           });
         }
-        console.log(err);
+        console.log(docs);
         const dataSource = await this.pupp.start('feature_getVideoMsg', {
           list: docs[0].commentList,
         });
