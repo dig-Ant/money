@@ -102,6 +102,7 @@ class WebInterface {
       });
       const list = await this.pupp.start('feature_yunyun', body);
       console.log('list', list);
+      if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
@@ -276,6 +277,7 @@ class WebInterface {
       });
       const list = await this.pupp.start('feature_searchUsers', body);
       console.log('list', list);
+      if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
@@ -330,6 +332,7 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
+      if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
