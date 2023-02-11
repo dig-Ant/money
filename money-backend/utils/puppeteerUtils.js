@@ -149,7 +149,7 @@ const downFile = async (arr, file) => {
       JSON.stringify(arr),
     );
     fs.writeFileSync(
-      path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
+      path.resolve(__dirname, `${mkdirPath}/${pathname}-time.json`),
       JSON.stringify(
         arr.sort((q, w) => {
           let time1 = new Date(q.time.slice(5));
@@ -161,6 +161,7 @@ const downFile = async (arr, file) => {
   } catch (error) {
     console.log('数据文件下载失败', error);
   }
+
   let i = 0;
   while (arr[i]) {
     try {

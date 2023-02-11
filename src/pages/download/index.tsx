@@ -18,7 +18,7 @@ import request from '@/utils/request';
 import { GET_DY_RESOURCE } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
-import { copy } from '@/utils/common';
+import { copy, transformUrl } from '@/utils/common';
 
 interface DataType {
   key: string;
@@ -51,9 +51,8 @@ export default function HomePage() {
   console.log('data: ', loading, data);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run(values);
+    run({ ...values, userURL: transformUrl(values) });
   };
-
   const columns: ColumnsType<DataType> = [
     {
       title: '用户',
@@ -102,7 +101,7 @@ export default function HomePage() {
         // labelCol={{ span: 0, offset: 0 }}
         colon={false}
       >
-        <Form.Item name="url" label="link">
+        <Form.Item name="userURL" label="link">
           <Input />
         </Form.Item>
 

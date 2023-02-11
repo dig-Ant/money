@@ -12,7 +12,7 @@ const { downFile, createDownloadPath } = puppeteerUtils;
 // TODO 抖音收藏列表下载抖音无损视频资源
 const feature_downloadVideo = async function (params) {
   let {
-    url = MY_USER_LINK,
+    userURL = MY_USER_LINK,
     limitStart,
     limitEnd,
     downloadFilename = '',
@@ -25,9 +25,9 @@ const feature_downloadVideo = async function (params) {
   await page.setViewport(INIT_VIEWPORT);
   // 打开列表页
   try {
-    url = GET_URL(url, type);
-    console.log(url);
-    await page.goto(url);
+    userURL = GET_URL(userURL, type);
+    console.log(userURL);
+    await page.goto(userURL);
   } catch (error) {
     console.log(error);
     await browser.close();
@@ -43,19 +43,29 @@ const feature_downloadVideo = async function (params) {
         let StringToNum = new Function(STRINGNUM);
         let StringToNumFun = new StringToNum();
 
-        let eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
+        let eleList = [
+          ...document.querySelectorAll('[data-e2e="scroll-list"] li>a'),
+        ];
         // 获取对应数量为止
+        console.log(eleList);
+        console.log('limitStart: ', limitStart);
+        console.log('limitEnd: ', limitEnd);
         if (
           typeof limitStart !== 'undefined' &&
           typeof limitEnd !== 'undefined'
         ) {
           while (eleList.length < limitEnd) {
+            // debugger
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
-            eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
+            eleList = [
+              ...document.querySelectorAll('[data-e2e="scroll-list"] li>a'),
+            ];
           }
           eleList = eleList.slice(limitStart, limitEnd);
         }
+        console.log(eleList);
+        // debugger;
         eleList = eleList.map((el) => {
           const href = el.href;
           const [like, title = ''] = el.innerText.split('\n\n');
@@ -67,6 +77,8 @@ const feature_downloadVideo = async function (params) {
             // filename: `${like}-${title.split(' ')[0]}`,
           };
         });
+        console.log(eleList);
+        debugger;
         return eleList;
       },
       VIDEO_LIST_SELECTOR,
@@ -74,7 +86,8 @@ const feature_downloadVideo = async function (params) {
       limitEnd,
       STRINGNUM,
     );
-
+    console.log('dataSource');
+    console.log(dataSource);
     // 按照点赞排序 高->低
     dataSource.sort((a, b) => {
       return b.likeNum - a.likeNum;
@@ -84,6 +97,7 @@ const feature_downloadVideo = async function (params) {
     await limitExec(
       async (item, i) => {
         const { href } = item;
+        if (href && href.includes('note')) return;
         const videoPage = await browser.newPage();
         try {
           await videoPage.goto(href);
