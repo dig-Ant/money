@@ -1,4 +1,4 @@
-export const consumerUserPageList = [
+export const consumerUserPageList= [
   {
     label: '于 兜兜',
     value:
@@ -100,6 +100,13 @@ export const agedUserPageList = [
   },
 ];
 export const liveUserPageList = [
+  {
+    label: '交个朋友母婴生活',
+    value: 'https://live.douyin.com/206031013417/',
+  },{
+    label: '兰姐孕婴',
+    value: 'https://live.douyin.com/937804427532/',
+  },
   {
     label: '任白',
     value: 'https://live.douyin.com/463889443552/',
