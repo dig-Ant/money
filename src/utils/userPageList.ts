@@ -101,6 +101,10 @@ export const agedUserPageList = [
 ];
 export const liveUserPageList = [
   {
+    label: '兰姐孕婴',
+    value: 'https://live.douyin.com/937804427532/',
+  },
+  {
     label: '任白',
     value: 'https://live.douyin.com/463889443552/',
   },
