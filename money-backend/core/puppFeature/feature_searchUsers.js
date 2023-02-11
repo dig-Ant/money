@@ -23,7 +23,7 @@ const {
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
-  const {
+  let {
     userURL = MY_USER_LINK,
     limitLen = 1,
     commentLimitLen = LIMIT,

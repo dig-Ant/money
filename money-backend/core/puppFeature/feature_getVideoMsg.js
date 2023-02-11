@@ -87,7 +87,9 @@ const feature_getVideoMsg = async function (params) {
         return { code: -1, errorMsg: error };
       }
     },
-    [list[3]],
+    list,
+    1,
+    // [list[3]],
   );
 };
 
