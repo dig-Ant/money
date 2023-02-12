@@ -19,7 +19,7 @@ export const videoNote = [
     value: 'note',
   },
 ];
-export const consumerUserPageList = require('./consumerUserPageList');
-export const businessUserPageList = require('./businessUserPageList');
-export const agedUserPageList = require('./agedUserPageList');
-export const liveUserPageList = require('./liveUserPageList');
+export { consumerUserPageList } from './consumerUserPageList';
+export { businessUserPageList } from './businessUserPageList';
+export { agedUserPageList } from './agedUserPageList';
+export { liveUserPageList } from './liveUserPageList';

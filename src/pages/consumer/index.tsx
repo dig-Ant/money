@@ -18,6 +18,7 @@ import { consumerUserPageList, copy, transformUrl } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import { modeOptions } from '@/utils/userPageList';
+console.log(consumerUserPageList);
 
 const userType = 'consumer';
 interface DataType {
