@@ -222,7 +222,11 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userURL: transformUrl(values.userURL[1]), userType });
+    run({
+      ...values,
+      userURL: transformUrl((values.userURL || [])[1]),
+      userType,
+    });
   };
   return (
     <div>
