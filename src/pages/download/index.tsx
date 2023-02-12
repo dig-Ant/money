@@ -51,7 +51,7 @@ export default function HomePage() {
   console.log('data: ', loading, data);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    run({ ...values, userURL: transformUrl(values) });
+    run({ ...values, userURL: transformUrl(values.userURL) });
   };
   const columns: ColumnsType<DataType> = [
     {

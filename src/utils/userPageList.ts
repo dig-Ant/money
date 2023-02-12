@@ -5,7 +5,7 @@ export const modeOptions = [
   },
   {
     label: '点赞评论模式',
-    value: '点赞关注模式',
+    value: '点赞评论模式',
   },
 ];
 interface Option {
@@ -269,6 +269,11 @@ export const liveUserPageList = [
     value: '居家',
     label: 'home',
     children: [
+      
+      {
+        label: '爱上做饭的小娘子',
+        value: 'https://live.douyin.com/699789496585',
+      },
       {
         label: '乔乔好物',
         value: 'https://live.douyin.com/147613255084',

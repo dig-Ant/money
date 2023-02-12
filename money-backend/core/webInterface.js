@@ -391,7 +391,7 @@ class WebInterface {
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const { _id, userType } = body || {};
+      const { _id, userType, mode } = body || {};
       console.log(userType);
       const db = new Datastore({
         filename: path.resolve(__dirname, `../db/${userType}User.json`),
@@ -410,6 +410,7 @@ class WebInterface {
         const { code } = await this.pupp.start('feature_userLike', {
           list: docs[0].commentList,
           userType,
+          mode,
         });
         if (code !== 0) {
           return res.json({

@@ -13,8 +13,7 @@ const feature_userLike = async function (params) {
   });
   try {
     const { list = [], userType, mode = '点赞评论模式' } = params || {};
-    console.log('userType: ', userType);
-    // console.log('list: ', list);
+    console.log('userType, mode: ', userType, mode);
 
     for (i = 0; i < list.length; i++) {
       // const { userInfo } = list[i];
@@ -58,9 +57,14 @@ const feature_userLike = async function (params) {
           // );
           if (!hasQin) {
             //类名 点赞kr4MM4DQ 有红心的NILc2fGS
-            await newPage.click('.kr4MM4DQ:nth-child(1):not(.NILc2fGS)');
+            // await newPage.click('.kr4MM4DQ:nth-child(1):not(.NILc2fGS)');
             await delay(3000);
-            if (mode == '点赞评论模式') {
+            if (mode == '点赞关注模式') {
+              await newPage.click(
+                'div[data-e2e="related-video"]>div[data-e2e="user-info"] .YYdcMMWF .B10aL8VQ.gPRZQy7u.vMQD6aai',
+              );
+              await delay(3000);
+            } else {
               await newPage.click('.public-DraftStyleDefault-block');
               // await newPage.keyboard.down('Z');
               // await newPage.keyboard.up('Z');
@@ -72,11 +76,6 @@ const feature_userLike = async function (params) {
               await newPage.keyboard.type(GET_COMMENT1(userType));
               await delay(5000);
               await newPage.keyboard.press('Enter'); // 回车
-              await delay(3000);
-            } else {
-              await newPage.click(
-                'div[data-e2e="related-video"]>div[data-e2e="user-info"] .YYdcMMWF .B10aL8VQ.gPRZQy7u.vMQD6aai',
-              );
               await delay(3000);
             }
           }

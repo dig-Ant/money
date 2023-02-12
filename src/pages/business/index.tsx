@@ -102,7 +102,7 @@ export default function searchUser() {
               onClick={() => {
                 dispatch({
                   type: 'businessPage/batchLike',
-                  payload: { userType, _id },
+                  payload: { userType, _id, mode: '1' },
                 });
               }}
             >
