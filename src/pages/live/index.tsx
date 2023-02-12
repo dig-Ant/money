@@ -6,6 +6,7 @@ import {
   Table,
   Tag,
   Select,
+  Cascader,
   Form,
   Button,
   Input,
@@ -259,11 +260,10 @@ export default function searchUser() {
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
-    console.log(transformUrl(values));
 
     run({
       ...values,
-      userURL: transformUrl(values),
+      userURL: transformUrl(values.userURL[1]),
       userType: 'consumer',
       type: 'live',
     });
@@ -290,11 +290,7 @@ export default function searchUser() {
           </Button>
         </Form.Item>
         <Form.Item name="userURL">
-          <Select
-            defaultValue=""
-            style={{ width: 120 }}
-            options={liveUserPageList}
-          />
+          <Cascader options={liveUserPageList} placeholder="userURL" />
         </Form.Item>
         <Form.Item>
           <Button
