@@ -1,3 +1,4 @@
+//【 (.+) 】
 interface Option {
   value: string | number;
   label: string;
@@ -49,9 +50,9 @@ export const liveUserPageList: Option[] = [
         value: 'https://live.douyin.com/249775856401',
       },
       {
-        label:'袜裤姐妹👭',
-        value:'https://live.douyin.com/578753356959/'
-      }
+        label: '袜裤姐妹👭',
+        value: 'https://live.douyin.com/578753356959/',
+      },
     ],
   },
   {
@@ -118,6 +119,30 @@ export const liveUserPageList: Option[] = [
       {
         label: '乔乔好物',
         value: 'https://live.douyin.com/147613255084',
+      },
+      {
+        label: '英子（早上3点10分',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BQe6hcU/
+      },
+      {
+        label: '神奇Aha',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BQeF6Yh/
+      },
+      {
+        label: '寻TA服饰',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BxsUgBc/
+      },
+      {
+        label: '思羽针织',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BxVo6Vw/
+      },
+      {
+        label: 'ATSUGI厚木官方旗舰店',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BxVTVkb/
+      },
+      {
+        label: '喜儿ula轻奢高定饰品',
+        value: 'https://live.douyin.com/', // https://v.douyin.com/BxBkFBH/
       },
     ],
   },
