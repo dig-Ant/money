@@ -18,16 +18,6 @@ import request from '@/utils/request';
 import { GET_DY_TEXT } from '@/utils/api';
 import { copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
-import moment from 'moment';
-import styles from './index.less';
-
-const layout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 14 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 interface DataType {
   key: string;

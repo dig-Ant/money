@@ -122,7 +122,7 @@ export default function HomePage() {
         // size="small"
         onFinish={onFinish}
         initialValues={{
-          downloadFilename: '巧克力',
+          downloadFilename: '不沾油洗碗巾',
           type: 'favorite_collection',
           limitStart: 0,
           limitEnd: 3,

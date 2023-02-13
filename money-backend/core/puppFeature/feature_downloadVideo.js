@@ -76,8 +76,6 @@ const feature_downloadVideo = async function (params) {
             // filename: `${like}-${title.split(' ')[0]}`,
           };
         });
-        console.log(eleList);
-        debugger;
         return eleList;
       },
       VIDEO_LIST_SELECTOR,
@@ -91,7 +89,7 @@ const feature_downloadVideo = async function (params) {
     dataSource.sort((a, b) => {
       return b.likeNum - a.likeNum;
     });
-    dataSource = dataSource.map((e) => {
+    dataSource = dataSource.map((e, index) => {
       e.index = index + 1;
       return e;
     });
@@ -103,7 +101,9 @@ const feature_downloadVideo = async function (params) {
         if (href && href.includes('note')) return;
         const videoPage = await browser.newPage();
         try {
+          console.log('href: ', href);
           await videoPage.goto(href, TIME_OUT);
+          console.log('href: ', href);
           const videoSelect = '.xg-video-container video source';
           const userSelect = '[data-e2e="user-info"]';
           await videoPage.waitForSelector(videoSelect, TIME_OUT);

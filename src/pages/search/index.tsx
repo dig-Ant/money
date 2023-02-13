@@ -92,16 +92,6 @@ const columns: ColumnsType<DataType> = [
       );
     },
   },
-  {
-    title: '操作',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
 ];
 
 export default function HomePage() {
@@ -175,7 +165,7 @@ export default function HomePage() {
           label="最近几条"
           // rules={[{ required: true, message: '请输入最近几条' }]}
         >
-          <InputNumber precision={0} style={{ width: '100%' }} />
+          <Input style={{ width: '45px' }} />
         </Form.Item>
 
         <Form.Item>
@@ -187,10 +177,14 @@ export default function HomePage() {
           <Button
             htmlType="button"
             onClick={() => {
-              form.resetFields();
+              const res = list.map(({ title }) => {
+                const textList = title.split(/[#|\s]/);
+                return textList.join();
+              });
+              copy(JSON.stringify(res));
             }}
           >
-            重置
+            copy
           </Button>
         </Form.Item>
       </Form>

@@ -90,6 +90,7 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
+      if (dataSource.code == -1) return;
       db.insert(dataSource, (err, docs) => {
         resHandle(res, err, docs);
       });
@@ -103,42 +104,6 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
-      // db.insert([
-      //   {
-      //     href: 'https://www.douyin.com/video/7197604926682336551',
-      //     like: '2702',
-      //     likeNum: 30000,
-      //     title:
-      //       '#狂飙大嫂 #狂飙陈书婷 #大哥的女人#陈淑婷同款耳饰 #网红爆款饰品',
-      //     src: 'https://v3-web.douyinvod.com/c1feca5ab055f6f6405f104097167a65/63e9fcc4/video/tos/cn/tos-cn-ve-15c001-alinc2/oszu8hJQNUB81fSAaDCNLlE7arCGBegmjxIYAA/?a=6383&ch=26&cr=3&dr=0&lr=all&cd=0%7C0%7C0%7C3&cv=1&br=1609&bt=1609&cs=0&ds=3&ft=E3qina7To1xD12NvUkAgZIxRK657x3_45S2&mime_type=video_mp4&qs=0&rc=NDs2MztmNWdpaWc2MzU7Z0BpM3RwZTw6ZnRqaTMzNGkzM0BiLi5hYTMxXjAxLTY2NTY1YSMwamhncjRnYWVgLS1kLTBzcw%3D%3D&l=20230213160245D9E1B2003978C1DD4B59&btag=10000',
-      //     name: '五爱饰品-粉丝7098个-获赞3.0万',
-      //     time: '发布时间：2023-02-08 10:23',
-      //     filename: '五爱饰品-粉丝7098个-获赞3.0万-2702-#狂飙大嫂',
-      //   },
-      //   {
-      //     href: 'https://www.douyin.com/video/7199274672297479481',
-      //     like: '22',
-      //     likeNum: 45000,
-      //     title:
-      //       '0d黑丝真的太哇塞了吧！若隐若现轻薄透气～#斩男穿搭 #谁穿谁好看 #ootd穿搭 #纯欲穿搭 #开春搭配安排上了',
-      //     src: 'https://video-web-cn.douyin.com/940cacf5c0d3e979cc0a7212f45a768b/63e9fcbf/tos-cn-ve-15c001-alinc2/o0jGCColfBSIPAf9DAUUdk6QB6ALgRtDJU9zh4?a=6383&ch=0&cr=3&dr=0&cd=0%7C0%7C0%7C3&cv=1&br=1312&bt=1312&cs=0&ds=3&ft=CuEd.uqoQmo0PDweS_MaQ9GT.-Q4JE.C0&mime_type=video_mp4&qs=0&rc=NXZpTGRTaFBnKXVmfWVuZDFwekApaDc6ZmZpNWRmN2Q6OjhkM2cpdjs8bHg6dWRuZjMzajM1eXlTbGt2aXFEOmpibFxmK2BtYmJeYC42XzAtNTU1YzYtMC1iNS46Yy1mYWswNGBjY2MtLS5jLS06&l=20230213160249192421C4FA898F67C716&btag=8000&ply_type=3&policy=eyJ2bSI6MywidWlkIjoiMTA2NTE0NjM5NDc3In0%3D',
-      //     name: '琴琴好物-粉丝4335个-获赞4.5万',
-      //     time: '发布时间：2023-02-12 22:23',
-      //     filename:
-      //       '琴琴好物-粉丝4335个-获赞4.5万-22-0d黑丝真的太哇塞了吧！若隐若现轻薄透气～#斩男穿搭',
-      //   },
-      //   {
-      //     href: 'https://www.douyin.com/video/7199483745391430972',
-      //     like: '7',
-      //     likeNum: 45000,
-      //     title:
-      //       '#狂飙大嫂 #狂飙陈书婷 #大哥的女人 #陈淑婷同款耳饰 #网红爆款饰品',
-      //     src: 'https://v26-web.douyinvod.com/5d01f355a929d3a4c8347de68f9c9e36/63e9fd0d/video/tos/cn/tos-cn-ve-15c001-alinc2/oEIqpxQA6BNBHgeiLwUAHfhAltzPi9Ql6NFtHC/?a=6383&ch=26&cr=3&dr=0&lr=all&cd=0%7C0%7C0%7C3&cv=1&br=1623&bt=1623&cs=0&ds=3&ft=E3qina7To1xD12NvWEAgZIxRK657x3_45S2&mime_type=video_mp4&qs=0&rc=OzdmaWk1OThlN2U1Z2Q5O0BpajU0O2U6ZnB1aTMzNGkzM0A1MDMuNi0uXjYxMDNfMzE2YSMvLmpxcjRnMmhgLS1kLS9zcw%3D%3D&l=20230213160405474B55FEF5EF9D54E74D&btag=8000',
-      //     name: '琴琴好物-粉丝4335个-获赞4.5万',
-      //     time: '发布时间：2023-02-13 11:54',
-      //     filename: '琴琴好物-粉丝4335个-获赞4.5万-7-#狂飙大嫂',
-      //   },
-      // ]);
       db.find({}).exec((err, docs) => {
         console.log('docs: ', docs);
         if (err) {
