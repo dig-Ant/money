@@ -110,7 +110,7 @@ export default function HomePage() {
         </Form.Item> */}
 
         <Form.Item name="downloadFilename" label="文件夹名">
-          <Input />
+          <Input style={{ width: '105px' }} />
         </Form.Item>
 
         <Form.Item name="limitStart" label="start">

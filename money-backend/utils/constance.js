@@ -34,6 +34,9 @@ module.exports = {
   VIDEO_SRC_SELECTOR: '.xg-video-container video source',
   LIMIT: 100,
   INIT_VIEWPORT: { width: 1080, height: 800 },
+  TIME_OUT:{
+    timeout: 10 * 60 * 000,
+  },
   DEVTOOLS: false,
   STRINGNUM:
     'this.eval = function (like, type = true) {if (type) {if (like.includes("万")) {const [num] = like.split("万");return Number((+num * 10000).toFixed(0));} else {return Number(like);}}}',
