@@ -60,6 +60,10 @@ export const liveUserPageList: Option[] = [
     label: '美妆',
     children: [
       {
+        label: '小希姐高定饰品',
+        value: 'https://v.douyin.com/BQGDAPj/',
+      },
+      {
         label: '佛山市南海区幻月蓝化妆品店',
         value: 'https://live.douyin.com/877401283807',
       },
