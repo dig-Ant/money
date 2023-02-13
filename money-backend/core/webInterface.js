@@ -392,13 +392,11 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const { _id, userType, mode } = body || {};
-      console.log(userType);
       const db = new Datastore({
         filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
         timestampData: true,
       });
-      console.log(_id);
       db.find({ _id }, async (err, docs) => {
         if (err) {
           return res.json({
@@ -406,7 +404,6 @@ class WebInterface {
             errorMsg: err,
           });
         }
-        console.log(docs);
         const { code } = await this.pupp.start('feature_userLike', {
           list: docs[0].commentList,
           userType,

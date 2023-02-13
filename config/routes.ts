@@ -29,7 +29,7 @@ export default [
       },
       {
         path: '/fans/business',
-        component: './business/index',
+        component: './consumer/index',
         meta: {
           icon: 'DropboxOutlined',
           name: '同行',
@@ -37,7 +37,7 @@ export default [
       },
       {
         path: '/fans/aged',
-        component: './aged/index',
+        component: './consumer/index',
         meta: {
           icon: 'AlibabaOutlined',
           name: '大龄粉',

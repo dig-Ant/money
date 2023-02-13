@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useRequest, useDispatch } from 'umi';
+import { useSelector, useRequest, useDispatch, useLocation } from 'umi';
 import {
   Space,
   Table,
@@ -14,14 +14,18 @@ import {
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
-import { consumerUserPageList, copy, transformUrl } from '@/utils/common';
+import {
+  consumerUserPageList,
+  businessUserPageList,
+  agedUserPageList,
+  copy,
+  transformUrl,
+} from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
-import { modeOptions } from '@/utils/userPageList';
-console.log(consumerUserPageList);
 
-const userType = 'consumer';
 interface DataType {
+  _id: string;
   key: string;
   name: string;
   age: number;
@@ -34,7 +38,16 @@ export default function searchUser() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState([]);
-
+  const location = useLocation();
+  const userType = location.pathname.slice(6);
+  let CascaderOptions = consumerUserPageList;
+  if (userType == 'consumer') {
+    CascaderOptions = consumerUserPageList;
+  } else if (userType == 'business') {
+    CascaderOptions = businessUserPageList;
+  } else if (userType == 'aged') {
+    CascaderOptions = agedUserPageList;
+  }
   const { run } = useRequest(
     (data) => {
       return request(GET_DY_USERS, {
@@ -74,40 +87,62 @@ export default function searchUser() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'consumer',
+      title: 'num',
       dataIndex: 'commentList',
-      render: (val, record: any) => {
+      render: (val) => {
         const num = (val && val.length) || 0;
-        const commentList = record?.commentList || [];
+        const commentList = val || [];
         return (
-          <div>
-            <a
-              onClick={() => {
-                num && setIsModalOpen(true);
-                setCurrent(commentList);
-              }}
-            >
-              {num}
-            </a>
-          </div>
+          <a
+            onClick={() => {
+              num && setIsModalOpen(true);
+              setCurrent(commentList);
+            }}
+          >
+            {num}
+          </a>
         );
       },
     },
     {
       title: 'action',
+      width: 150,
       render: (_, record) => {
-        const { _id } = record || {};
         return (
-          <a
-            onClick={() => {
-              dispatch({
-                type: 'consumerPage/batchLike',
-                payload: { userType, _id },
-              });
-            }}
-          >
-            赞
-          </a>
+          <Space size="middle">
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: { userType, _id: record._id, mode: '点赞评论模式' },
+                });
+              }}
+            >
+              评论
+            </a>
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: { userType, _id: record._id, mode: '点赞关注模式' },
+                });
+              }}
+            >
+              关注
+            </a>
+            {userType === 'business' ? (
+              <a
+                onClick={() => {
+                  dispatch({
+                    type: 'businessPage/getVideoMsg',
+                    payload: { userType, _id: record._id },
+                  });
+                }}
+              >
+                获取主页视频信息
+              </a>
+            ) : null}
+          </Space>
         );
       },
     },
@@ -251,7 +286,7 @@ export default function searchUser() {
           </Button>
         </Form.Item>
         <Form.Item name="userURL">
-          <Cascader options={consumerUserPageList} placeholder="userURL" />
+          <Cascader options={CascaderOptions} placeholder="userURL" />
         </Form.Item>
         <Form.Item label="主页前" name="limitLen">
           <Input style={{ width: '42px' }} />
@@ -280,17 +315,6 @@ export default function searchUser() {
           >
             查询
           </Button>
-        </Form.Item>
-        <Form.Item name="mode">
-          <Radio.Group>
-            {modeOptions.map((e: any) => {
-              return (
-                <Radio value={e.value} key={e.value}>
-                  {e.label}
-                </Radio>
-              );
-            })}
-          </Radio.Group>
         </Form.Item>
       </Form>
       <Table

@@ -29,7 +29,7 @@ export const liveUserPageList: Option[] = [
     children: [
       {
         label: '睿文同学加油',
-        value: 'https://l ive.douyin.com/455397898090',
+        value: 'https://live.douyin.com/455397898090',
       },
       {
         label: '老孙学长',
