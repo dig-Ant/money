@@ -122,27 +122,27 @@ export const liveUserPageList: Option[] = [
       },
       {
         label: '英子（早上3点10分',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BQe6hcU/
+        value: 'https://live.douyin.com/683029500533',
       },
       {
         label: '神奇Aha',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BQeF6Yh/
+        value: 'https://live.douyin.com/20434217832',
       },
       {
         label: '寻TA服饰',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BxsUgBc/
+        value: 'https://live.douyin.com/525145038749',
       },
       {
         label: '思羽针织',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BxVo6Vw/
+        value: 'https://live.douyin.com/806329063465',
       },
       {
         label: 'ATSUGI厚木官方旗舰店',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BxVTVkb/
+        value: 'https://live.douyin.com/249775856401',
       },
       {
         label: '喜儿ula轻奢高定饰品',
-        value: 'https://live.douyin.com/', // https://v.douyin.com/BxBkFBH/
+        value: 'https://live.douyin.com/532521022310',
       },
     ],
   },

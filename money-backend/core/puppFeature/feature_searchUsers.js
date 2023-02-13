@@ -91,208 +91,212 @@ const feature_searchUsers = async function (params = {}) {
     );
     console.log('myFavorateVideos: ');
     console.log(myFavorateVideos);
-    await limitExec(async (item) => {
-      const { href } = item;
-      const videoPage = await browser.newPage();
-      await videoPage.goto(href);
-      try {
-        if (href.includes('video')) {
-          await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, {
-            timeout: 5000,
-          });
-          // 3.获取评论区用户的信息
-          let { src, user, commentList } = await videoPage.evaluate(
-            async (
+    await limitExec(
+      async (item) => {
+        const { href } = item;
+        const videoPage = await browser.newPage();
+        await videoPage.goto(href);
+        try {
+          if (href.includes('video')) {
+            await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, {
+              timeout: 5000,
+            });
+            // 3.获取评论区用户的信息
+            let { src, user, commentList } = await videoPage.evaluate(
+              async (
+                VIDEO_SRC_SELECTOR,
+                USER_INFO_LIST_SELECTOR,
+                COMMENT_LIST_SELECTOR,
+                commentLimitLen,
+                STRINGNUM,
+              ) => {
+                let StringToNum = new Function(STRINGNUM);
+                let StringToNumFun = new StringToNum();
+                videoSrc = document.querySelector(VIDEO_SRC_SELECTOR).src;
+                const user = document.querySelector(USER_INFO_LIST_SELECTOR);
+                const userSrc = user.children[1].querySelector('a').innerText;
+                const userName = user.children[1].querySelector('a').innerText;
+                const [fans, like] = user.children[1]
+                  .querySelector('p')
+                  .innerText.slice(2)
+                  .split('获赞');
+                // 获取评论
+                let commentList = [
+                  ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+                ];
+                // 获取对应数量为止
+                if (typeof commentLimitLen !== 'undefined') {
+                  while (
+                    commentList.length < commentLimitLen &&
+                    !commentList.at(-1).innerText.includes('没有')
+                  ) {
+                    window.scrollBy({ left: 0, top: 2 * window.innerHeight });
+                    await new Promise((res) => setTimeout(() => res(), 600));
+                    commentList = [
+                      ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+                    ];
+                  }
+                  commentList = commentList.slice(0, commentLimitLen);
+                }
+
+                commentList.splice(-1, 1);
+                console.log(commentList);
+                commentList = commentList.map((el) => {
+                  const userInfoEl = el.querySelector('div:nth-child(2)');
+                  if (!userInfoEl) return {};
+                  const userName = userInfoEl.querySelector('a').innerText;
+                  const userLike =
+                    userInfoEl.querySelector('.jtyFqENC').innerText;
+                  const activeTime =
+                    userInfoEl.querySelector('.L4ozKLf7').innerText;
+                  const comment = userInfoEl.querySelector('p').innerText;
+                  const createDate =
+                    userInfoEl.querySelector('.L4ozKLf7').innerText;
+                  const userLink = userInfoEl.querySelector('a').href;
+                  return {
+                    userName,
+                    userLike,
+                    activeTime,
+                    comment,
+                    createDate,
+                    userLink,
+                  };
+                });
+                console.log('fasdf1');
+                console.log(commentList);
+
+                // await new Promise((res) => setTimeout(() => res(), 50000));
+
+                return {
+                  src: videoSrc,
+                  user: {
+                    fans,
+                    like,
+                    src: userSrc,
+                    name: userName,
+                  },
+                  commentList,
+                };
+              },
               VIDEO_SRC_SELECTOR,
               USER_INFO_LIST_SELECTOR,
               COMMENT_LIST_SELECTOR,
               commentLimitLen,
               STRINGNUM,
-            ) => {
-              let StringToNum = new Function(STRINGNUM);
-              let StringToNumFun = new StringToNum();
-              videoSrc = document.querySelector(VIDEO_SRC_SELECTOR).src;
-              const user = document.querySelector(USER_INFO_LIST_SELECTOR);
-              const userSrc = user.children[1].querySelector('a').innerText;
-              const userName = user.children[1].querySelector('a').innerText;
-              const [fans, like] = user.children[1]
-                .querySelector('p')
-                .innerText.slice(2)
-                .split('获赞');
-              // 获取评论
-              let commentList = [
-                ...document.querySelector(COMMENT_LIST_SELECTOR).children,
-              ];
-              // 获取对应数量为止
-              if (typeof commentLimitLen !== 'undefined') {
-                while (
-                  commentList.length < commentLimitLen &&
-                  !commentList.at(-1).innerText.includes('没有')
-                ) {
-                  window.scrollBy({ left: 0, top: 2 * window.innerHeight });
-                  await new Promise((res) => setTimeout(() => res(), 600));
-                  commentList = [
-                    ...document.querySelector(COMMENT_LIST_SELECTOR).children,
-                  ];
-                }
-                commentList = commentList.slice(0, commentLimitLen);
-              }
-
-              commentList.splice(-1, 1);
-              console.log(commentList);
-              commentList = commentList.map((el) => {
-                const userInfoEl = el.querySelector('div:nth-child(2)');
-                if (!userInfoEl) return {};
-                const userName = userInfoEl.querySelector('a').innerText;
-                const userLike =
-                  userInfoEl.querySelector('.jtyFqENC').innerText;
-                const activeTime =
-                  userInfoEl.querySelector('.L4ozKLf7').innerText;
-                const comment = userInfoEl.querySelector('p').innerText;
-                const createDate =
-                  userInfoEl.querySelector('.L4ozKLf7').innerText;
-                const userLink = userInfoEl.querySelector('a').href;
-                return {
-                  userName,
-                  userLike,
-                  activeTime,
-                  comment,
-                  createDate,
-                  userLink,
-                };
-              });
-              console.log('fasdf1');
-              console.log(commentList);
-
-              // await new Promise((res) => setTimeout(() => res(), 50000));
-
-              return {
-                src: videoSrc,
-                user: {
-                  fans,
-                  like,
-                  src: userSrc,
-                  name: userName,
-                },
-                commentList,
-              };
-            },
-            VIDEO_SRC_SELECTOR,
-            USER_INFO_LIST_SELECTOR,
-            COMMENT_LIST_SELECTOR,
-            commentLimitLen,
-            STRINGNUM,
-          );
-          // console.log('src, user: ', src, user);
-          console.log('111过滤前的个数', commentList.length);
-          // console.log(commentList);
-          // 根据用户名是否含有好物关键字过滤，评论过滤
-          commentList = commentList.filter(({ userName, userLike }) => {
-            const isBusinessUser = IS_BUSINESS_USER(userName);
-            if (isBusinessUser && IS_CONSUMER_TYPE(userType)) return false;
-            if (!isBusinessUser && IS_BUSINESS_TYPE(userType)) return false;
-            // 找消费粉，当前评论的点赞小于5
-            if (STRING_TO_NUM_FUN(userLike) > 5 && IS_CONSUMER_TYPE(userType))
-              return false;
-            return true;
-            // 活跃评论时间1h内
-            // if (
-            //   !activeTime.includes('分钟') &&
-            //   userType === 'consumer'
-            // ) {
-            //   return null;
-            // }
-          });
-          item.src = src;
-          Object.assign(item, user);
-          console.log(
-            '222根据用户名是否含有好物关键字过滤，评论过滤，还剩个数',
-            commentList.length,
-          );
-          // console.log(commentList);
-          await limitExec(async (comment) => {
-            const videoPage = await browser.newPage();
-            try {
-              const { userLink } = comment;
-              await videoPage.goto(userLink);
-              // 获取用户
-              await videoPage.waitForSelector('.Nu66P_ba');
-              const userInfo = await videoPage.evaluate(
-                async (userType, STRINGNUM) => {
-                  let StringToNum = new Function(STRINGNUM);
-                  let StringToNumFun = new StringToNum();
-                  // 获取前6条标题
-                  let videoList = [
-                    ...(
-                      document.querySelector(
-                        '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
-                      ) || { children: [] }
-                    ).children,
-                  ];
-
-                  if (videoList.length <= 0) return null;
-                  videoList = videoList.slice(0, 6);
-                  const videoTitles = videoList.map((v) => v.innerText || '');
-                  const firstVideoSrc = videoList
-                    .filter((e) => !e.innerText.includes('置顶'))[0]
-                    .querySelector('a').href;
-                  const secondVideoSrc = videoList
-                    .filter((e) => !e.innerText.includes('置顶'))[1]
-                    .querySelector('a').href;
-                  const thirdVideoSrc = videoList
-                    .filter((e) => !e.innerText.includes('置顶'))[2]
-                    .querySelector('a').href;
-                  const gender = (age =
-                    (document.querySelector('.N4QS6RJT') || {}).innerText ||
-                    '');
-                  if (gender.includes('男')) return { errMsg: '男，不考虑' };
-                  const [follow, fans, like] = [
-                    ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
-                  ].map((v) => StringToNumFun.eval(v.innerText));
-                  if (fans > 550 && userType === 'consumer')
-                    return { errMsg: '消费粉粉丝数大于550，不考虑' };
-                  if (like > 1050 && userType === 'consumer')
-                    return { errMsg: '消费粉点赞数大于1050，不考虑' };
-                  return {
-                    gender,
-                    age,
-                    follow,
-                    fans,
-                    like,
-                    videoTitles,
-                    firstVideoSrc,
-                    secondVideoSrc,
-                    thirdVideoSrc,
-                  };
-                },
-                userType,
-                STRINGNUM,
-              );
-              if (userInfo) {
-                Object.assign(comment, userInfo);
-              }
-              videoPage.close();
-            } catch (error) {
-              videoPage.close();
-              console.log('error: ---', error);
-            }
-          }, commentList);
-          if (commentList) {
-            item.commentList = commentList.filter(
-              (v) => v.videoTitles && v.videoTitles.length > 0 && !v.errMsg,
             );
+            // console.log('src, user: ', src, user);
+            console.log('111过滤前的个数', commentList.length);
+            // console.log(commentList);
+            // 根据用户名是否含有好物关键字过滤，评论过滤
+            commentList = commentList.filter(({ userName, userLike }) => {
+              const isBusinessUser = IS_BUSINESS_USER(userName);
+              if (isBusinessUser && IS_CONSUMER_TYPE(userType)) return false;
+              if (!isBusinessUser && IS_BUSINESS_TYPE(userType)) return false;
+              // 找消费粉，当前评论的点赞小于5
+              if (STRING_TO_NUM_FUN(userLike) > 5 && IS_CONSUMER_TYPE(userType))
+                return false;
+              return true;
+              // 活跃评论时间1h内
+              // if (
+              //   !activeTime.includes('分钟') &&
+              //   userType === 'consumer'
+              // ) {
+              //   return null;
+              // }
+            });
+            item.src = src;
+            Object.assign(item, user);
+            console.log(
+              '222根据用户名是否含有好物关键字过滤，评论过滤，还剩个数',
+              commentList.length,
+            );
+            // console.log(commentList);
+            await limitExec(async (comment) => {
+              const videoPage = await browser.newPage();
+              try {
+                const { userLink } = comment;
+                await videoPage.goto(userLink);
+                // 获取用户
+                await videoPage.waitForSelector('.Nu66P_ba');
+                const userInfo = await videoPage.evaluate(
+                  async (userType, STRINGNUM) => {
+                    let StringToNum = new Function(STRINGNUM);
+                    let StringToNumFun = new StringToNum();
+                    // 获取前6条标题
+                    let videoList = [
+                      ...(
+                        document.querySelector(
+                          '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
+                        ) || { children: [] }
+                      ).children,
+                    ];
+
+                    if (videoList.length <= 0) return null;
+                    videoList = videoList.slice(0, 6);
+                    const videoTitles = videoList.map((v) => v.innerText || '');
+                    const firstVideoSrc = videoList
+                      .filter((e) => !e.innerText.includes('置顶'))[0]
+                      .querySelector('a').href;
+                    const secondVideoSrc = videoList
+                      .filter((e) => !e.innerText.includes('置顶'))[1]
+                      .querySelector('a').href;
+                    const thirdVideoSrc = videoList
+                      .filter((e) => !e.innerText.includes('置顶'))[2]
+                      .querySelector('a').href;
+                    const gender = (age =
+                      (document.querySelector('.N4QS6RJT') || {}).innerText ||
+                      '');
+                    if (gender.includes('男')) return { errMsg: '男，不考虑' };
+                    const [follow, fans, like] = [
+                      ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
+                    ].map((v) => StringToNumFun.eval(v.innerText));
+                    if (fans > 550 && userType === 'consumer')
+                      return { errMsg: '消费粉粉丝数大于550，不考虑' };
+                    if (like > 1050 && userType === 'consumer')
+                      return { errMsg: '消费粉点赞数大于1050，不考虑' };
+                    return {
+                      gender,
+                      age,
+                      follow,
+                      fans,
+                      like,
+                      videoTitles,
+                      firstVideoSrc,
+                      secondVideoSrc,
+                      thirdVideoSrc,
+                    };
+                  },
+                  userType,
+                  STRINGNUM,
+                );
+                if (userInfo) {
+                  Object.assign(comment, userInfo);
+                }
+                videoPage.close();
+              } catch (error) {
+                videoPage.close();
+                console.log('error: ---', error);
+              }
+            }, commentList);
+            if (commentList) {
+              item.commentList = commentList.filter(
+                (v) => v.videoTitles && v.videoTitles.length > 0 && !v.errMsg,
+              );
+            }
+            item.src = src;
+            item.user = user;
           }
-          item.src = src;
-          item.user = user;
+          // const src = await videoPage.$eval(videoSelect, (source) => {
+          //   return source.src;
+          // });
+        } catch (error) {
+          console.log('获取评论报错----', error);
         }
-        // const src = await videoPage.$eval(videoSelect, (source) => {
-        //   return source.src;
-        // });
-      } catch (error) {
-        console.log('获取评论报错----', error);
-      }
-      videoPage.close();
-    }, myFavorateVideos.slice(0, 2));
+        videoPage.close();
+      },
+      myFavorateVideos.slice(0, 2),
+      1,
+    );
     const [_, partPath] = createDownloadPath(downloadFilename);
 
     fs.writeFileSync(
