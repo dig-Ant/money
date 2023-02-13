@@ -16,6 +16,7 @@ export const consumerUserPageList: Option[] = [
       },
     ],
   },
+
   {
     value: '母婴/幼儿--女宝',
     label: 'baby',
@@ -29,6 +30,11 @@ export const consumerUserPageList: Option[] = [
         label: '小盛夏👧🏼',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAr_FGd1QaMJdIM-BsZYb4xOPkGtYmUkW5av4ldq6bKK8',
+      },
+      {
+        label: '小麦',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAmYL3yHLQ7c6ISC5QIcisrh4mxw6DtiEdmqf2u__d2kI',
       },
     ],
   },

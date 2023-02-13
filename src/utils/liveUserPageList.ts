@@ -28,7 +28,7 @@ export const liveUserPageList: Option[] = [
     children: [
       {
         label: '睿文同学加油',
-        value: 'https://live.douyin.com/455397898090',
+        value: 'https://l ive.douyin.com/455397898090',
       },
       {
         label: '老孙学长',
@@ -38,6 +38,20 @@ export const liveUserPageList: Option[] = [
         label: '北大满哥-早6：50直播',
         value: 'https://live.douyin.com/896737105098',
       },
+    ],
+  },
+  {
+    value: '黑丝',
+    label: '黑丝',
+    children: [
+      {
+        label: 'ATSUGI厚木官方旗舰店',
+        value: 'https://live.douyin.com/249775856401',
+      },
+      {
+        label:'袜裤姐妹👭',
+        value:'https://live.douyin.com/578753356959/'
+      }
     ],
   },
   {
