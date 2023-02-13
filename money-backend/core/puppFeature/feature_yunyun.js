@@ -4,6 +4,7 @@ const {
   INIT_VIEWPORT,
   STRINGNUM,
   MY_USER_LINK,
+  TIME_OUT,
 } = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
@@ -27,10 +28,10 @@ const feature_yunyun = async function (params) {
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
     if (url.includes('showTab')) {
-      await page.goto(url);
+      await page.goto(url, TIME_OUT);
     } else {
       const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl);
+      await page.goto(gotoUrl, TIME_OUT);
     }
   } catch (error) {
     await browser.close();
@@ -42,7 +43,7 @@ const feature_yunyun = async function (params) {
     const resultsSelector =
       '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
     // const resultsSelector = '[data-e2e="scroll-list"] li a';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(resultsSelector, TIME_OUT);
 
     const myFavorateVideos = await page.evaluate(
       async (resultsSelector, limitStart, limitEnd, STRINGNUM) => {
@@ -67,7 +68,7 @@ const feature_yunyun = async function (params) {
           const [like, title = ''] = el.innerText.split('\n\n');
           return {
             href,
-            userlike:like,
+            userlike: like,
             userlikeNum: StringToNumFun.eval(like),
             title,
             // filename: `${like}-${title.split(' ')[0]}`,
@@ -87,14 +88,12 @@ const feature_yunyun = async function (params) {
       const { href } = item;
       const videoPage = await browser.newPage();
       try {
-        await videoPage.goto(href);
+        await videoPage.goto(href, TIME_OUT);
         const userSelect = '[data-e2e="user-info"]';
         let userInfo = {};
         if (href.includes('video')) {
           const videoSelect = '.xg-video-container video source';
-          await videoPage.waitForSelector(videoSelect, {
-            timeout: 5000,
-          });
+          await videoPage.waitForSelector(videoSelect, TIME_OUT);
           userInfo = await videoPage.evaluate(
             (videoSelect, userSelect, STRINGNUM) => {
               let StringToNum = new Function(STRINGNUM);
@@ -135,7 +134,7 @@ const feature_yunyun = async function (params) {
                 .querySelector('p')
                 .innerText.slice(2)
                 .split('获赞');
-                like =like.replace('图文\n','')
+              like = like.replace('图文\n', '');
               return {
                 // videoSrc,
                 time,

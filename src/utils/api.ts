@@ -20,6 +20,7 @@ export const LOGOUT_PUP = '/v1/logoutPup';
 
 // 下载抖音视频资源到本地
 export const GET_DY_RESOURCE = '/v1/getDyResource';
+export const EXEC_DY_DOWNLIST = '/v1/getDyDownloadList';
 
 // 获取前n条收藏视频的视频信息和作者信息
 export const GET_DY_YUNYUN = '/v1/getDyYunyun';

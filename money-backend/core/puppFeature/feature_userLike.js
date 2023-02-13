@@ -2,6 +2,7 @@ const {
   GET_COMMENT1,
   GET_COMMENT2,
   COMMENT_LIST_SELECTOR,
+  TIME_OUT,
 } = require('../../utils/constance');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
@@ -17,14 +18,20 @@ const feature_userLike = async function (params) {
 
     for (i = 0; i < list.length; i++) {
       const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
-      console.log('firstVideoSrc: ', firstVideoSrc);
+      console.log('firstVideoSrc1111: ', firstVideoSrc);
       if (firstVideoSrc && firstVideoSrc.includes('video')) {
         try {
           const newPage = await browser.newPage();
           // await newPage.setViewport({ width: 1080, height: 800 });
-          await newPage.goto(firstVideoSrc);
+          console.log('firstVideoSrc222: ', firstVideoSrc);
+          await newPage.goto(firstVideoSrc, TIME_OUT);
+          console.log('firstVideoSrc333: ', firstVideoSrc);
           // 检测到有视频为止
-          await newPage.waitForSelector('.xg-video-container video source');
+          await newPage.waitForSelector(
+            '.xg-video-container video source',
+            TIME_OUT,
+          );
+          console.log('firstVideoSrc444: ', firstVideoSrc);
           //类名 点赞kr4MM4DQ 有红心的NILc2fGS
           // 获取评论区用户的信息
           let hasQin = await newPage.evaluate(async (COMMENT_LIST_SELECTOR) => {
@@ -89,9 +96,12 @@ const feature_userLike = async function (params) {
           try {
             const newPage = await browser.newPage();
             // await newPage.setViewport({ width: 1080, height: 800 });
-            await newPage.goto(secondVideoSrc);
+            await newPage.goto(secondVideoSrc, TIME_OUT);
             // 检测到有视频为止
-            await newPage.waitForSelector('.xg-video-container video source');
+            await newPage.waitForSelector(
+              '.xg-video-container video source',
+              TIME_OUT,
+            );
 
             // 获取评论区用户的信息
             let hasQin = await newPage.evaluate(

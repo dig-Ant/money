@@ -20,6 +20,7 @@ const {
   IS_BUSINESS_USER,
   STRING_TO_NUM_FUN,
   GET_URL,
+  TIME_OUT,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
@@ -35,7 +36,7 @@ const feature_searchUsers = async function (params = {}) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
-    devtools: false,
+    devtools: true,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -44,7 +45,7 @@ const feature_searchUsers = async function (params = {}) {
   // 1.打开我的主页里，喜欢/收藏的列表页
   try {
     userURL = GET_URL(userURL, type);
-    await page.goto(userURL);
+    await page.goto(userURL, TIME_OUT);
   } catch (error) {
     console.log('主页打开失败', error);
     await browser.close();
@@ -53,7 +54,7 @@ const feature_searchUsers = async function (params = {}) {
 
   // 2.获取我的主页里，喜欢/收藏的列表页的数据
   try {
-    await page.waitForSelector(VIDEO_LIST_SELECTOR);
+    await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
     const myFavorateVideos = await page.evaluate(
       async (VIDEO_LIST_SELECTOR, limitLen, userType, STRINGNUM) => {
         let StringToNum = new Function(STRINGNUM);
@@ -95,12 +96,13 @@ const feature_searchUsers = async function (params = {}) {
       async (item) => {
         const { href } = item;
         const videoPage = await browser.newPage();
-        await videoPage.goto(href);
+        console.log('href111: ', href);
+        await videoPage.goto(href, TIME_OUT);
+        console.log('href222: ', href);
         try {
           if (href.includes('video')) {
-            await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, {
-              timeout: 5000,
-            });
+            await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, TIME_OUT);
+            console.log('href333: ', href);
             // 3.获取评论区用户的信息
             let { src, user, commentList } = await videoPage.evaluate(
               async (
@@ -215,9 +217,9 @@ const feature_searchUsers = async function (params = {}) {
               const videoPage = await browser.newPage();
               try {
                 const { userLink } = comment;
-                await videoPage.goto(userLink);
+                await videoPage.goto(userLink, TIME_OUT);
                 // 获取用户
-                await videoPage.waitForSelector('.Nu66P_ba');
+                await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
                 const userInfo = await videoPage.evaluate(
                   async (userType, STRINGNUM) => {
                     let StringToNum = new Function(STRINGNUM);
@@ -294,7 +296,7 @@ const feature_searchUsers = async function (params = {}) {
         }
         videoPage.close();
       },
-      myFavorateVideos.slice(0, 2),
+      myFavorateVideos.slice(0, 1),
       1,
     );
     const [_, partPath] = createDownloadPath(downloadFilename);

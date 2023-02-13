@@ -1,4 +1,5 @@
 const { limitExec } = require('../../utils/common');
+const { TIME_OUT } = require('../../utils/constance');
 const { delay, getToday } = require('../../utils/index');
 
 // TODO 搜索列表功能
@@ -15,7 +16,7 @@ const feature_comment = async function (params = {}) {
 
   await page.setViewport({ width: 1080, height: 800 });
   try {
-    await page.goto(keyword);
+    await page.goto(keyword, TIME_OUT);
   } catch (error) {
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
@@ -23,9 +24,7 @@ const feature_comment = async function (params = {}) {
   // 获取列表数据
   const resultsSelector =
     '.tMWlo89q .BOJBWh64 .comment-mainContent[data-e2e="comment-list"] div[data-e2e="comment-item"]';
-  await page.waitForSelector(
-    '.tMWlo89q .BOJBWh64 .comment-mainContent[data-e2e="comment-list"] div[data-e2e="comment-item"] a',
-  );
+  await page.waitForSelector(`${resultsSelector} a`, TIME_OUT);
   // [...document.querySelectorAll('[data-e2e="comment-list"]>li>div')]
   try {
     const dataSource = await page.evaluate(
@@ -41,7 +40,9 @@ const feature_comment = async function (params = {}) {
         }
         eleList = eleList.map((el, i) => {
           const payload = {};
-          payload.user = el.querySelector('.comment-item-info-wrap .Nu66P_ba').innerText;
+          payload.user = el.querySelector(
+            '.comment-item-info-wrap .Nu66P_ba',
+          ).innerText;
           payload.userLink = el.querySelector('.B3AsdZT9').href;
           payload.content = el.querySelector(
             '.RHiEl2d8 .a9uirtCT .Nu66P_ba',

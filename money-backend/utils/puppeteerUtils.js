@@ -9,7 +9,7 @@ const hrefClassMap = {
   user: 'Eie04v01',
 };
 const getHref = async (page, url, className) => {
-  await page.goto(url, { timeout: 0 }); // 进入页面
+  await page.goto(url, TIME_OUT); // 进入页面
   await delay(5000);
   const hrefList = await page.$$eval(`#root .${className} a`, (e) =>
     e.map((v) => v.href),
@@ -34,7 +34,7 @@ const getHref = async (page, url, className) => {
 const getKeyboardHref = async (page, text) => {
   await page.goto(
     'https://www.douyin.com/search/新?publish_time=0&sort_type=1&source=tab_search&type=video',
-    { timeout: 0 },
+    TIME_OUT,
   );
   await delay(10000);
   await page.type('.igFQqPKs', text, { delay: 0 });
@@ -50,7 +50,7 @@ const getSrc = async (page, videoArr) => {
   let i = 0,
     videoSrcArr = [];
   while (i < videoArr.length) {
-    await page.goto(videoArr[i].href, { timeout: 0 });
+    await page.goto(videoArr[i].href, TIME_OUT);
     await delay(2000);
     const src = await page.$$eval('#root video source', (e) => {
       return e[0].src;
@@ -148,16 +148,16 @@ const downFile = async (arr, file) => {
       path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
       JSON.stringify(arr),
     );
-    fs.writeFileSync(
-      path.resolve(__dirname, `${mkdirPath}/${pathname}-time.json`),
-      JSON.stringify(
-        arr.sort((q, w) => {
-          let time1 = new Date(q.time.slice(5));
-          let time2 = new Date(w.time.slice(5));
-          return time1.getTime() - time2.getTime();
-        }),
-      ),
-    );
+    // fs.writeFileSync(
+    //   path.resolve(__dirname, `${mkdirPath}/${pathname}-time.json`),
+    //   JSON.stringify(
+    //     arr.sort((q, w) => {
+    //       let time1 = new Date(q.time.slice(5));
+    //       let time2 = new Date(w.time.slice(5));
+    //       return time1.getTime() - time2.getTime();
+    //     }),
+    //   ),
+    // );
   } catch (error) {
     console.log('数据文件下载失败', error);
   }

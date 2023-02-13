@@ -5,6 +5,7 @@ const {
   MY_USER_LINK,
   VIDEO_LIST_SELECTOR,
   GET_URL,
+  TIME_OUT,
 } = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downFile, createDownloadPath } = puppeteerUtils;
@@ -26,8 +27,9 @@ const feature_downloadVideo = async function (params) {
   // 打开列表页
   try {
     userURL = GET_URL(userURL, type);
-    console.log(userURL);
-    await page.goto(userURL);
+    console.log('userURL: ', userURL);
+    await page.goto(userURL, TIME_OUT);
+    console.log('userURL: ', userURL);
   } catch (error) {
     console.log(error);
     await browser.close();
@@ -36,8 +38,9 @@ const feature_downloadVideo = async function (params) {
 
   try {
     // 获取列表数据
-    await page.waitForSelector(VIDEO_LIST_SELECTOR);
-
+    console.log('VIDEO_LIST_SELECTOR: ', VIDEO_LIST_SELECTOR);
+    await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
+    console.log('VIDEO_LIST_SELECTOR: ', VIDEO_LIST_SELECTOR);
     const dataSource = await page.evaluate(
       async (VIDEO_LIST_SELECTOR, limitStart, limitEnd, STRINGNUM) => {
         let StringToNum = new Function(STRINGNUM);
@@ -47,9 +50,6 @@ const feature_downloadVideo = async function (params) {
           ...document.querySelectorAll('[data-e2e="scroll-list"] li>a'),
         ];
         // 获取对应数量为止
-        console.log(eleList);
-        console.log('limitStart: ', limitStart);
-        console.log('limitEnd: ', limitEnd);
         if (
           typeof limitStart !== 'undefined' &&
           typeof limitEnd !== 'undefined'
@@ -65,7 +65,6 @@ const feature_downloadVideo = async function (params) {
           eleList = eleList.slice(limitStart, limitEnd);
         }
         console.log(eleList);
-        // debugger;
         eleList = eleList.map((el) => {
           const href = el.href;
           const [like, title = ''] = el.innerText.split('\n\n');
@@ -92,6 +91,10 @@ const feature_downloadVideo = async function (params) {
     dataSource.sort((a, b) => {
       return b.likeNum - a.likeNum;
     });
+    dataSource = dataSource.map((e) => {
+      e.index = index + 1;
+      return e;
+    });
 
     //  获取无水印 src
     await limitExec(
@@ -100,23 +103,21 @@ const feature_downloadVideo = async function (params) {
         if (href && href.includes('note')) return;
         const videoPage = await browser.newPage();
         try {
-          await videoPage.goto(href);
+          await videoPage.goto(href, TIME_OUT);
           const videoSelect = '.xg-video-container video source';
           const userSelect = '[data-e2e="user-info"]';
-          await videoPage.waitForSelector(videoSelect, {
-            timeout: 5000,
-          });
+          await videoPage.waitForSelector(videoSelect, TIME_OUT);
           // const src = await videoPage.$eval(videoSelect, (source) => {
           //   return source.src;
           // });
-          const { src, user, time } = await videoPage.evaluate(
+
+          const { src, likeNum, name, time } = await videoPage.evaluate(
             (videoSelect, userSelect, STRINGNUM) => {
               let StringToNum = new Function(STRINGNUM);
               let StringToNumFun = new StringToNum();
               const videoSrc = document.querySelector(videoSelect).src;
               const time = document.querySelector('.aQoncqRg').innerText;
               const user = document.querySelector(userSelect);
-              const userSrc = user.children[1].querySelector('a').innerText;
               const userName = user.children[1].querySelector('a').innerText;
               const [fans, like] = user.children[1]
                 .querySelector('p')
@@ -125,39 +126,33 @@ const feature_downloadVideo = async function (params) {
               return {
                 src: videoSrc,
                 time,
-                user: {
-                  fans,
-                  like,
-                  likeNum: StringToNumFun.eval(like),
-                  src: userSrc,
-                  name: userName,
-                },
+                likeNum: StringToNumFun.eval(like),
+                name: `${userName}-粉丝${fans}个-获赞${like}`,
               };
             },
             videoSelect,
             userSelect,
             STRINGNUM,
           );
-
+          console.log('src, likeNum, name, time: ', src, likeNum, name, time);
           // if(user){
           //   item.user = user.substring(1).split('· ')[0];
           //   item.createDate = user.substring(1).split('· ')[1];
           // }
           item.src = src;
-          item.user = user;
+          item.likeNum = likeNum;
+          item.name = name;
           item.time = time;
-          item.filename = `${user.name}-${item.like}-${
-            item.title.split(' ')[0]
-          }`;
+          item.filename = `${name}-${item.like}-${item.title.split(' ')[0]}`;
         } catch (error) {
           console.log('获取无水印视频报错----', error);
         }
         videoPage.close();
       },
       dataSource,
-      5,
+      2,
     );
-
+    console.log('dataSource: ', dataSource);
     await downFile(dataSource, {
       pathname: downloadFilename,
     });

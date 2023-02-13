@@ -1,4 +1,5 @@
 const { limitExec } = require('../../utils/common');
+const { TIME_OUT } = require('../../utils/constance');
 const { delay, getToday } = require('../../utils/index');
 
 // TODO 搜索列表功能
@@ -20,7 +21,7 @@ const feature_search = async function (params = {}) {
     keyword,
   )}?publish_time=0&sort_type=1&source=tab_search&type=video`;
   try {
-    await page.goto(gotoUrl);
+    await page.goto(gotoUrl, TIME_OUT);
   } catch (error) {
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
@@ -30,6 +31,7 @@ const feature_search = async function (params = {}) {
     '.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"]>li>div';
   await page.waitForSelector(
     '.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"] li>div a',
+    TIME_OUT,
   );
   // [...document.querySelectorAll('.FtarROQM .J122YuOM div[style="display:block"]>[data-e2e="scroll-list"]>li>div')]
   try {

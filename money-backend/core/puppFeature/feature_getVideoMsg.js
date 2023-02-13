@@ -3,6 +3,7 @@ const {
   GET_COMMENT2,
   INIT_VIEWPORT,
   STRINGNUM,
+  TIME_OUT,
 } = require('../../utils/constance');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
@@ -21,7 +22,7 @@ const feature_getVideoMsg = async function (params) {
       const { userLink } = item || {};
       console.log(userLink);
       try {
-        await page.goto(userLink);
+        await page.goto(userLink, TIME_OUT);
         console.log('用户主页打开成功');
       } catch (error) {
         await browser.close();
@@ -32,7 +33,7 @@ const feature_getVideoMsg = async function (params) {
         // 2.获取用户主页视频数据
         const resultsSelector =
           '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
-        await page.waitForSelector(resultsSelector);
+        await page.waitForSelector(resultsSelector, TIME_OUT);
         const [user, eleList] = await page.evaluate(
           async (resultsSelector, STRINGNUM) => {
             let StringToNum = new Function(STRINGNUM);

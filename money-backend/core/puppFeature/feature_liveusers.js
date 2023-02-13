@@ -12,6 +12,7 @@ const {
   GET_COMMENT2,
   INIT_VIEWPORT,
   IS_BUSINESS_USER,
+  TIME_OUT,
 } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
@@ -33,7 +34,7 @@ const feature_liveusers = async function (params = {}) {
   await page.setViewport({ width: 980, height: 1000 });
   //   await page.setViewport(INIT_VIEWPORT);
   try {
-    await page.goto(userURL);
+    await page.goto(userURL, TIME_OUT);
   } catch (error) {
     console.log('直播页打开失败', error);
     await browser.close();
@@ -44,8 +45,8 @@ const feature_liveusers = async function (params = {}) {
     // 获取列表数据
     const resultsSelector =
       '#audiencePanelScrollId .lazyload-wrapper:nth-child(1) .xVcgegQm.jDfuWYRH';
-    await page.waitForSelector('[data-e2e="basicPlayer"]');
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector('[data-e2e="basicPlayer"]', TIME_OUT);
+    await page.waitForSelector(resultsSelector, TIME_OUT);
     // await page.mouse.move(27, 77);
     // await page.mouse.wheel({ deltaY: -500 });
     await page.evaluate(async () => {
@@ -115,7 +116,10 @@ const feature_liveusers = async function (params = {}) {
           name !== '琴琴好物' &&
           !IS_BUSINESS_USER(name)
         ) {
-          await page.waitForSelector('#portal .SllfYJTY button:nth-child(2)');
+          await page.waitForSelector(
+            '#portal .SllfYJTY button:nth-child(2)',
+            TIME_OUT,
+          );
           await page.click('#portal .SllfYJTY button:nth-child(2)');
           await delay(1000);
           // 4.再点一次隐藏弹框
@@ -134,7 +138,7 @@ const feature_liveusers = async function (params = {}) {
           // 5.获取主页视频信息
           const pages = await browser.pages();
           const videoPage = pages[2];
-          await videoPage.waitForSelector('.Nu66P_ba');
+          await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
           const userInfo = await videoPage.evaluate(async () => {
             let videoList = [
               ...(

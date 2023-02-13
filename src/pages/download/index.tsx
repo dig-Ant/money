@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
 
 import {
@@ -15,7 +15,7 @@ import {
   Radio,
 } from 'antd';
 import request from '@/utils/request';
-import { GET_DY_RESOURCE } from '@/utils/api';
+import { EXEC_DY_DOWNLIST, GET_DY_RESOURCE } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy, transformUrl } from '@/utils/common';
@@ -48,7 +48,33 @@ export default function HomePage() {
       },
     },
   );
-  console.log('data: ', loading, data);
+  let {
+    run: listRun,
+    data: listData = [],
+    error: listError,
+    loading: listLoading,
+  } = useRequest(
+    (data) => {
+      return request(EXEC_DY_DOWNLIST, {
+        method: 'post',
+        data,
+      }).then((res) => res?.data);
+    },
+    {
+      manual: true,
+      onSuccess: (result, params) => {
+        return;
+      },
+    },
+  );
+  useEffect(() => {
+    listRun({});
+  }, []);
+  console.log('listData: ', listData);
+  listData = listData.map((e: any) => {
+    e.publishTime = new Date(e.time.slice(5)).getTime();
+    return e;
+  });
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
     run({ ...values, userURL: transformUrl(values.userURL) });
@@ -56,26 +82,30 @@ export default function HomePage() {
   const columns: ColumnsType<DataType> = [
     {
       title: '用户',
-      dataIndex: ['user', 'name'],
+      dataIndex: 'name',
+    },
+    {
+      title: '赞',
+      dataIndex: 'like',
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.like - b.like,
+    },
+    {
+      title: '发布时间',
+      dataIndex: 'time',
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.publishTime - b.publishTime,
+      width: 150,
+      render: (val) => <span>{val && val.slice(7)}</span>,
     },
     {
       title: '标题',
       dataIndex: 'title',
       render: (val, record: Record<string, any>) => {
-        const {
-          href = 'javaScript:void(0);',
-          name = '',
-          likeNum,
-        } = record || {};
+        const { href = 'javaScript:void(0);' } = record || {};
         return (
-          <a
-            href={href}
-            target="_blank"
-            onClick={() => {
-              copy(val);
-            }}
-          >
-            {likeNum}-{val}
+          <a href={href} target="_blank">
+            {val}
           </a>
         );
       },
@@ -95,12 +125,17 @@ export default function HomePage() {
           downloadFilename: '巧克力',
           type: 'favorite_collection',
           limitStart: 0,
-          limitEnd: 20,
+          limitEnd: 3,
         }}
         // wrapperCol={{span: 0, offset: 0}}
         // labelCol={{ span: 0, offset: 0 }}
         colon={false}
       >
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            下载
+          </Button>
+        </Form.Item>
         <Form.Item name="userURL" label="link">
           <Input />
         </Form.Item>
@@ -132,22 +167,17 @@ export default function HomePage() {
           </Radio.Group>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
-        </Form.Item>
-        <Form.Item>
           <Button
             htmlType="button"
             onClick={() => {
-              form.resetFields();
+              listRun({});
             }}
           >
-            重置
+            查询
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data?.data.list || []} />
+      <Table columns={columns} dataSource={listData || []} />
     </div>
   );
 }

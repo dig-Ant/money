@@ -1,5 +1,5 @@
 const { limitExec } = require('../../utils/common');
-const { INIT_VIEWPORT, STRINGNUM } = require('../../utils/constance');
+const { INIT_VIEWPORT, STRINGNUM, TIME_OUT } = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downProductmsg, createDownloadPath } = puppeteerUtils;
 
@@ -11,7 +11,7 @@ const feature_productmsg = async function (params) {
   });
   await page.setViewport(INIT_VIEWPORT);
   try {
-    await page.goto(url);
+    await page.goto(url, TIME_OUT);
     console.log('用户主页打开成功');
   } catch (error) {
     await browser.close();
@@ -22,7 +22,7 @@ const feature_productmsg = async function (params) {
     // 2.获取用户主页视频数据
     const resultsSelector =
       '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(resultsSelector, TIME_OUT);
     const [user, eleList] = await page.evaluate(async (resultsSelector) => {
       let StringToNum = new Function(STRINGNUM);
       let StringToNumFun = new StringToNum();

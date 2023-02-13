@@ -5,7 +5,7 @@ const fs = require('fs');
 const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
-const { MY_USER_LINK } = require('../../utils/constance');
+const { MY_USER_LINK, TIME_OUT } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_getText = async function (params = {}) {
@@ -31,10 +31,10 @@ const feature_getText = async function (params = {}) {
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
     if (url.includes('showTab')) {
-      await page.goto(url);
+      await page.goto(url, TIME_OUT);
     } else {
       const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl);
+      await page.goto(gotoUrl, TIME_OUT);
     }
   } catch (error) {
     console.log('列表页打开失败', error);
@@ -45,7 +45,7 @@ const feature_getText = async function (params = {}) {
   try {
     // 获取点赞列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a .__0w4MvO';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(resultsSelector, TIME_OUT);
     const dataSource = await page.evaluate(
       async (resultsSelector, limitLen, userType) => {
         let eleList = [...document.querySelectorAll(resultsSelector)];

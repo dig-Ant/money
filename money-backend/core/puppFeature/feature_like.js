@@ -9,6 +9,7 @@ const {
   GET_COMMENT1,
   GET_COMMENT2,
   MY_USER_LINK,
+  TIME_OUT,
 } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
@@ -32,10 +33,10 @@ const feature_like = async function (params = {}) {
   let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
     if (url.includes('showTab')) {
-      await page.goto(url);
+      await page.goto(url, TIME_OUT);
     } else {
       const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl);
+      await page.goto(gotoUrl, TIME_OUT);
     }
   } catch (error) {
     console.log('列表页打开失败', error);
@@ -46,7 +47,7 @@ const feature_like = async function (params = {}) {
   try {
     // 获取列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a';
-    await page.waitForSelector(resultsSelector);
+    await page.waitForSelector(resultsSelector, TIME_OUT);
     const dataSource = await page.evaluate(
       async (resultsSelector, limitLen) => {
         let eleList = [...document.querySelectorAll(resultsSelector)];
@@ -83,9 +84,12 @@ const feature_like = async function (params = {}) {
       try {
         const newPage = await browser.newPage();
         // await newPage.setViewport({ width: 1080, height: 800 });
-        await newPage.goto(dataSource[i].href);
+        await newPage.goto(dataSource[i].href, TIME_OUT);
         // 检测到有视频为止
-        await newPage.waitForSelector('.xg-video-container video source');
+        await newPage.waitForSelector(
+          '.xg-video-container video source',
+          TIME_OUT,
+        );
         //类名 点赞kr4MM4DQ 有红心的NILc2fGS
         // await newPage.click('.kr4MM4DQ:nth-child(1):not(.NILc2fGS)');
         await delay(3000);
