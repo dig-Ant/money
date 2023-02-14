@@ -48,6 +48,16 @@ export const businessUserPageList: Option[] = [
     label: '全品类',
     children: [
       {
+        label: '小颖好物',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAIffNageL7ftKI-ublUZs3v1eGu8T1VW2rzjXHKaZVxTfEhdDvyLtt-0yj2p2HqHr',
+      },
+      {
+        label: '大开好物分享',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAs8eex9FDtgSNqmTg6ICk9xtQQ497nzVOWuG52_NQwluwS5D74cbLv6wA9i7X3dfp',
+      },
+      {
         label: '思娇好物',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAOw8CezlYWY9b5x_NAvzYgv1CRWgF01CzjXieZ18yifRaWuBhPHPZN6xDC5k7gM8Z',

@@ -22,6 +22,21 @@ export const consumerUserPageList: Option[] = [
     label: 'baby',
     children: [
       {
+        label: '粉团小莘莘❤',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAA6ft4vTxyToHrx_Vd_cIKCGGf_FKbB1rAPmDrTnnBoxE',
+      },
+      {
+        label: '爱捣鼓的小仙儿',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAANpPYio7BrbmitoqGXoa44by7SK50m8xXCWx2zd6vU_c',
+      },
+      {
+        label: '樱桃🍒小丸子',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAxItbUzdZu33kFipvQ7X4a4fvxmzkvo5dZnqWRyCubZ4',
+      },
+      {
         label: '沐言开心酱',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA5HhsD-onh_O8HDqpra58UYvLz6tNKsFtlm1u5NyvFjpjkWyqeq36gbkyghG3OuVc',
