@@ -9,7 +9,7 @@ const { MY_USER_LINK, TIME_OUT, GET_URL } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_getText = async function (params = {}) {
-  const {
+  let {
     url = MY_USER_LINK,
     limitLen = 1,
     type = '',
@@ -27,7 +27,8 @@ const feature_getText = async function (params = {}) {
 
   // 打开点赞列表页
   try {
-    url = GET_URL(url);
+    url = GET_URL(url, type);
+    console.log('url: ', url);
     await page.goto(url, TIME_OUT);
   } catch (error) {
     console.log('列表页打开失败', error);
