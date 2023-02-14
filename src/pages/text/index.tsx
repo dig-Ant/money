@@ -13,11 +13,13 @@ import {
   notification,
   Radio,
   Modal,
+  Select,
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_TEXT } from '@/utils/api';
 import { copy } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
+import { textUserList } from '@/utils/userPageList';
 
 interface DataType {
   key: string;
@@ -198,7 +200,11 @@ export default function searchUser() {
           {/* <Input style={{ width: '55px' }} /> */}
         </Form.Item>
         <Form.Item name="url" label="url">
-          <Input style={{ width: '55px' }} />
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            options={textUserList}
+          />
         </Form.Item>
 
         <Form.Item>

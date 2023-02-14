@@ -5,15 +5,13 @@ const fs = require('fs');
 const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
-const { MY_USER_LINK, TIME_OUT } = require('../../utils/constance');
+const { MY_USER_LINK, TIME_OUT, GET_URL } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_getText = async function (params = {}) {
   const {
     url = MY_USER_LINK,
     limitLen = 1,
-    commentLimitLen = 100,
-    downloadFilename = '',
     type = '',
     isLogin = true,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
@@ -28,14 +26,9 @@ const feature_getText = async function (params = {}) {
   await page.setViewport({ width: 1080, height: 800 });
 
   // 打开点赞列表页
-  let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
-    if (url.includes('showTab')) {
-      await page.goto(url, TIME_OUT);
-    } else {
-      const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl, TIME_OUT);
-    }
+    url = GET_URL(url);
+    await page.goto(url, TIME_OUT);
   } catch (error) {
     console.log('列表页打开失败', error);
     await browser.close();

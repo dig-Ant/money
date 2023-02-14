@@ -273,7 +273,6 @@ export default function searchUser() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
-          isLogin: false,
           type: 'like',
           limitLen: 1,
           commentLimitLen: 270,
@@ -288,7 +287,7 @@ export default function searchUser() {
         <Form.Item name="userURL">
           <Cascader options={CascaderOptions} placeholder="userURL" />
         </Form.Item>
-        <Form.Item label="主页前" name="limitLen">
+        <Form.Item label="主页第" name="index">
           <Input style={{ width: '42px' }} />
         </Form.Item>
         <Form.Item name="type" label="条">

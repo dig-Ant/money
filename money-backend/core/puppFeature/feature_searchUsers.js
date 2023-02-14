@@ -26,7 +26,7 @@ const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
   let {
     userURL = MY_USER_LINK,
-    limitLen = 1,
+    index = 0,
     commentLimitLen = LIMIT,
     downloadFilename = '',
     type = '',
@@ -36,7 +36,7 @@ const feature_searchUsers = async function (params = {}) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
-    devtools: true,
+    devtools: false,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -55,50 +55,36 @@ const feature_searchUsers = async function (params = {}) {
   // 2.获取我的主页里，喜欢/收藏的列表页的数据
   try {
     await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
-    const myFavorateVideos = await page.evaluate(
-      async (VIDEO_LIST_SELECTOR, limitLen, userType, STRINGNUM) => {
+    const myVideo = await page.evaluate(
+      async (VIDEO_LIST_SELECTOR, index, userType, STRINGNUM) => {
         let StringToNum = new Function(STRINGNUM);
         let StringToNumFun = new StringToNum();
         // 获取到对应数量的视频为止
-        let eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
-        if (typeof limitLen !== 'undefined') {
-          while (eleList.length < limitLen) {
-            window.scrollBy({ left: 0, top: 2 * window.innerHeight });
-            await new Promise((res) => setTimeout(() => res(), 1000));
-            eleList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)];
-          }
-          eleList = eleList.slice(0, limitLen);
-        }
-        eleList = eleList
-          .map((el) => {
-            const href = el.href;
-            const [like, title = ''] = el.innerText.split('\n\n');
-            return {
-              userType,
-              href,
-              like,
-              likeNum: StringToNumFun.eval(like),
-              title,
-              filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
-            };
-          })
-          .filter((e) => !e.like.includes('置顶'));
-        return eleList;
+        let ele = document.querySelectorAll(VIDEO_LIST_SELECTOR)[index];
+        const [like, title = ''] = ele.innerText.split('\n\n');
+        return {
+          userType,
+          href: ele.href,
+          like,
+          likeNum: StringToNumFun.eval(like),
+          title,
+          filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
+        };
       },
       VIDEO_LIST_SELECTOR,
-      limitLen,
+      index,
       userType,
       STRINGNUM,
     );
-    console.log('myFavorateVideos: ');
-    console.log(myFavorateVideos);
+    console.log('myVideo: ');
+    console.log(myVideo);
     await limitExec(
       async (item) => {
         const { href } = item;
+        console.log(href);
+        console.log('href: ', href);
         const videoPage = await browser.newPage();
-        console.log('href111: ', href);
         await videoPage.goto(href, TIME_OUT);
-        console.log('href222: ', href);
         try {
           if (href.includes('video')) {
             await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, TIME_OUT);
@@ -140,7 +126,6 @@ const feature_searchUsers = async function (params = {}) {
                   }
                   commentList = commentList.slice(0, commentLimitLen);
                 }
-
                 commentList.splice(-1, 1);
                 console.log(commentList);
                 commentList = commentList.map((el) => {
@@ -296,8 +281,7 @@ const feature_searchUsers = async function (params = {}) {
         }
         videoPage.close();
       },
-      myFavorateVideos.slice(0, 1),
-      1,
+      [myVideo],
     );
     const [_, partPath] = createDownloadPath(downloadFilename);
 
@@ -308,11 +292,11 @@ const feature_searchUsers = async function (params = {}) {
           'HH:mm:ss',
         )}.json`,
       ),
-      JSON.stringify(myFavorateVideos),
+      JSON.stringify(myVideo),
     );
 
-    await browser.close();
-    return myFavorateVideos;
+    // await browser.close();
+    return myVideo;
   } catch (error) {
     console.log('error: ', error);
     await browser.close();

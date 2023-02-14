@@ -30,12 +30,12 @@ module.exports = {
   // https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v
   MY_USER_LINK:
     'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA',
-  VIDEO_LIST_SELECTOR: '[data-e2e="scroll-list"] li a', // .mwo84cvf>div:last-child [data-e2e="scroll-list"] li a
+  VIDEO_LIST_SELECTOR: '[data-e2e="scroll-list"] li a.chmb2GX8', // .mwo84cvf>div:last-child [data-e2e="scroll-list"] li a
   VIDEO_SRC_SELECTOR: '.xg-video-container video source',
   LIMIT: 100,
   INIT_VIEWPORT: { width: 1080, height: 800 },
-  TIME_OUT:{
-    timeout: 10 * 60 * 000,
+  TIME_OUT: {
+    timeout: 4 * 000,
   },
   DEVTOOLS: false,
   STRINGNUM:
@@ -89,6 +89,7 @@ module.exports = {
     return comments[commenti2];
   },
   GET_URL: function (url, type) {
+    if (url != this.MY_USER_LINK) return url;
     let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
     if (url.includes('showTab')) {
       return url;

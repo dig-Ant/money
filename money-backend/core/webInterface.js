@@ -369,7 +369,8 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
-      if (list.code == -1) return;
+      console.log('list: ', list);
+      // if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
