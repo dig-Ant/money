@@ -83,11 +83,13 @@ export default function HomePage() {
     {
       title: '用户',
       dataIndex: 'name',
+      width: 150,
     },
     {
       title: '赞',
       dataIndex: 'like',
       defaultSortOrder: 'descend',
+      width: 100,
       sorter: (a: any, b: any) => a.like - b.like,
     },
     {
@@ -177,7 +179,12 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={listData || []} />
+      <Table
+        columns={columns}
+        pagination={false}
+        scroll={{ y: 500 }}
+        dataSource={listData || []}
+      />
     </div>
   );
 }

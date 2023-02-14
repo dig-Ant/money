@@ -22,6 +22,7 @@ const feature_downloadVideo = async function (params) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_downloadVideo',
+    isLogin: true,
   });
   await page.setViewport(INIT_VIEWPORT);
   // 打开列表页
@@ -41,7 +42,7 @@ const feature_downloadVideo = async function (params) {
     console.log('VIDEO_LIST_SELECTOR: ', VIDEO_LIST_SELECTOR);
     await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
     console.log('VIDEO_LIST_SELECTOR: ', VIDEO_LIST_SELECTOR);
-    const dataSource = await page.evaluate(
+    let dataSource = await page.evaluate(
       async (VIDEO_LIST_SELECTOR, limitStart, limitEnd, STRINGNUM) => {
         let StringToNum = new Function(STRINGNUM);
         let StringToNumFun = new StringToNum();

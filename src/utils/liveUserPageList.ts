@@ -117,6 +117,10 @@ export const liveUserPageList: Option[] = [
     label: 'home',
     children: [
       {
+        label:'五季好物',
+        value:'https://v.douyin.com/BXKV9LG/'
+      },
+      {
         label: '爱上做饭的小娘子',
         value: 'https://live.douyin.com/699789496585',
       },
