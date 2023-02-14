@@ -80,10 +80,23 @@ export default function HomePage() {
     run({ ...values, userURL: transformUrl(values.userURL) });
   };
   const columns: ColumnsType<DataType> = [
+    // {
+    //   title: '_id',
+    //   dataIndex: '_id',
+    //   width: 100,
+    // },
+    {
+      title: 'i',
+      dataIndex: 'index',
+      width: 50,
+    },
     {
       title: '用户',
       dataIndex: 'name',
       width: 150,
+      render: (val, record: Record<string, any>) => {
+        return <span>{val.split('-')[0]}</span>;
+      },
     },
     {
       title: '赞',

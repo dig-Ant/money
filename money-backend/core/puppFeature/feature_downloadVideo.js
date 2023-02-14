@@ -23,6 +23,7 @@ const feature_downloadVideo = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_downloadVideo',
     isLogin: true,
+    devtools: false,
   });
   await page.setViewport(INIT_VIEWPORT);
   // 打开列表页
@@ -88,7 +89,7 @@ const feature_downloadVideo = async function (params) {
     console.log(dataSource);
     // 按照点赞排序 高->低
     dataSource.sort((a, b) => {
-      return b.likeNum - a.likeNum;
+      return b.like - a.like;
     });
     dataSource = dataSource.map((e, index) => {
       e.index = index + 1;

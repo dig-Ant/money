@@ -94,6 +94,17 @@ class WebInterface {
       db.insert(dataSource, (err, docs) => {
         resHandle(res, err, docs);
       });
+      // const db = new Datastore({
+      //   filename: path.resolve(__dirname, `../db/download.json`),
+      //   autoload: true,
+      //   timestampData: true,
+      // });
+      // db.insert(
+      //   [],
+      //   (err, docs) => {
+      //     resHandle(res, err, docs);
+      //   },
+      // );
     });
 
     // 查询下载列表

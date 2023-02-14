@@ -161,7 +161,6 @@ const downFile = async (arr, file) => {
   } catch (error) {
     console.log('数据文件下载失败', error);
   }
-
   let i = 0;
   while (arr[i]) {
     try {
