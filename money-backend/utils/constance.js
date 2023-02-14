@@ -25,6 +25,20 @@ const BUSINESS_NAME = [
   '宝贝',
   '生活',
 ];
+const MATE_NAME = [
+  '哥',
+  '斌',
+  '涛',
+  '军',
+  '勇',
+  '亮',
+  '康',
+  '峰 ',
+  '锋 ',
+  '龙',
+  '虎',
+  '男',
+];
 module.exports = {
   // searchUser
   // https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v
@@ -47,6 +61,11 @@ module.exports = {
   IS_BUSINESS_TYPE: (v) => v === 'business',
   IS_BUSINESS_USER: function (username) {
     return !!BUSINESS_NAME.some((val) => {
+      return username.includes(val);
+    });
+  },
+  IS_MATE: function (username) {
+    return !!MATE_NAME.some((val) => {
       return username.includes(val);
     });
   },

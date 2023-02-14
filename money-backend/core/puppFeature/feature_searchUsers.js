@@ -21,6 +21,7 @@ const {
   STRING_TO_NUM_FUN,
   GET_URL,
   TIME_OUT,
+  IS_MATE,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
@@ -176,6 +177,8 @@ const feature_searchUsers = async function (params = {}) {
             // console.log(commentList);
             // 根据用户名是否含有好物关键字过滤，评论过滤
             commentList = commentList.filter(({ userName, userLike }) => {
+              const isMateUser = IS_MATE(userName);
+              if (isMateUser) return false;
               const isBusinessUser = IS_BUSINESS_USER(userName);
               if (isBusinessUser && IS_CONSUMER_TYPE(userType)) return false;
               if (!isBusinessUser && IS_BUSINESS_TYPE(userType)) return false;
