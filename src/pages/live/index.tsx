@@ -225,7 +225,11 @@ export default function searchUser() {
               <Button
                 type="link"
                 onClick={() => {
-                  copy(textList.join(''));
+                  copy(
+                    textList
+                      .sort((a: any, b: any) => b.length - a.length)
+                      .join(''),
+                  );
                   window.open(
                     location.origin + '/search?v=' + textList.join(''),
                   );
@@ -338,13 +342,15 @@ export default function searchUser() {
           onClick={() => {
             copy(
               JSON.stringify(
-                current.map((e: any) => {
-                  return e.videoTitles[0]
-                    .split('\n')
-                    .slice(-1)[0]
-                    .split(/[#|\s]/)
-                    .join(' ');
-                }),
+                current
+                  .map((e: any) => {
+                    return e.videoTitles[0]
+                      .split('\n')
+                      .slice(-1)[0]
+                      .split(/[#|\s]/)
+                      .join(' ');
+                  })
+                  .sort((a: any, b: any) => b.length - a.length),
               ),
             );
           }}

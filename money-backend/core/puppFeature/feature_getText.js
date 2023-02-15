@@ -5,7 +5,12 @@ const fs = require('fs');
 const moment = require('moment');
 const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
-const { MY_USER_LINK, TIME_OUT, GET_URL } = require('../../utils/constance');
+const {
+  MY_USER_LINK,
+  TIME_OUT,
+  GET_URL,
+  VIDEO_LIST_SELECTOR,
+} = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_getText = async function (params = {}) {
@@ -40,8 +45,10 @@ const feature_getText = async function (params = {}) {
     // 获取点赞列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a .__0w4MvO';
     await page.waitForSelector(resultsSelector, TIME_OUT);
+    await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
+
     const dataSource = await page.evaluate(
-      async (resultsSelector, limitLen, userType) => {
+      async (resultsSelector, limitLen, VIDEO_LIST_SELECTOR) => {
         let eleList = [...document.querySelectorAll(resultsSelector)];
         // 获取对应数量为止
         if (typeof limitLen !== 'undefined') {
@@ -52,10 +59,14 @@ const feature_getText = async function (params = {}) {
           }
           eleList = eleList.slice(0, limitLen);
         }
-        eleList = eleList.map((el) => {
+        let hrefList = [...document.querySelectorAll(VIDEO_LIST_SELECTOR)].map(
+          (e) => e.href,
+        );
+        eleList = eleList.map((el, i) => {
           const [title = ''] = el.innerText.split('\n\n');
           return {
             title,
+            href: hrefList[i],
             // filename: `${title?.split(' ')?.[0] || '无标题'}`,
           };
         });
@@ -63,7 +74,7 @@ const feature_getText = async function (params = {}) {
       },
       resultsSelector,
       limitLen,
-      userType,
+      VIDEO_LIST_SELECTOR,
     );
 
     // fs.writeFileSync(

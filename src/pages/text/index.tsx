@@ -66,7 +66,7 @@ export default function searchUser() {
       title: '文案',
       dataIndex: 'title',
       render: (val, record: Record<string, any>) => {
-        const { title = '' } = record || {};
+        const { title = '', href = '' } = record || {};
         let textList = title.split(/[#|\s]/);
         return (
           <div>
@@ -75,10 +75,24 @@ export default function searchUser() {
               size="small"
               style={{ padding: 0 }}
               onClick={() => {
-                copy(textList.join(''));
+                copy(
+                  textList
+                    .sort((a: any, b: any) => b.length - a.length)
+                    .join(''),
+                );
               }}
             >
               total
+            </Button>
+
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                window.open(location.origin + '/text/comment?v=' + href);
+              }}
+            >
+              获取评论
             </Button>
             {textList.map((e: string, i: number) => {
               return (
@@ -133,7 +147,11 @@ export default function searchUser() {
             <Button
               type="link"
               onClick={() => {
-                copy(textList.join(''));
+                copy(
+                  textList
+                    .sort((a: any, b: any) => b.length - a.length)
+                    .join(''),
+                );
                 window.open(location.origin + '/search?v=' + textList.join(''));
               }}
             >
@@ -213,7 +231,13 @@ export default function searchUser() {
             onClick={() => {
               console.log(list);
 
-              copy(JSON.stringify(list.map((e: any) => e.title)));
+              copy(
+                JSON.stringify(
+                  list
+                    .map((e: any) => e.title)
+                    .sort((a: any, b: any) => b.length - a.length),
+                ),
+              );
             }}
           >
             copy

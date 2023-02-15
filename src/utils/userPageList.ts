@@ -21,6 +21,16 @@ export const videoNote = [
 ];
 export const textUserList = [
   {
+    label: '兔姐姐',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAQYewMumiY0tQke_VRnMKxp2hPASHyJe4YJNOMrOS70j23RR2Jbf5YCn4NdRYTdzG',
+  },
+  {
+    label: '浩子',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAu8qwDm1-muGuMhZZ-tVzyPVWlUxIbQRNJN_9k83OhWU',
+  },
+  {
     label: '粉团小莘莘❤',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAA6ft4vTxyToHrx_Vd_cIKCGGf_FKbB1rAPmDrTnnBoxE',

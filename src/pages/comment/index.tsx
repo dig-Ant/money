@@ -198,7 +198,11 @@ export default function HomePage() {
                 const textList = content.split(/[#|\s]/);
                 return textList.join();
               });
-              copy(JSON.stringify(res));
+              copy(
+                JSON.stringify(
+                  res.sort((a: any, b: any) => b.length - a.length),
+                ),
+              );
             }}
           >
             copy

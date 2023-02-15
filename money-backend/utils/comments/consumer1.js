@@ -6,4 +6,4 @@
 // ',
 const weekily = require('./weekily');
 const text = require('./text');
-module.exports = [...text.爱捣鼓的小仙儿, ...weekily.miss];
+module.exports = [...text.浩子, ...text.爱捣鼓的小仙儿, ...weekily.miss];

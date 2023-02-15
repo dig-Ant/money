@@ -56,7 +56,7 @@ const columns: ColumnsType<DataType> = [
             type="link"
             size="small"
             onClick={() => {
-              window.open(location.origin + '/comment?v=' + userLink);
+              window.open(location.origin + '/text/comment?v=' + userLink);
             }}
           >
             获取评论
@@ -67,7 +67,9 @@ const columns: ColumnsType<DataType> = [
             size="small"
             style={{ padding: 0 }}
             onClick={() => {
-              copy(textList.join(''));
+              copy(
+                textList.sort((a: any, b: any) => b.length - a.length).join(''),
+              );
             }}
           >
             total
@@ -177,10 +179,12 @@ export default function HomePage() {
           <Button
             htmlType="button"
             onClick={() => {
-              const res = list.map(({ title }) => {
-                const textList = title.split(/[#|\s]/);
-                return textList.join();
-              });
+              const res = list
+                .map(({ title }) => {
+                  const textList = title.split(/[#|\s]/);
+                  return textList.join();
+                })
+                .sort((a: any, b: any) => b.length - a.length);
               copy(JSON.stringify(res));
             }}
           >
