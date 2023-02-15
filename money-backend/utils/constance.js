@@ -119,6 +119,12 @@ module.exports = {
   },
 };
 /**
+// let query = qs.stringify(
+//   { a: 1, b: '2', c: [1, 2], d: { d1: 1 } },
+//   { arrayFormat: 'repeat', addQueryPrefix: true },
+// );
+// let queryObj = qs.parse(query, { arrayFormat: 'repeat' , ignoreQueryPrefix: true });
+
 let StringToNum = new Function('this.eval = function (like, type = true) {if (type) {if (like.includes("万")) {const [num] = like.split("万");return Number((+num * 10000).toFixed(0));} else {return Number(like);}}}');
 let StringToNumFun = new StringToNum()
 StringToNumFun.eval('1万');

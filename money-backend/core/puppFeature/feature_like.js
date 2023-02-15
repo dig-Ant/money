@@ -29,15 +29,9 @@ const feature_like = async function (params = {}) {
 
   await page.setViewport({ width: 1080, height: 800 });
 
-  // 打开列表页
-  let query = qs.stringify({ showTab: type }, { arrayFormat: 'repeat' });
   try {
-    if (url.includes('showTab')) {
-      await page.goto(url, TIME_OUT);
-    } else {
-      const gotoUrl = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
-      await page.goto(gotoUrl, TIME_OUT);
-    }
+    url = GET_URL(url, type);
+    await page.goto(url, TIME_OUT);
   } catch (error) {
     console.log('列表页打开失败', error);
     await browser.close();
