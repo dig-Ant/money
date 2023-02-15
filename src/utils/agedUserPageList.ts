@@ -9,6 +9,11 @@ export const agedUserPageList: Option[] = [
     value: 'all',
     children: [
       {
+        label: '兔姐姐',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAQYewMumiY0tQke_VRnMKxp2hPASHyJe4YJNOMrOS70j23RR2Jbf5YCn4NdRYTdzG',
+      },
+      {
         label: '世外丹云一陈家大姐',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAPTkq3uJcJMbeqwgIvRJQ5nZ-qV4xWGQYNHScBeoz_ss',
