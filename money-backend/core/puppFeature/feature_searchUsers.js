@@ -157,11 +157,27 @@ const feature_searchUsers = async function (params = {}) {
       //   return null;
       // }
     });
-    Object.assign(myVideo, { fans, like, name, commentList });
+    // 去重
+    let commitListRes = [];
+    for (let i = 0; i < commentList.length; i++) {
+      const commentItem = commentList[i];
+      const has = commitListRes.find(
+        (e) =>
+          e.userLink === commentItem.userLink &&
+          e.userName === commentItem.userName,
+      );
+      console.log(has);
+      if (!has && commentItem.userName !== '琴琴好物') {
+        commitListRes.push(commentItem);
+        console.log(commitListRes);
+      }
+    }
+    Object.assign(myVideo, { fans, like, name });
     console.log(
-      '根据用户名是否含有好物关键字过滤，评论过滤，还剩',
-      commentList.length,
+      '根据用户名是否含有好物关键字过滤，评论过滤，去重，还剩',
+      commitListRes.length,
     );
+    console.log(commitListRes);
     await limitExec(async (comment) => {
       try {
         const videoPage = await browser.newPage();
@@ -241,12 +257,12 @@ const feature_searchUsers = async function (params = {}) {
         videoPage.close();
         console.log('error: ---', error);
       }
-    }, commentList);
-    if (commentList) {
-      myVideo.commentList = commentList.filter(
+    }, commitListRes);
+    if (commitListRes) {
+      myVideo.commentList = commitListRes.filter(
         (v) => v.videoTitles && v.videoTitles.length > 0 && !v.errMsg,
       );
-      myVideo.followList = commentList.filter((v) => v.type == '关注');
+      myVideo.followList = commitListRes.filter((v) => v.type == '关注');
     }
     videoPage.close();
     const [_, partPath] = createDownloadPath(downloadFilename);
