@@ -147,7 +147,7 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={listData || []} />
+      <Table columns={columns} pagination={false} dataSource={listData || []} />
       <Modal
         title=""
         width="85%"
@@ -161,6 +161,7 @@ export default function HomePage() {
         footer={null}
       >
         <Table
+          pagination={false}
           scroll={{ y: '75vh' }}
           columns={videoCols}
           rowKey="_id"

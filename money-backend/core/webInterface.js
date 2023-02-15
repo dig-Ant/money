@@ -341,8 +341,8 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
-      const start = Math.floor((Number(page) - 1) * Number(pageSize));
-      const end = Math.floor(start + Number(pageSize));
+      // const start = Math.floor((Number(page) - 1) * Number(pageSize));
+      // const end = Math.floor(start + Number(pageSize));
 
       db.find({
         userType,
@@ -361,9 +361,9 @@ class WebInterface {
               code: 0,
               data: {
                 total: docs.length,
-                list: docs.slice(start, end),
-                page: Number(page),
-                pageSize: Number(pageSize),
+                list: docs, //.slice(start, end),
+                // page: Number(page),
+                // pageSize: Number(pageSize),
               },
             });
           }

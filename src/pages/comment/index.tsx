@@ -132,7 +132,7 @@ export default function HomePage() {
       keyword = 'http' + keyword.split('http')[1];
     }
 
-    run({...values,keyword});
+    run({ ...values, keyword });
   };
   return (
     <div>
@@ -205,7 +205,12 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table scroll={{ x: true }} columns={columns} dataSource={list} />
+      <Table
+        scroll={{ x: true }}
+        pagination={false}
+        columns={columns}
+        dataSource={list}
+      />
     </div>
   );
 }

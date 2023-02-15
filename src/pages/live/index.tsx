@@ -306,9 +306,10 @@ export default function searchUser() {
         </Form.Item>
       </Form>
       <Table
-        scroll={{ x: true }}
+        scroll={{ x: true, y: 500 }}
         columns={columns}
         dataSource={list}
+        pagination={false}
         rowKey="_id"
         // pagination={{
         //   total,
@@ -353,6 +354,7 @@ export default function searchUser() {
         </Button>
         <Table
           scroll={{ y: '75vh' }}
+          pagination={false}
           columns={commentCols}
           dataSource={current}
           rowKey="_id"
