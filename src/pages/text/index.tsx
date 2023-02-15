@@ -221,8 +221,9 @@ export default function searchUser() {
         </Form.Item>
       </Form>
       <Table
-        scroll={{ x: true }}
+        scroll={{ x: true, y: 500 }}
         columns={columns}
+        pagination={false}
         dataSource={list}
         rowKey="_id"
       />
@@ -243,6 +244,7 @@ export default function searchUser() {
           scroll={{ y: '75vh' }}
           columns={commentCols}
           dataSource={current}
+          pagination={false}
           rowKey="_id"
         />
       </Modal>

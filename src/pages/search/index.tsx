@@ -188,7 +188,12 @@ export default function HomePage() {
           </Button>
         </Form.Item>
       </Form>
-      <Table scroll={{ x: true }} columns={columns} dataSource={list} />
+      <Table
+        scroll={{ x: true }}
+        pagination={false}
+        columns={columns}
+        dataSource={list}
+      />
     </div>
   );
 }
