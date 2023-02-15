@@ -453,11 +453,18 @@ class WebInterface {
             errorMsg: err,
           });
         }
-        const { code } = await this.pupp.start('feature_userLike', {
-          list: docs[0].commentList,
-          userType,
-          mode,
-        });
+        let code;
+        if (mode == '点赞关注模式') {
+          code = await this.pupp.start('feature_userFollow', {
+            list: docs[0].followList,
+            userType,
+          }).code;
+        } else {
+          code = await this.pupp.start('feature_userLike', {
+            list: docs[0].commentList,
+            userType,
+          }).code;
+        }
         if (code !== 0) {
           return res.json({
             code: -1,

@@ -13,8 +13,7 @@ const feature_userLike = async function (params) {
     devtools: false,
   });
   try {
-    const { list = [], userType, mode } = params || {};
-    console.log('userType, mode: ', userType, mode);
+    const { list = [], userType } = params || {};
 
     for (i = 0; i < list.length; i++) {
       const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
@@ -63,25 +62,18 @@ const feature_userLike = async function (params) {
           console.log('hasQin: ', hasQin);
           if (!hasQin) {
             await delay(3000);
-            if (mode == '点赞关注模式') {
-              await newPage.click(
-                'div[data-e2e="related-video"]>div[data-e2e="user-info"] .YYdcMMWF .B10aL8VQ.gPRZQy7u.vMQD6aai',
-              );
-              await delay(3000);
-            } else {
-              await newPage.keyboard.down('Z');
-              await newPage.keyboard.up('Z');
-              await delay(1000);
-              await newPage.click('.public-DraftStyleDefault-block');
-              // await newPage.keyboard.down('Control');
-              // await newPage.keyboard.press('V');
-              // await newPage.keyboard.up('Control');
-              await delay(5000); // data-text
-              await newPage.keyboard.type(GET_COMMENT1(userType));
-              await delay(2000);
-              await newPage.keyboard.press('Enter'); // 回车
-              await delay(3000);
-            }
+            await newPage.keyboard.down('Z');
+            await newPage.keyboard.up('Z');
+            await delay(1000);
+            await newPage.click('.public-DraftStyleDefault-block');
+            // await newPage.keyboard.down('Control');
+            // await newPage.keyboard.press('V');
+            // await newPage.keyboard.up('Control');
+            await delay(5000); // data-text
+            await newPage.keyboard.type(GET_COMMENT1(userType));
+            await delay(2000);
+            await newPage.keyboard.press('Enter'); // 回车
+            await delay(3000);
           }
           newPage.close();
         } catch (error) {
@@ -135,25 +127,19 @@ const feature_userLike = async function (params) {
             if (!hasQin) {
               //类名 点赞kr4MM4DQ 有红心的NILc2fGS
               await delay(3000);
-              if (mode == '点赞关注模式') {
-                await newPage.click(
-                  'div[data-e2e="related-video"]>div[data-e2e="user-info"] .YYdcMMWF .B10aL8VQ.gPRZQy7u.vMQD6aai',
-                );
-                await delay(3000);
-              } else {
-                await newPage.keyboard.down('Z');
-                await newPage.keyboard.up('Z');
-                await newPage.click('.public-DraftStyleDefault-block');
-                // await newPage.keyboard.down('Control');
-                // await newPage.keyboard.press('V');
-                // await newPage.keyboard.up('Control');
-                await delay(5000); // data-text
-                await delay(1000);
-                await newPage.keyboard.type(GET_COMMENT2(userType));
-                await delay(2000);
-                await newPage.keyboard.press('Enter'); // 回车
-                await delay(3000);
-              }
+
+              await newPage.keyboard.down('Z');
+              await newPage.keyboard.up('Z');
+              await newPage.click('.public-DraftStyleDefault-block');
+              // await newPage.keyboard.down('Control');
+              // await newPage.keyboard.press('V');
+              // await newPage.keyboard.up('Control');
+              await delay(5000); // data-text
+              await delay(1000);
+              await newPage.keyboard.type(GET_COMMENT2(userType));
+              await delay(2000);
+              await newPage.keyboard.press('Enter'); // 回车
+              await delay(3000);
             }
             newPage.close();
           } catch (error) {

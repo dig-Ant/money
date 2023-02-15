@@ -250,7 +250,7 @@ export default function searchUser() {
   list = list.map((e: any) => {
     if (e.commentList) {
       e.commentList = e.commentList.filter((e: any) => {
-        return e.age && e.age.replace('岁', '') - 0 < 40;
+        return e.gender && e.gender.replace('岁', '') - 0 < 40;
       });
     }
     return e;
