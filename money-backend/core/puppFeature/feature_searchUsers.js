@@ -44,7 +44,7 @@ const feature_searchUsers = async function (params = {}) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
-    devtools: true,
+    devtools: false,
     ...(isLogin ? {} : { userDataDir: undefined }),
   });
 
@@ -180,8 +180,8 @@ const feature_searchUsers = async function (params = {}) {
                 like,
                 type: '关注',
               };
-            const videoTitles = videoList.map((v) => v.innerText || '');
             videoList = videoList.slice(0, 6);
+            const videoTitles = videoList.map((v) => v.innerText || '');
             const firstVideoSrc = videoList[0].querySelector('a').href;
             const secondVideoSrc = videoList[1]
               ? videoList[1].querySelector('a').href
@@ -212,7 +212,7 @@ const feature_searchUsers = async function (params = {}) {
         console.log('error: ---', error);
       }
     }, commentList);
-    console.log(commentList);
+    // console.log(commentList);
     commentList = NOT_SVG_MATE(commentList);
     console.log('==========根据svg过滤男', commentList.length);
     let sepeRes = FILTER_BUSINESS(commentList);
@@ -225,18 +225,20 @@ const feature_searchUsers = async function (params = {}) {
       commentList = FILTER_FANS_LIKE(commentList);
       console.log('==========消费粉过滤粉丝和获赞数高的', commentList.length);
     }
+    const followList = commentList.filter((v) => v.type == '关注');
+    console.log(commentList);
+    commentList = commentList.filter(
+      (v) => v.videoTitles && v.videoTitles.length > 0 && !v.type == '关注',
+    );
     // 2.符合的，一部分放在db1 一部分放在db2
     Object.assign(myVideo, {
       fans,
       like,
       name,
-      commentList: commentList.filter(
-        (v) => v.videoTitles && v.videoTitles.length > 0 && !v.type == '关注',
-      ),
-      followList: commentList.filter((v) => v.type == '关注'),
+      commentList,
+      followList,
       businessList,
     });
-
     videoPage.close();
     const [_, partPath] = createDownloadPath(downloadFilename);
 

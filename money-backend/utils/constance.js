@@ -124,7 +124,7 @@ module.exports = {
     return commentList.filter((e) => !IS_MATE(e.userName));
   },
   NOT_SVG_MATE(commentList) {
-    return commentList.filter((e) => e.svgHtml.includes('woman'));
+    return commentList.filter((e) => e.svgHtml && e.svgHtml.includes('woman'));
   },
   LESS_FIVE(commentList) {
     return commentList.filter((e) => STRING_TO_NUM_FUN(e.userLike) < 5);
