@@ -156,6 +156,8 @@ const feature_searchUsers = async function (params = {}) {
             // 1.过滤男和粉丝点赞多的
             const svgHtml =
               (document.querySelector('.N4QS6RJT') || {}).innerHTML || '';
+            const gender =
+              (document.querySelector('.N4QS6RJT') || {}).innerText || '';
             const ip =
               (document.querySelector('.a83NyFJ4') || {}).innerText || '';
             const [follow, fans, like] = [
@@ -174,6 +176,7 @@ const feature_searchUsers = async function (params = {}) {
             if (videoList.length <= 0)
               return {
                 ip,
+                gender,
                 svgHtml,
                 follow,
                 fans,
@@ -191,6 +194,7 @@ const feature_searchUsers = async function (params = {}) {
               : '';
             return {
               ip,
+              gender,
               svgHtml,
               follow,
               fans,
@@ -226,9 +230,9 @@ const feature_searchUsers = async function (params = {}) {
       console.log('==========消费粉过滤粉丝和获赞数高的', commentList.length);
     }
     const followList = commentList.filter((v) => v.type == '关注');
-    console.log(commentList);
+    // console.log(commentList.map(e=>e.));
     commentList = commentList.filter(
-      (v) => v.videoTitles && v.videoTitles.length > 0 && !v.type == '关注',
+      (v) => v.videoTitles && v.videoTitles.length > 0,
     );
     // 2.符合的，一部分放在db1 一部分放在db2
     Object.assign(myVideo, {

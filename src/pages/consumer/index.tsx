@@ -292,14 +292,6 @@ export default function searchUser() {
     },
   ];
   let { list = [] } = listData;
-  list = list.map((e: any) => {
-    if (e.commentList) {
-      e.commentList = e.commentList.filter((e: any) => {
-        return e.gender && e.gender.replace('岁', '') - 0 < 40;
-      });
-    }
-    return e;
-  });
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
