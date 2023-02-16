@@ -31,7 +31,12 @@ const feature_comment = async function (params = {}) {
       async (resultsSelector, limitLen) => {
         let eleList = [...document.querySelectorAll(resultsSelector)];
         if (typeof limitLen !== 'undefined') {
-          while (eleList.length < limitLen) {
+          while (
+            eleList.length < limitLen &&
+            ![...document.querySelector('[data-e2e="comment-list"]').children]
+              .at(-1)
+              .innerText.includes('没有')
+          ) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
             eleList = [...document.querySelectorAll(resultsSelector)];
