@@ -7,7 +7,7 @@ export const consumerUserPageList: Option[] = [
   // 按母婴/美妆/小学用品/居家/情侣/分类
   {
     value: '母婴/幼儿--男宝',
-    label: 'baby',
+    label: '男宝',
     children: [
       {
         label: '是个甜仔',
@@ -19,7 +19,7 @@ export const consumerUserPageList: Option[] = [
 
   {
     value: '母婴/幼儿--女宝',
-    label: 'baby',
+    label: '女宝',
     children: [
       {
         label: '粉团小莘莘❤',
@@ -55,8 +55,13 @@ export const consumerUserPageList: Option[] = [
   },
   {
     value: '小学',
-    label: 'junior',
+    label: '小学',
     children: [
+    {
+      label: '北大满哥-早6：50直播',
+      value:
+        'https://www.douyin.com/user/MS4wLjABAAAANMcXrkaKsBT4YhYETmb7EAXlcdxqgzPAOLt8ZQrnvBw',
+    },
       {
         label: '饭饭麻麻菜菜',
         value:

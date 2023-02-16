@@ -7,7 +7,7 @@ const { delay, getToday } = require('../../utils/index');
 const feature_userFollow = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_userFollow',
-    devtools: true,
+    devtools:  false,
   });
   await page.setViewport(INIT_VIEWPORT);
   const { list = [], userType } = params || {};

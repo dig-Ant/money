@@ -119,9 +119,18 @@ export default function HomePage() {
       render: (val, record: Record<string, any>) => {
         const { href = 'javaScript:void(0);' } = record || {};
         return (
-          <a href={href} target="_blank">
-            {val}
-          </a>
+          <Space>
+            <Button
+              onClick={() => {
+                copy(val);
+              }}
+            >
+              copy
+            </Button>
+            <a href={href} target="_blank">
+              {val}
+            </a>
+          </Space>
         );
       },
     },
