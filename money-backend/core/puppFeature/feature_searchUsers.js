@@ -22,6 +22,13 @@ const {
   GET_URL,
   TIME_OUT,
   IS_MATE,
+  NOT_REPEAT,
+  LESS_FIVE,
+  NOT_MATE,
+  NOT_SVG_MATE,
+  FILTER_FANS_LIKE,
+  FILTER_BUSINESS,
+  TO_NUM,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
@@ -57,28 +64,22 @@ const feature_searchUsers = async function (params = {}) {
   try {
     await page.waitForSelector(VIDEO_LIST_SELECTOR, TIME_OUT);
     const myVideo = await page.evaluate(
-      async (VIDEO_LIST_SELECTOR, index, userType, STRINGNUM) => {
-        let StringToNum = new Function(STRINGNUM);
-        let StringToNumFun = new StringToNum();
-        // 获取到对应数量的视频为止
-        let ele = document.querySelectorAll(VIDEO_LIST_SELECTOR)[index];
+      async (VIDEO_LIST_SELECTOR, index) => {
+        const ele = document.querySelectorAll(VIDEO_LIST_SELECTOR)[index];
         const [like, title = ''] = ele.innerText.split('\n\n');
         return {
-          userType,
           href: ele.href,
           like,
-          likeNum: StringToNumFun.eval(like),
           title,
           filename: `${like}-${title?.split(' ')?.[0] || '无标题'}`,
         };
       },
       VIDEO_LIST_SELECTOR,
       index,
-      userType,
-      STRINGNUM,
     );
     if (!myVideo.href.includes('video'))
       return { code: -1, errorMsg: '不是video' };
+    // myVideo.likeNum = STRING_TO_NUM_FUN(myVideo.like);
     const videoPage = await browser.newPage();
     await videoPage.goto(myVideo.href, TIME_OUT);
     await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, TIME_OUT);
@@ -90,7 +91,7 @@ const feature_searchUsers = async function (params = {}) {
         commentLimitLen,
       ) => {
         const user = document.querySelector(USER_INFO_LIST_SELECTOR);
-        const userName = user.children[1].querySelector('a').innerText;
+        const name = user.children[1].querySelector('a').innerText;
         const [fans, like] = user.children[1]
           .querySelector('p')
           .innerText.slice(2)
@@ -128,142 +129,114 @@ const feature_searchUsers = async function (params = {}) {
         return {
           fans,
           like,
-          name: userName,
+          name,
           commentList,
         };
       },
       USER_INFO_LIST_SELECTOR,
       COMMENT_LIST_SELECTOR,
       commentLimitLen,
-      STRINGNUM,
     );
-    console.log('111过滤前的个数', commentList.length);
-    // 根据用户名是否含有好物关键字过滤，评论过滤
-    commentList = commentList.filter(({ userName, userLike }) => {
-      const isMateUser = IS_MATE(userName);
-      if (isMateUser) return false;
-      const isBusinessUser = IS_BUSINESS_USER(userName);
-      if (isBusinessUser && IS_CONSUMER_TYPE(userType)) return false;
-      if (!isBusinessUser && IS_BUSINESS_TYPE(userType)) return false;
-      // 找消费粉，当前评论的点赞小于5
-      if (STRING_TO_NUM_FUN(userLike) > 5 && IS_CONSUMER_TYPE(userType))
-        return false;
-      return true;
-      // 活跃评论时间1h内
-      // if (
-      //   !activeTime.includes('分钟') &&
-      //   userType === 'consumer'
-      // ) {
-      //   return null;
-      // }
-    });
-    // 去重
-    let commitListRes = [];
-    for (let i = 0; i < commentList.length; i++) {
-      const commentItem = commentList[i];
-      const has = commitListRes.find(
-        (e) =>
-          e.userLink === commentItem.userLink &&
-          e.userName === commentItem.userName,
-      );
-      console.log(has);
-      if (!has && commentItem.userName !== '琴琴好物') {
-        commitListRes.push(commentItem);
-        console.log(commitListRes);
-      }
+    console.log('==========过滤前的个数', commentList.length);
+    commentList = NOT_MATE(commentList);
+    commentList = NOT_REPEAT(commentList);
+    console.log('==========过滤男和重复', commentList.length);
+    if (IS_CONSUMER_TYPE(userType)) {
+      commentList = LESS_FIVE(commentList);
+      console.log('==========找消费粉过滤点赞高于5的', commentList.length);
     }
-    Object.assign(myVideo, { fans, like, name });
-    console.log(
-      '根据用户名是否含有好物关键字过滤，评论过滤，去重，还剩',
-      commitListRes.length,
-    );
-    console.log(commitListRes);
+    // 去页面获取详细的commentList
     await limitExec(async (comment) => {
       try {
         const videoPage = await browser.newPage();
         await videoPage.goto(comment.userLink, TIME_OUT);
         await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
-        const userInfo = await videoPage.evaluate(
-          async (userType, STRINGNUM) => {
-            let StringToNum = new Function(STRINGNUM);
-            let StringToNumFun = new StringToNum();
-            try {
-              // 1.过滤男和粉丝点赞多的
-              const gender =
-                (document.querySelector('.N4QS6RJT') || {}).innerText || '';
-              const ip =
-                (document.querySelector('.a83NyFJ4') || {}).innerText || '';
-              const [follow, fans, like] = [
-                ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
-              ].map((v) => StringToNumFun.eval(v.innerText));
-              if (gender.includes('男')) return { errMsg: '男，不考虑' };
-              if (fans > 550 && userType === 'consumer')
-                return { errMsg: '消费粉粉丝数大于550，不考虑' };
-              if (like > 1050 && userType === 'consumer')
-                return { errMsg: '消费粉点赞数大于1050，不考虑' };
-              // 2.符合的，一部分放在db1 一部分放在db2
-              let videoList = [
-                ...(
-                  document.querySelector(
-                    '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
-                  ) || { children: [] }
-                ).children,
-              ].filter(
-                (e) =>
-                  !e.innerText.includes('图文') &&
-                  !e.innerText.includes('置顶'),
-              );
-              if (videoList.length <= 0)
-                return {
-                  ip,
-                  gender,
-                  follow,
-                  fans,
-                  like,
-                  type: '关注',
-                };
-              const videoTitles = videoList.map((v) => v.innerText || '');
-              videoList = videoList.slice(0, 6);
-              const firstVideoSrc = videoList[0].querySelector('a').href;
-              const secondVideoSrc = videoList[1]
-                ? videoList[1].querySelector('a').href
-                : '';
-              const thirdVideoSrc = videoList[2]
-                ? videoList[2].querySelector('a').href
-                : '';
+        const userInfo = await videoPage.evaluate(async () => {
+          try {
+            // 1.过滤男和粉丝点赞多的
+            const svgHtml =
+              (document.querySelector('.N4QS6RJT') || {}).innerHTML || '';
+            const ip =
+              (document.querySelector('.a83NyFJ4') || {}).innerText || '';
+            const [follow, fans, like] = [
+              ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
+            ].map((v) => v.innerText);
+            let videoList = [
+              ...(
+                document.querySelector(
+                  '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
+                ) || { children: [] }
+              ).children,
+            ].filter(
+              (e) =>
+                !e.innerText.includes('图文') && !e.innerText.includes('置顶'),
+            );
+            if (videoList.length <= 0)
               return {
                 ip,
-                gender,
+                svgHtml,
                 follow,
                 fans,
                 like,
-                videoTitles,
-                firstVideoSrc,
-                secondVideoSrc,
-                thirdVideoSrc,
+                type: '关注',
               };
-            } catch (error) {
-              console.log(error);
-              debugger;
-            }
-          },
-          userType,
-          STRINGNUM,
-        );
-        console.log(userInfo);
+            const videoTitles = videoList.map((v) => v.innerText || '');
+            videoList = videoList.slice(0, 6);
+            const firstVideoSrc = videoList[0].querySelector('a').href;
+            const secondVideoSrc = videoList[1]
+              ? videoList[1].querySelector('a').href
+              : '';
+            const thirdVideoSrc = videoList[2]
+              ? videoList[2].querySelector('a').href
+              : '';
+            return {
+              ip,
+              svgHtml,
+              follow,
+              fans,
+              like,
+              videoTitles,
+              firstVideoSrc,
+              secondVideoSrc,
+              thirdVideoSrc,
+            };
+          } catch (error) {
+            console.log(error);
+            debugger;
+          }
+        });
         if (userInfo) Object.assign(comment, userInfo);
         videoPage.close();
       } catch (error) {
         videoPage.close();
         console.log('error: ---', error);
       }
-    }, commitListRes);
-    if (commitListRes) {
-      myVideo.commentList = commitListRes.filter(
-        (v) => v.videoTitles && v.videoTitles.length > 0 && !v.errMsg,
-      );
-      myVideo.followList = commitListRes.filter((v) => v.type == '关注');
+    }, commentList);
+    console.log(commentList);
+    commentList = NOT_SVG_MATE(commentList);
+    console.log('==========根据svg过滤男', commentList.length);
+    let sepeRes = FILTER_BUSINESS(commentList);
+    commentList = sepeRes.commentList;
+    let businessList = sepeRes.businessList;
+    console.log('==========过滤同行', commentList.length);
+    console.log('==========同行', businessList.length);
+    commentList = TO_NUM(commentList);
+    if (IS_CONSUMER_TYPE(userType)) {
+      commentList = FILTER_FANS_LIKE(commentList);
+      console.log('==========消费粉过滤粉丝和获赞数高的', commentList.length);
     }
+    // 2.符合的，一部分放在db1 一部分放在db2
+    Object.assign(myVideo, {
+      fans,
+      like,
+      name,
+      commentList: commentList.filter(
+        (v) => v.videoTitles && v.videoTitles.length > 0 && !v.type == '关注',
+      ),
+      followList: commentList.filter((v) => v.type == '关注'),
+      businessList,
+    });
+
     videoPage.close();
     const [_, partPath] = createDownloadPath(downloadFilename);
 

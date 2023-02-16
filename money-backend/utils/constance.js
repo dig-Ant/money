@@ -39,6 +39,26 @@ const MATE_NAME = [
   '虎',
   '男',
 ];
+const IS_MATE = function (username) {
+  return !!MATE_NAME.some((val) => {
+    return username.includes(val);
+  });
+};
+const STRING_TO_NUM_FUN = function (like, type = true) {
+  if (type) {
+    if (like.includes('万')) {
+      const [num] = like.split('万');
+      return Number((+num * 10000).toFixed(0));
+    } else {
+      return Number(like);
+    }
+  }
+};
+const IS_BUSINESS_USER = function (username) {
+  return !!BUSINESS_NAME.some((val) => {
+    return username.includes(val);
+  });
+};
 const MY_USER_LINK =
   'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA';
 module.exports = {
@@ -60,26 +80,9 @@ module.exports = {
   COMMENT_LIST_SELECTOR: '[data-e2e="comment-list"]',
   IS_CONSUMER_TYPE: (v) => v === 'consumer',
   IS_BUSINESS_TYPE: (v) => v === 'business',
-  IS_BUSINESS_USER: function (username) {
-    return !!BUSINESS_NAME.some((val) => {
-      return username.includes(val);
-    });
-  },
-  IS_MATE: function (username) {
-    return !!MATE_NAME.some((val) => {
-      return username.includes(val);
-    });
-  },
-  STRING_TO_NUM_FUN: function (like, type = true) {
-    if (type) {
-      if (like.includes('万')) {
-        const [num] = like.split('万');
-        return Number((+num * 10000).toFixed(0));
-      } else {
-        return Number(like);
-      }
-    }
-  },
+  IS_BUSINESS_USER,
+  IS_MATE,
+  STRING_TO_NUM_FUN,
   GET_COMMENT1: function (userType) {
     let comments =
       userType === 'aged'
@@ -116,6 +119,60 @@ module.exports = {
     } else {
       return url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
     }
+  },
+  NOT_MATE(commentList) {
+    return commentList.filter((e) => !IS_MATE(e.userName));
+  },
+  NOT_SVG_MATE(commentList) {
+    return commentList.filter((e) => e.svgHtml.includes('woman'));
+  },
+  LESS_FIVE(commentList) {
+    return commentList.filter((e) => STRING_TO_NUM_FUN(e.userLike) < 5);
+  },
+  // commentList去重
+  NOT_REPEAT: function (commentList) {
+    let commitListRes = [];
+    for (let i = 0; i < commentList.length; i++) {
+      const commentItem = commentList[i];
+      const has = commitListRes.find(
+        (e) =>
+          e.userLink === commentItem.userLink &&
+          e.userName === commentItem.userName,
+      );
+      if (!has && commentItem.userName !== '琴琴好物') {
+        commitListRes.push(commentItem);
+      }
+    }
+    return commitListRes;
+  },
+  TO_NUM: function (commentList) {
+    return commentList.map((e) => {
+      e.follow = STRING_TO_NUM_FUN(e.follow);
+      e.fans = STRING_TO_NUM_FUN(e.fans);
+      e.like = STRING_TO_NUM_FUN(e.like);
+      return e;
+    });
+  },
+  FILTER_FANS_LIKE: function (commentList) {
+    return commentList.filter((e) => {
+      return e.fans < 850 && e.like < 1250;
+    });
+  },
+  FILTER_BUSINESS: function (commentList) {
+    let commRes = [],
+      businRes = [];
+    for (let i = 0; i < commentList.length; i++) {
+      const element = commentList[i];
+      if (IS_BUSINESS_USER(element.userName)) {
+        businRes.push(element);
+      } else {
+        commRes.push(element);
+      }
+    }
+    return {
+      commentList: commRes,
+      businessList: businRes,
+    };
   },
 };
 /**
