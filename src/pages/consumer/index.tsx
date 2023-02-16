@@ -105,27 +105,27 @@ export default function searchUser() {
         );
       },
     },
-    userType === 'consumer'
-      ? {
-          title: '同N',
-          width: 70,
-          dataIndex: 'businessList',
-          render: (val) => {
-            const num = (val && val.length) || 0;
-            const businessList = val || [];
-            return (
-              <a
-                onClick={() => {
-                  num && setIsModalOpen(true);
-                  setCurrent(businessList);
-                }}
-              >
-                {num}
-              </a>
-            );
-          },
-        }
-      : null,
+    // userType === 'consumer'
+    //   ? {
+    //       title: '同N',
+    //       width: 70,
+    //       dataIndex: 'businessList',
+    //       render: (val) => {
+    //         const num = (val && val.length) || 0;
+    //         const businessList = val || [];
+    //         return (
+    //           <a
+    //             onClick={() => {
+    //               num && setIsModalOpen(true);
+    //               setCurrent(businessList);
+    //             }}
+    //           >
+    //             {num}
+    //           </a>
+    //         );
+    //       },
+    //     }
+    //   : null,
     {
       title: '关N',
       width: 70,
