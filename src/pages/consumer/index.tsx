@@ -87,7 +87,7 @@ export default function searchUser() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'num',
+      title: 'connum',
       dataIndex: 'commentList',
       render: (val) => {
         const num = (val && val.length) || 0;
@@ -97,6 +97,24 @@ export default function searchUser() {
             onClick={() => {
               num && setIsModalOpen(true);
               setCurrent(commentList);
+            }}
+          >
+            {num}
+          </a>
+        );
+      },
+    },
+    {
+      title: 'zeronum',
+      dataIndex: 'followList',
+      render: (val) => {
+        const num = (val && val.length) || 0;
+        const followList = val || [];
+        return (
+          <a
+            onClick={() => {
+              num && setIsModalOpen(true);
+              setCurrent(followList);
             }}
           >
             {num}

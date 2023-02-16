@@ -114,6 +114,14 @@ export default function HomePage() {
       render: (val) => <span>{val && val.slice(7)}</span>,
     },
     {
+      title: '作者粉丝',
+      dataIndex: 'name',
+      width: 150,
+      render: (val, record: Record<string, any>) => {
+        return <span>{val.split('-').slice(1).join('-')}</span>;
+      },
+    },
+    {
       title: '标题',
       dataIndex: 'title',
       render: (val, record: Record<string, any>) => {
