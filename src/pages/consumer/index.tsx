@@ -258,12 +258,12 @@ export default function searchUser() {
     {
       title: '性别',
       dataIndex: 'gender',
-      width: 25,
+      width: 35,
     },
     {
       title: '年龄',
       dataIndex: 'age',
-      width: 25,
+      width: 35,
     },
     {
       title: '粉丝-赞',
@@ -326,6 +326,22 @@ export default function searchUser() {
     },
   ];
   let { list = [] } = listData;
+  list = list.map((e: any) => {
+    e.commentList = e.commentList
+      .map((f: any) => {
+        if (f.gender) {
+          const match = f.gender.match(/(\d+)岁/);
+          if (match) f.age = match[1];
+        }
+        return f;
+      })
+      .filter((e: any) => {
+        if (!e.age) return true;
+        return e.age < 40;
+      });
+    return e;
+    //
+  });
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
