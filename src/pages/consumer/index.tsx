@@ -229,7 +229,19 @@ export default function searchUser() {
     {
       title: '用户名',
       dataIndex: 'userName',
-      width: 25,
+      width: 60,
+      render: (userName, render: any) => {
+        const { svgHtml } = render;
+        const a = () => {
+          return { __html: svgHtml };
+        };
+        return (
+          <div>
+            <div dangerouslySetInnerHTML={a()}></div>
+            <div>{userName}</div>
+          </div>
+        );
+      },
     },
     {
       title: '性别',
