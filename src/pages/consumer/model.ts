@@ -1,5 +1,5 @@
 import { request, api } from '@/utils';
-import { EXEC_DY_VIDEPMSG } from '@/utils/api';
+import { EXEC_DY_DELETE, EXEC_DY_VIDEPMSG } from '@/utils/api';
 
 const { EXEC_DY_USERS_LIKE } = api;
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -25,6 +25,12 @@ export default {
         request(EXEC_DY_VIDEPMSG, { method: 'post', data: payload }),
       );
     },
+    *delete({ payload }: any, { call, put }: any) {
+      yield call(() =>
+        request(EXEC_DY_DELETE, { method: 'post', data: payload }),
+      );
+    },
+    
   },
   subscriptions: {
     setups(action) {

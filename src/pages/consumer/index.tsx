@@ -169,6 +169,18 @@ export default function searchUser() {
             >
               关注
             </a>
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/delete',
+                  payload: { userType, _id: record._id },
+                }).then(() => {
+                  listRun({ userType });
+                });
+              }}
+            >
+              删除
+            </a>
             {userType === 'business' ? (
               <a
                 onClick={() => {

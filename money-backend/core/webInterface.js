@@ -139,6 +139,23 @@ class WebInterface {
       });
     });
 
+    // 查询下载列表
+    app.post('/v1/execDyDelete', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { userType, _id } = body;
+      console.log('delete userType, _id: ', userType, _id);
+
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
+        autoload: true,
+        timestampData: true,
+      });
+      db.remove({ _id }, {}, (err, numRemoved) => {
+        resHandle(res, err, numRemoved);
+      });
+    });
+
     // 获取下载抖音收藏列表
     app.post('/v1/getDyYunyun', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -345,8 +362,8 @@ class WebInterface {
       // const end = Math.floor(start + Number(pageSize));
 
       db.find()
-      .sort({ createdAt: -1 })
-      .exec((err, docs) => {
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
           if (err) {
             res.end({
               code: -1,
