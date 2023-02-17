@@ -227,6 +227,18 @@ export default function searchUser() {
 
   const commentCols: ColumnsType<DataType> = [
     {
+      title: '头像',
+      dataIndex: 'userImgSrc',
+      width: 60,
+      render: (val, render: any) => {
+        return (
+          <div>
+            <img src={val} style={{ width: '50px', height: '50px' }} alt="" />
+          </div>
+        );
+      },
+    },
+    {
       title: '用户名',
       dataIndex: 'userName',
       width: 60,

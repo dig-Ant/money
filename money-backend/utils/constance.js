@@ -76,7 +76,7 @@ module.exports = {
   STRINGNUM:
     'this.eval = function (like, type = true) {if (type) {if (like.includes("万")) {const [num] = like.split("万");return Number((+num * 10000).toFixed(0));} else {return Number(like);}}}',
   BUSINESS_NAME,
-  USER_INFO_LIST_SELECTOR: '[data-e2e="user-info"',
+  USER_INFO_LIST_SELECTOR: '[data-e2e="user-info"]',
   COMMENT_LIST_SELECTOR: '[data-e2e="comment-list"]',
   IS_CONSUMER_TYPE: (v) => v === 'consumer',
   IS_BUSINESS_TYPE: (v) => v === 'business',
