@@ -52,7 +52,12 @@ const feature_getText = async function (params = {}) {
         let eleList = [...document.querySelectorAll(resultsSelector)];
         // 获取对应数量为止
         if (typeof limitLen !== 'undefined') {
-          while (eleList.length < limitLen) {
+          while (
+            eleList.length < limitLen &&
+            !document
+              .querySelector('[data-e2e="user-post-list"] .kwodhZJl')
+              .innerText.includes('没有') //'暂时没有更多了'
+          ) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
             eleList = [...document.querySelectorAll(resultsSelector)];

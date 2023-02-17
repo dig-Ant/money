@@ -21,9 +21,9 @@ export const videoNote = [
 ];
 export const textUserList = [
   {
-    label: '兔姐姐',
+    label: '玫瑰图书馆',
     value:
-      'https://www.douyin.com/user/MS4wLjABAAAAQYewMumiY0tQke_VRnMKxp2hPASHyJe4YJNOMrOS70j23RR2Jbf5YCn4NdRYTdzG',
+      'https://www.douyin.com/user/MS4wLjABAAAAyb14P19thT3opp-Mj9VuKWhXFuc1yOLmTMHguWHrmsU',
   },
   {
     label: '浩子',
