@@ -344,11 +344,9 @@ class WebInterface {
       // const start = Math.floor((Number(page) - 1) * Number(pageSize));
       // const end = Math.floor(start + Number(pageSize));
 
-      db.find({
-        // userType,
-      })
-        .sort({ createdAt: -1 })
-        .exec((err, docs) => {
+      db.find()
+      .sort({ createdAt: -1 })
+      .exec((err, docs) => {
           if (err) {
             res.end({
               code: -1,
