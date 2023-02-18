@@ -10,11 +10,12 @@ const {
   GET_COMMENT2,
   MY_USER_LINK,
   TIME_OUT,
+  GET_URL,
 } = require('../../utils/constance');
 const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_like = async function (params = {}) {
-  const {
+  let {
     url = MY_USER_LINK,
     limitLen = 1,
     commentLimitLen = 100,
