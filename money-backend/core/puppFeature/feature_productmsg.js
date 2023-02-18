@@ -1,5 +1,10 @@
 const { limitExec } = require('../../utils/common');
-const { INIT_VIEWPORT, STRINGNUM, TIME_OUT } = require('../../utils/constance');
+const {
+  INIT_VIEWPORT,
+  STRINGNUM,
+  TIME_OUT,
+  STRING_TO_NUM_FUN,
+} = require('../../utils/constance');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const { downProductmsg, createDownloadPath } = puppeteerUtils;
 
@@ -8,6 +13,7 @@ const feature_productmsg = async function (params) {
   console.log(url);
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_productmsg',
+    devtools: false,
   });
   await page.setViewport(INIT_VIEWPORT);
   try {
@@ -24,8 +30,6 @@ const feature_productmsg = async function (params) {
       '.mwo84cvf>div:last-child [data-e2e="scroll-list"] li a';
     await page.waitForSelector(resultsSelector, TIME_OUT);
     const [user, eleList] = await page.evaluate(async (resultsSelector) => {
-      let StringToNum = new Function(STRINGNUM);
-      let StringToNumFun = new StringToNum();
       let user = document.querySelector('.Nu66P_ba').innerText;
       let totalNum = document.querySelector('.J6IbfgzH').innerText - 0;
       totalNum = Math.min(1000, totalNum);
@@ -45,22 +49,26 @@ const feature_productmsg = async function (params) {
       }
       console.log(eleList);
       // (获取结束)
-      eleList = eleList
-        .map((el) => {
-          const href = el.href;
-          const [like, title = ''] = el.innerText.split('\n\n');
-          return {
-            href,
-            like,
-            likeNum: StringToNumFun.eval(like),
-            title,
-            // filename: `${like}-${title.split(' ')[0]}`,
-          };
-        })
-        .sort((a, b) => b.likeNum - a.likeNum);
+      eleList = eleList.map((el) => {
+        const href = el.href;
+        const [like, title = ''] = el.innerText.split('\n\n');
+        return {
+          href,
+          like,
+          title,
+          // filename: `${like}-${title.split(' ')[0]}`,
+        };
+      });
       return [user, eleList];
     }, resultsSelector);
     console.log(eleList);
+
+    eleList
+      .map((e) => {
+        e.likeNum = STRING_TO_NUM_FUN(e.like);
+        return e;
+      })
+      .sort((a, b) => b.likeNum - a.likeNum);
     await downProductmsg(eleList, {
       pathname: user,
       downloadPath: '../downloadFiles/账号作品信息',

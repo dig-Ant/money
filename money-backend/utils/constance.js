@@ -123,7 +123,26 @@ module.exports = {
   NOT_MATE(commentList) {
     return commentList.filter((e) => !IS_MATE(e.userName));
   },
-  NOT_SVG_MATE(commentList) {
+  // NOT_SVG_MATE(commentList) {
+  //   return commentList.filter((e) => {
+  //     console.log(e.svgHtml);
+  //     return (
+  //       e.svgHtml && (e.svgHtml.includes('woman') || !e.svgHtml.includes('>'))
+  //     );
+  //   });
+  // },
+  FILTER_AGE(commentList) {
+    return commentList.map((e) => {
+      if (e.gender) {
+        const match = e.gender.match(/(\d+)岁/);
+        if (match) {
+          e.age = match[1];
+        }
+      }
+      return e;
+    });
+  },
+  LESS_40(commentList) {
     return commentList.filter((e) => {
       return (
         e.svgHtml && (e.svgHtml.includes('woman') || !e.svgHtml.includes('>'))

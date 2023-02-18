@@ -29,6 +29,8 @@ const {
   FILTER_FANS_LIKE,
   FILTER_BUSINESS,
   TO_NUM,
+  LESS_40,
+  FILTER_AGE,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchUsers = async function (params = {}) {
@@ -38,7 +40,7 @@ const feature_searchUsers = async function (params = {}) {
     commentLimitLen = LIMIT,
     downloadFilename = '',
     type = '',
-    isLogin = true,
+    isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
 
@@ -117,7 +119,7 @@ const feature_searchUsers = async function (params = {}) {
         console.log(commentList);
         commentList = commentList.map((el) => {
           const userInfoEl = el.querySelector('div:nth-child(2)');
-          const userImgSrc = el.querySelector('.PbpHcHqa').src;
+          const userImgSrc = (el.querySelector('.PbpHcHqa') || {}).src || '';
           if (!userInfoEl) return {};
           return {
             userImgSrc,
@@ -158,6 +160,7 @@ const feature_searchUsers = async function (params = {}) {
         const videoPage = await browser.newPage();
         await videoPage.goto(comment.userLink, TIME_OUT);
         await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
+        // await videoPage.waitForSelector('.N4QS6RJT', TIME_OUT);
         const userInfo = await videoPage.evaluate(async () => {
           try {
             // 1.过滤男和粉丝点赞多的
@@ -223,9 +226,12 @@ const feature_searchUsers = async function (params = {}) {
         console.log('error: ---', error);
       }
     }, commentList);
-    // console.log(commentList);
-    commentList = NOT_SVG_MATE(commentList);
-    console.log('==========根据svg过滤男', commentList.length);
+    console.log(commentList);
+    // commentList = NOT_SVG_MATE(commentList);
+    // console.log('==========根据svg过滤男', commentList.length);
+    // commentList = FILTER_AGE(commentList);
+    // commentList = LESS_40(commentList);
+    // console.log('==========根据gender过滤年龄大于40的', commentList.length);
     let sepeRes = FILTER_BUSINESS(commentList);
     commentList = sepeRes.commentList;
     let businessList = sepeRes.businessList;

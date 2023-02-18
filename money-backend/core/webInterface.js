@@ -139,7 +139,7 @@ class WebInterface {
       });
     });
 
-    // 查询下载列表
+    // 删除
     app.post('/v1/execDyDelete', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
@@ -155,7 +155,33 @@ class WebInterface {
         resHandle(res, err, numRemoved);
       });
     });
-
+    // 删除单条用户
+    app.post('/v1/execDyDeleteSingle', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { userType, _id, listType, userName } = body;
+      console.log('userType, _id, listType: ', userType, _id, listType);
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
+        autoload: true,
+        timestampData: true,
+      });
+      db.find({ _id }).exec((err, doc) => {
+        let updateList = doc[0][listType].filter(
+          (e) => e.userName !== userName,
+        );
+        db.update(
+          { _id },
+          {
+            [listType]: updateList,
+          },
+          {},
+          (err, numReplaced) => {
+            resHandle(res, err, numReplaced);
+          },
+        );
+      });
+    });
     // 获取下载抖音收藏列表
     app.post('/v1/getDyYunyun', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');

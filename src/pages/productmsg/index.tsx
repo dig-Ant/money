@@ -99,9 +99,11 @@ export default function HomePage() {
       },
     },
     {
-      title: 'like',
-      dataIndex: 'like',
+      title: 'likeNum',
+      dataIndex: 'likeNum',
       width: 65,
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.likeNum - b.likeNum,
     },
     {
       title: '粉丝-赞',
@@ -133,7 +135,7 @@ export default function HomePage() {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            提交
+            获取
           </Button>
         </Form.Item>
         <Form.Item>
@@ -143,7 +145,7 @@ export default function HomePage() {
               listRun({});
             }}
           >
-            获取
+            查询
           </Button>
         </Form.Item>
       </Form>

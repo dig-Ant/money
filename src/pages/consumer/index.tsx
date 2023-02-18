@@ -38,6 +38,8 @@ export default function searchUser() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState([]);
+  const [listType, setListType] = useState('commentList');
+  const [_id, seID] = useState('');
   const location = useLocation();
   const userType = location.pathname.slice(6);
   let CascaderOptions = consumerUserPageList;
@@ -90,13 +92,15 @@ export default function searchUser() {
       title: '消N',
       width: 70,
       dataIndex: 'commentList',
-      render: (val) => {
+      render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const commentList = val || [];
         return (
           <a
             onClick={() => {
               num && setIsModalOpen(true);
+              setListType('commentList');
+              seID(record._id);
               setCurrent(commentList);
             }}
           >
@@ -109,13 +113,15 @@ export default function searchUser() {
       title: '同N',
       width: 70,
       dataIndex: 'businessList',
-      render: (val) => {
+      render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const businessList = val || [];
         return (
           <a
             onClick={() => {
               num && setIsModalOpen(true);
+              setListType('businessList');
+              seID(record._id);
               setCurrent(businessList);
             }}
           >
@@ -128,13 +134,15 @@ export default function searchUser() {
       title: '关N',
       width: 70,
       dataIndex: 'followList',
-      render: (val) => {
+      render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const followList = val || [];
         return (
           <a
             onClick={() => {
               num && setIsModalOpen(true);
+              setListType('followList');
+              seID(record._id);
               setCurrent(followList);
             }}
           >
@@ -205,11 +213,11 @@ export default function searchUser() {
           href = 'javaScript:void(0);',
           title = '',
           likeNum = '',
-          user = {},
+          name = '',
         } = record || {};
         return (
           <a href={href}>
-            {user.name || ''}-{likeNum}-{title}
+            {name || ''}-{likeNum}-{title}
           </a>
         );
       },
@@ -264,6 +272,26 @@ export default function searchUser() {
       title: '年龄',
       dataIndex: 'age',
       width: 35,
+    },
+    {
+      title: '操作',
+      width: 35,
+      render: (val, record: any) => {
+        return (
+          <div
+            onClick={() => {
+              dispatch({
+                type: 'consumerPage/deleteSingleUser',
+                payload: { userType, _id, listType, userName: record.userName },
+              }).then(() => {
+                // listRun({ userType });
+              });
+            }}
+          >
+            删除
+          </div>
+        );
+      },
     },
     {
       title: '粉丝-赞',
@@ -326,22 +354,22 @@ export default function searchUser() {
     },
   ];
   let { list = [] } = listData;
-  list = list.map((e: any) => {
-    e.commentList = e.commentList
-      .map((f: any) => {
-        if (f.gender) {
-          const match = f.gender.match(/(\d+)岁/);
-          if (match) f.age = match[1];
-        }
-        return f;
-      })
-      .filter((e: any) => {
-        if (!e.age) return true;
-        return e.age < 40;
-      });
-    return e;
-    //
-  });
+  // list = list.map((e: any) => {
+  //   e.commentList = e.commentList
+  //     .map((f: any) => {
+  //       if (f.gender) {
+  //         const match = f.gender.match(/(\d+)岁/);
+  //         if (match) f.age = match[1];
+  //       }
+  //       return f;
+  //     })
+  //     .filter((e: any) => {
+  //       if (!e.age) return true;
+  //       return e.age < 40;
+  //     });
+  //   return e;
+  //   //
+  // });
   console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
@@ -362,6 +390,7 @@ export default function searchUser() {
         initialValues={{
           type: 'like',
           limitLen: 1,
+          index: 0,
           commentLimitLen: 270,
         }}
         colon={false}

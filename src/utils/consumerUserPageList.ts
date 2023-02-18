@@ -57,11 +57,21 @@ export const consumerUserPageList: Option[] = [
     value: '小学',
     label: '小学',
     children: [
-    {
-      label: '北大满哥-早6：50直播',
-      value:
-        'https://www.douyin.com/user/MS4wLjABAAAANMcXrkaKsBT4YhYETmb7EAXlcdxqgzPAOLt8ZQrnvBw',
-    },
+      {
+        label: '一铭宝贝',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAPcshls-g-ImjskADotkeRMbn5xDZB-lQpCO3DxtFBw_F1bfj472yUUf7dNZQSnhB',
+      },//
+      {
+        label: '柒娘',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAQxWY5Wl9ssAIfJJ6g5-4ctuobE_fNmE_Da6jRGftuQQ',
+      },//
+      {
+        label: '北大满哥-早6：50直播',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAANMcXrkaKsBT4YhYETmb7EAXlcdxqgzPAOLt8ZQrnvBw',
+      },
       {
         label: '饭饭麻麻菜菜',
         value:
