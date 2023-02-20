@@ -21,6 +21,11 @@ export const videoNote = [
 ];
 export const textUserList = [
   {
+    label: '西子问',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAnXDRv4NxUbWXTlwxKQKDy5RcFBGGiMEIMn-AvpYgMQA',
+  },
+  {
     label: '玫瑰图书馆',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAyb14P19thT3opp-Mj9VuKWhXFuc1yOLmTMHguWHrmsU',
