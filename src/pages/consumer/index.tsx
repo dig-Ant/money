@@ -74,7 +74,11 @@ export default function searchUser() {
       return request(GET_DY_USERS_LIST, {
         method: 'post',
         data,
-      }).then((res) => res?.data);
+      }).then((res) => {
+        // console.log(res?.data[0].commentList.map((e) => e.svgHtml));
+        // console.log(res?.data[0]);
+        return res?.data;
+      });
     },
     {
       manual: true,
@@ -98,6 +102,7 @@ export default function searchUser() {
         return (
           <a
             onClick={() => {
+              console.log(commentList.map((e) => e.svgHtml));
               num && setIsModalOpen(true);
               setListType('commentList');
               seID(record._id);
@@ -372,6 +377,7 @@ export default function searchUser() {
     return e;
   });
   console.log('list: ', list, listError);
+
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
 
