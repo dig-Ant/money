@@ -510,7 +510,7 @@ class WebInterface {
         const feature =
           listType === 'followList' ? 'feature_userFollow' : 'feature_userLike';
         console.log(listType, docs[0][listType].length);
-        return;
+        // return;
         let code = await this.pupp.start(feature, {
           list: docs[0][listType],
           userType,
