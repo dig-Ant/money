@@ -6,4 +6,4 @@
 // const a = require('./weekily/周一.js');
 // const a = require('./weekily/周二');
 const weekily = require('./weekily');
-module.exports = [...weekily.可可爱爱文案, ...weekily.极致温柔的短句];
+module.exports = [...weekily.周二 /*  ...weekily.极致温柔的短句 */];

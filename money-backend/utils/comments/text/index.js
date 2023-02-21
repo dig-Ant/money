@@ -12,3 +12,4 @@ weekilyList.forEach((filename) => {
 module.exports = {
   ...allFeature,
 };
+// .sort((b,a)=>a.length-b.length)

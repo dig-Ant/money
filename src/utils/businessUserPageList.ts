@@ -6,33 +6,6 @@ interface Option {
 
 export const businessUserPageList: Option[] = [
   {
-    value: '母婴/幼儿--男宝',
-    label: 'baby',
-    children: [
-      {
-        label: '小炎好物',
-        value:
-          'https://www.douyin.com/user/MS4wLjABAAAAD9YaF2w63nxhkoXGoEKhMX7ofVmZNS3O1735go_gnaM',
-      },
-    ],
-  },
-  {
-    value: '',
-    label:
-      'https://www.douyin.com/user/MS4wLjABAAAAA6pn95Blnh-irgSqvTDYw-vpfjB9x4FTvHPTiMUU8LI?previous_page=app_code_link',
-  },
-  {
-    value: '年轻品',
-    label: '年轻品',
-    children: [
-      {
-        label: '袁妹妹',
-        value:
-          'https://www.douyin.com/user/MS4wLjABAAAAxph_xYxXF1qd3tdm4BctBUzu-1w5bTtdwzPLayvyoCY',
-      },
-    ],
-  },
-  {
     value: '居家',
     label: '居家',
     children: [
@@ -71,6 +44,22 @@ export const businessUserPageList: Option[] = [
         label: '云云好物',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA2i1AhWAcPVZX3j5uwmcCuNmCYx6XOkvC5FXJYZxHDr8',
+      },
+    ],
+  },
+  {
+    value: '年轻品',
+    label: '年轻品',
+    children: [
+      {
+        label: '袁妹妹',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAxph_xYxXF1qd3tdm4BctBUzu-1w5bTtdwzPLayvyoCY',
+      },
+      {
+        label: '小炎好物',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAD9YaF2w63nxhkoXGoEKhMX7ofVmZNS3O1735go_gnaM',
       },
     ],
   },
