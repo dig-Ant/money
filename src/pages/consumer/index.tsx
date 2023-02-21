@@ -74,11 +74,7 @@ export default function searchUser() {
       return request(GET_DY_USERS_LIST, {
         method: 'post',
         data,
-      }).then((res) => {
-        // console.log(res?.data[0].commentList.map((e) => e.svgHtml));
-        // console.log(res?.data[0]);
-        return res?.data;
-      });
+      }).then((res) => res?.data);
     },
     {
       manual: true,
@@ -100,17 +96,33 @@ export default function searchUser() {
         const num = (val && val.length) || 0;
         const commentList = val || [];
         return (
-          <a
-            onClick={() => {
-              console.log(commentList.map((e) => e.svgHtml));
-              num && setIsModalOpen(true);
-              setListType('commentList');
-              seID(record._id);
-              setCurrent(commentList);
-            }}
-          >
-            {num}
-          </a>
+          <div>
+            <a
+              onClick={() => {
+                num && setIsModalOpen(true);
+                setListType('commentList');
+                seID(record._id);
+                setCurrent(commentList);
+              }}
+            >
+              {num}
+            </a>
+            &nbsp; &nbsp; &nbsp;
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: {
+                    userType,
+                    listType: 'commentList',
+                    _id: record._id,
+                  },
+                });
+              }}
+            >
+              评论
+            </a>
+          </div>
         );
       },
     },
@@ -122,16 +134,33 @@ export default function searchUser() {
         const num = (val && val.length) || 0;
         const businessList = val || [];
         return (
-          <a
-            onClick={() => {
-              num && setIsModalOpen(true);
-              setListType('businessList');
-              seID(record._id);
-              setCurrent(businessList);
-            }}
-          >
-            {num}
-          </a>
+          <div>
+            <a
+              onClick={() => {
+                num && setIsModalOpen(true);
+                setListType('businessList');
+                seID(record._id);
+                setCurrent(businessList);
+              }}
+            >
+              {num}
+            </a>
+            &nbsp; &nbsp; &nbsp;
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: {
+                    userType,
+                    listType: 'businessList',
+                    _id: record._id,
+                  },
+                });
+              }}
+            >
+              评论
+            </a>
+          </div>
         );
       },
     },
@@ -143,45 +172,42 @@ export default function searchUser() {
         const num = (val && val.length) || 0;
         const followList = val || [];
         return (
-          <a
-            onClick={() => {
-              num && setIsModalOpen(true);
-              setListType('followList');
-              seID(record._id);
-              setCurrent(followList);
-            }}
-          >
-            {num}
-          </a>
-        );
-      },
-    },
-    {
-      title: 'action',
-      width: 150,
-      render: (_, record) => {
-        return (
-          <Space size="middle">
+          <div>
             <a
               onClick={() => {
-                dispatch({
-                  type: 'consumerPage/batchLike',
-                  payload: { userType, _id: record._id, mode: '点赞评论模式' },
-                });
+                num && setIsModalOpen(true);
+                setListType('followList');
+                seID(record._id);
+                setCurrent(followList);
               }}
             >
-              评论
+              {num}
             </a>
+            &nbsp; &nbsp; &nbsp;
             <a
               onClick={() => {
                 dispatch({
                   type: 'consumerPage/batchLike',
-                  payload: { userType, _id: record._id, mode: '点赞关注模式' },
+                  payload: {
+                    userType,
+                    listType: 'followList',
+                    _id: record._id,
+                  },
                 });
               }}
             >
               关注
             </a>
+          </div>
+        );
+      },
+    },
+    {
+      title: 'action',
+      width: 100,
+      render: (_, record) => {
+        return (
+          <Space size="middle">
             <a
               onClick={() => {
                 dispatch({
@@ -263,7 +289,7 @@ export default function searchUser() {
         return (
           <div>
             <div dangerouslySetInnerHTML={a()}></div>
-            <div>{userName}</div>
+            <a>{userName}</a>
           </div>
         );
       },

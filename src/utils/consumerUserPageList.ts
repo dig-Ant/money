@@ -15,6 +15,11 @@ export const consumerUserPageList: Option[] = [
           'https://www.douyin.com/user/MS4wLjABAAAAH_vrrRPEaKhlrckmCZKz-Sq4SoLeedGpa0DTg1vjN0I',
       },
       {
+        label: '知遇和知恩',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAH_vrrRPEaKhlrckmCZKz-Sq4SoLeedGpa0DTg1vjN0I',
+      },
+      {
         label: '是个甜仔',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAAX6oWNDz8kvU5d97d1ODLNDPlPCPmiMKQiZQqjsl-3c',

@@ -488,7 +488,7 @@ class WebInterface {
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const { _id, userType, mode } = body || {};
+      const { _id, userType, listType = 'commentList' } = body || {};
       const db = new Datastore({
         filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
@@ -501,18 +501,14 @@ class WebInterface {
             errorMsg: err,
           });
         }
-        let code;
-        if (mode == '点赞关注模式') {
-          code = await this.pupp.start('feature_userFollow', {
-            list: docs[0].followList,
-            userType,
-          }).code;
-        } else {
-          code = await this.pupp.start('feature_userLike', {
-            list: docs[0].commentList,
-            userType,
-          }).code;
-        }
+        const feature =
+          listType === 'followList' ? 'feature_userFollow' : 'feature_userLike';
+        console.log(listType, docs[0][listType].length);
+        return;
+        let code = await this.pupp.start(feature, {
+          list: docs[0][listType],
+          userType,
+        }).code;
         if (code !== 0) {
           return res.json({
             code: -1,
