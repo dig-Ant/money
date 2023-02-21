@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
 
-import { Table, Tag, Form, Button, Input, Space, Modal } from 'antd';
+import { Table, Tag, Form, Button, Input, Space, Modal, Select } from 'antd';
 import request from '@/utils/request';
-import { GET_DY_PRODUCTMSG, GET_DY_PRODUCT_MSG_LIST } from '@/utils/api';
+import {
+  GET_DY_PRODUCTMSG,
+  GET_DY_PRODUCT_USER,
+  GET_DY_PRODUCT_MSG_LIST,
+} from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
 import { copy } from '@/utils/common';
@@ -18,6 +22,7 @@ interface DataType {
 
 export default function HomePage() {
   const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
   const { run, data, error, loading } = useRequest(
     (data) => {
       return request(GET_DY_PRODUCTMSG, {
@@ -32,9 +37,26 @@ export default function HomePage() {
       },
     },
   );
+  let { run: getUser, data: userList } = useRequest(
+    (data) => {
+      return request(GET_DY_PRODUCT_USER, {
+        method: 'post',
+        data,
+      }).then((res) => res?.data.map((e) => ({ label: e, value: e })) || []);
+    },
+    {
+      manual: true,
+      onSuccess: (result, params) => {
+        return;
+      },
+    },
+  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState([]);
   console.log('data: ', loading, data);
+  userList = userList || [];
+  console.log('userList: ', userList);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
     run(values);
@@ -53,39 +75,30 @@ export default function HomePage() {
       },
     },
   );
+  const onSearch = (values: Record<string, any>) => {
+    console.log('values: ', values);
+    listRun(values);
+  };
   // console.log(listData);
-  console.log('listData: ', listData);
-  listData = Object.keys(listData).map((username) => {
-    return {
-      username,
-      videoList: listData[username],
-      num: listData[username].length,
-    };
-  });
+  console.log('userList: ', userList);
   useEffect(() => {
-    listRun({});
+    getUser({ user: userList && userList[1] });
   }, []);
 
   const columns: ColumnsType<DataType> = [
     {
       title: '用户',
-      dataIndex: 'username',
+      dataIndex: 'title',
       render: (val, record: any) => {
-        return (
-          <div
-            onClick={() => {
-              record.num && setIsModalOpen(true);
-              setCurrent(record.videoList);
-            }}
-          >
-            {val}
-          </div>
-        );
+        const { href } = record;
+        return <a href={href}>{val}</a>;
       },
     },
     {
-      title: '视频数量',
-      dataIndex: 'num',
+      title: 'likeNum',
+      dataIndex: 'likeNum',
+      defaultSortOrder: 'descend',
+      sorter: (a: any, b: any) => a.likeNum - b.likeNum,
     },
   ];
   const videoCols: ColumnsType<DataType> = [
@@ -138,13 +151,20 @@ export default function HomePage() {
             获取
           </Button>
         </Form.Item>
+      </Form>
+      <Form
+        layout="inline"
+        form={searchForm}
+        className={styles.filter}
+        onFinish={onSearch}
+        initialValues={{ type: 'favorite_collection' }}
+        colon={false}
+      >
+        <Form.Item name="user" label="user">
+          <Select style={{ width: 120 }} options={userList} />
+        </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            onClick={() => {
-              listRun({});
-            }}
-          >
+          <Button type="primary" htmlType="submit">
             查询
           </Button>
         </Form.Item>

@@ -11,6 +11,17 @@ const express = require('express'),
   path = require('path'),
   Pupp = require('./pupp');
 
+const allJSON = {};
+const jsonList = fs.readdirSync(
+  path.resolve(__dirname, '../downloadFiles/账号作品信息'),
+);
+jsonList.forEach((filename) => {
+  if (filename.includes('.') && !['index.js', '.DS_Store'].includes(filename)) {
+    allJSON[
+      filename.split('.')[0]
+    ] = require(`../downloadFiles/账号作品信息/${filename}`);
+  }
+});
 class WebInterface {
   constructor(props) {
     const { port } = props || {};
@@ -244,28 +255,24 @@ class WebInterface {
       });
     });
     // 获取账号作品信息列表
+    app.post('/v1/getProductUser', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      console.log(allJSON);
+      res.send({
+        code: 0,
+        data: Object.keys(allJSON),
+      });
+    });
     app.post('/v1/getProductmsgList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
+      const { user } = body;
       // const db = new Datastore({
       //   filename: path.resolve(__dirname, `../db/${userType}User.json`),
       //   autoload: true,
       //   timestampData: true,
       // });
-      var allJSON = {};
-      const jsonList = fs.readdirSync(
-        path.resolve(__dirname, '../downloadFiles/账号作品信息'),
-      );
-      jsonList.forEach((filename) => {
-        if (
-          filename.includes('.') &&
-          !['index.js', '.DS_Store'].includes(filename)
-        ) {
-          allJSON[
-            filename.split('.')[0]
-          ] = require(`../downloadFiles/账号作品信息/${filename}`);
-        }
-      });
       // db.find({
       //   userType,
       // })
@@ -292,7 +299,7 @@ class WebInterface {
       //   });
       res.send({
         code: 0,
-        data: allJSON,
+        data: allJSON[user],
       });
     });
 
