@@ -10,8 +10,14 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   path = require('path'),
   Pupp = require('./pupp');
+const mkdirp = require('mkdirp');
 
 const allJSON = {};
+try {
+  mkdirp.sync(path.resolve(__dirname, '../downloadFiles/账号作品信息'));
+} catch (error) {
+  console.log('创建下载目录失败', error);
+}
 const jsonList = fs.readdirSync(
   path.resolve(__dirname, '../downloadFiles/账号作品信息'),
 );
