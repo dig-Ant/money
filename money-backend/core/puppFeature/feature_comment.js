@@ -5,6 +5,7 @@ const { delay, getToday } = require('../../utils/index');
 // TODO 搜索列表功能
 const feature_comment = async function (params = {}) {
   const { keyword, limitLen, isLogin = false } = params;
+  console.log(keyword);
   if (!keyword) {
     throw new Error('link 必填');
   }

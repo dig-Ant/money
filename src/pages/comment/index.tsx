@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useRequest, useDispatch } from 'umi';
 import parse from 'query-string';
-import { copy } from '@/utils/common';
+import { copy, transformUrl } from '@/utils/common';
 
 import {
   Space,
@@ -14,11 +14,13 @@ import {
   message,
   notification,
   Radio,
+  Cascader,
 } from 'antd';
 import request from '@/utils/request';
 import { GET_DY_COMMENT } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
+import { commentList } from '@/utils/commentList';
 
 const layout = {
   labelCol: { span: 10 },
@@ -132,7 +134,11 @@ export default function HomePage() {
       keyword = 'http' + keyword.split('http')[1];
     }
 
-    run({ ...values, keyword });
+    run({
+      ...values,
+      keyword,
+      userURL: transformUrl((values.userURL || [])[1]),
+    });
   };
   return (
     <div>
@@ -143,24 +149,26 @@ export default function HomePage() {
         className="list-filter"
         onFinish={onFinish}
         initialValues={{
+          type: 'like',
+          index: 0,
           // keyword: 'https://www.douyin.com/video/7195088865739296061',
           limitLen: 200,
           isLogin: false,
         }}
         colon={false}
       >
-        {/* <Form.Item
-          name="url"
-          label="link"
-          // rules={[{ required: true, message: '请输入抖音列表链接' }]}
-        >
-          <Input />
-        </Form.Item> */}
-        <Form.Item
-          name="keyword"
-          label="link"
-          rules={[{ required: true, message: '', whitespace: true }]}
-        >
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            获取
+          </Button>
+        </Form.Item>
+        <Form.Item name="userURL">
+          <Cascader options={commentList} placeholder="userURL" />
+        </Form.Item>
+        <Form.Item label="主页第" name="index">
+          <Input style={{ width: '42px' }} />
+        </Form.Item>
+        <Form.Item name="keyword" label="条作品，或link">
           <Input />
         </Form.Item>
         {/* <Form.Item name="filter" label="包含文字筛选">
@@ -169,25 +177,15 @@ export default function HomePage() {
 
         <Form.Item
           name="limitLen"
-          label="最近几条"
+          label="最近"
           // rules={[{ required: true, message: '请输入最近几条' }]}
         >
-          <InputNumber precision={0} style={{ width: '100%' }} />
+          <InputNumber precision={0} style={{ width: 50 }} />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item label="条">
           <Button type="primary" htmlType="submit">
             查询
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button
-            htmlType="button"
-            onClick={() => {
-              form.resetFields();
-            }}
-          >
-            重置
           </Button>
         </Form.Item>
         <Form.Item>
