@@ -434,6 +434,19 @@ export default function searchUser() {
     }
     return e;
   });
+
+  list.reduce((prev: any, curr: any) => {
+    if (curr.commentList) {
+      prev += curr.commentList.length;
+      console.log(
+        curr.commentList.length,
+        prev,
+        moment(curr.createdAt).format('YYYY-MM-DD HH:mm:ss').slice(10, 16),
+      );
+    }
+    return prev;
+  }, 0);
+
   console.log('list: ', list, listError);
 
   const onFinish = (values: Record<string, any>) => {
