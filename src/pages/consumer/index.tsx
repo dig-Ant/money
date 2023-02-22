@@ -99,6 +99,8 @@ export default function searchUser() {
           <div>
             <a
               onClick={() => {
+                console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
+
                 num && setIsModalOpen(true);
                 setListType('commentList');
                 seID(record._id);
@@ -137,6 +139,7 @@ export default function searchUser() {
           <div>
             <a
               onClick={() => {
+                console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
                 num && setIsModalOpen(true);
                 setListType('businessList');
                 seID(record._id);
@@ -175,6 +178,7 @@ export default function searchUser() {
           <div>
             <a
               onClick={() => {
+                console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
                 num && setIsModalOpen(true);
                 setListType('followList');
                 seID(record._id);
@@ -299,11 +303,11 @@ export default function searchUser() {
       dataIndex: 'gender',
       width: 35,
     },
-    {
-      title: '年龄',
-      dataIndex: 'age',
-      width: 35,
-    },
+    // {
+    //   title: '年龄',
+    //   dataIndex: 'age',
+    //   width: 35,
+    // },
     {
       title: '操作',
       width: 35,
@@ -332,7 +336,7 @@ export default function searchUser() {
         const { fans, like } = render;
         return (
           <div>
-            粉丝{fans}个，获{like}个赞
+            {fans}粉-{like}赞
           </div>
         );
       },
@@ -388,6 +392,34 @@ export default function searchUser() {
   list = list.map((e: any) => {
     if (e.commentList) {
       e.commentList = e.commentList
+        .map((f: any) => {
+          if (f.gender) {
+            const match = f.gender.match(/(\d+)岁/);
+            if (match) f.age = match[1];
+          }
+          return f;
+        })
+        .filter((e: any) => {
+          if (!e.age) return true;
+          return e.age < 40;
+        });
+    }
+    if (e.businessList) {
+      e.businessList = e.businessList
+        .map((f: any) => {
+          if (f.gender) {
+            const match = f.gender.match(/(\d+)岁/);
+            if (match) f.age = match[1];
+          }
+          return f;
+        })
+        .filter((e: any) => {
+          if (!e.age) return true;
+          return e.age < 40;
+        });
+    }
+    if (e.followList) {
+      e.followList = e.followList
         .map((f: any) => {
           if (f.gender) {
             const match = f.gender.match(/(\d+)岁/);

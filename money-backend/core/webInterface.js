@@ -123,6 +123,51 @@ class WebInterface {
       //   },
       // );
     });
+    app.post('/v1/execDyFollowList', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/followUsers.json`),
+        autoload: true,
+        timestampData: true,
+      });
+
+      db.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
+          console.log('docs: ', docs);
+          if (err) {
+            res.end({
+              code: -1,
+              status: 'error',
+              errorMsg: err.toString(),
+            });
+          } else {
+            res.json({
+              status: 'success',
+              code: 0,
+              data: docs,
+              // data: {
+              //   total: docs.length,
+              //   list: docs.slice(start, end),
+              //   page: Number(page),
+              //   pageSize: Number(pageSize),
+              // },
+            });
+          }
+        });
+      // const db = new Datastore({
+      //   filename: path.resolve(__dirname, `../db/download.json`),
+      //   autoload: true,
+      //   timestampData: true,
+      // });
+      // db.insert(
+      //   [],
+      //   (err, docs) => {
+      //     resHandle(res, err, docs);
+      //   },
+      // );
+    });
 
     // 查询下载列表
     app.post('/v1/getDyDownloadList', async (req, res) => {

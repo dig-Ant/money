@@ -44,6 +44,7 @@ export const GET_DY_LIVE_USERLIST = '/v1/getDyLiveUserList';
 
 // 批量点赞
 export const EXEC_DY_USERS_LIKE = '/v1/execDyUsersLike';
+export const EXEC_DY_FOLLOW_list = '/v1/execDyFollowList';
 // 批量获取主页视频信息
 export const EXEC_DY_VIDEPMSG = '/v1/execDyVidelMsg';
 export const EXEC_DY_DELETE = '/v1/execDyDelete';

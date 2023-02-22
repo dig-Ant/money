@@ -87,6 +87,14 @@ export default [
     },
   },
   {
+    path: '/follow',
+    component: './follow/index',
+    meta: {
+      icon: 'SearchOutlined',
+      name: '关注列表',
+    },
+  },
+  {
     path: '/select',
     meta: {
       icon: 'UserOutlined',
