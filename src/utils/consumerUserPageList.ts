@@ -32,6 +32,11 @@ export const consumerUserPageList: Option[] = [
     label: '女宝',
     children: [
       {
+        label: 'JoJo yoyo',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAA0_PHJ5IT10Md8iAla5z03oSs-890Nbwm486ZP7WRgdRPkct7YIT525NOnRjFo2j6?vid=7196573135594933539',
+      },
+      {
         label: '粉团小莘莘❤',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA6ft4vTxyToHrx_Vd_cIKCGGf_FKbB1rAPmDrTnnBoxE',
