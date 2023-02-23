@@ -21,6 +21,24 @@ export const videoNote = [
 ];
 export const textUserList = [
   {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAACDj9q6j6SBSHTgb-nljiMnaJ8maHUS78aig5HRUDepqR55cKDkMni1xwrqYfeIPF',
+    label: '书程小驿',
+    desc: '橱窗有惊喜 为你挑选好书的博主 用书塑身、受用一生，以书会友、天长地久。 ：...',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA89zOQELTigW2vGg_0t94kVSN1pQKrM_LnFulLZXsNSDr3r9o_kOxTYaHqMy46QKs',
+    label: '糖果动漫',
+    desc: '孤独，是一个人最高贵的自由',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAmVxCnQ0oEWoB0eg6SUss6z6tNUuL8uedginLYeZkoTs',
+    label: 'sharkie',
+    desc: '嗯 是我 不是8KRAW Premier 摄影师 不是国家地理签约摄影师 不是...',
+  },
+  {
     label: '青梅',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAmf-vTi2FAS9fCSY1CHKlPFXVNttUS5xt68IM16XBIo8',

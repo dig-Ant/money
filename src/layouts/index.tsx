@@ -25,7 +25,7 @@ import {
 } from 'antd';
 import type { MenuProps } from 'antd';
 
-import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LinkOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -144,6 +144,14 @@ export default function Layouts() {
                 onClick={() => {
                   dispatch({
                     type: 'global/logoutPup',
+                  });
+                }}
+              />
+              <LinkOutlined
+                title="link"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/grtLink',
                   });
                 }}
               />

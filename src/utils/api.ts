@@ -17,6 +17,7 @@ export const BASE_URL = apiConfig[env];
 // 登录pup
 export const LOGIN_PUP = '/v1/loginPup';
 export const LOGOUT_PUP = '/v1/logoutPup';
+export const GRT_LINK = '/v1/grtLink';
 
 // 下载抖音视频资源到本地
 export const GET_DY_RESOURCE = '/v1/getDyResource';

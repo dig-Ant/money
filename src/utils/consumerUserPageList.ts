@@ -11,6 +11,12 @@ export const consumerUserPageList: Option[] = [
     label: '儿科医生',
     children: [
       {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAtdAMFmWvZpzVXAKSXg_k1CMec3bGbu90pCiLj1_9nIA',
+        label: '崔玉涛',
+        desc: '儿科医生 知名养育专家 关注账号，留言写下您的育儿困惑...',
+      },
+      {
         label: '儿科姜主任',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA6Bp_rWLKxQ_RqOZbFCS4ViLy8qIDAzHsIcVSvUq14dk',
@@ -31,6 +37,12 @@ export const consumerUserPageList: Option[] = [
     value: '母婴/幼儿--男宝',
     label: '男宝',
     children: [
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAqgTlGelEmVztKQAuVWbB-88uN0WDKJRl7P-53IERh5Y',
+        label: '童年终结者',
+        desc: '事已至此 先吃饭吧 是个普通人有七情六欲，请勿圣人化 日常分享小号：@童年终结...',
+      },
       {
         label: '✨是汐宝呀~',
         value:
@@ -295,6 +307,48 @@ export const consumerUserPageList: Option[] = [
     value: '情侣',
     label: '情侣',
     children: [
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAArJpW4vtZLfDBarD4XgZD_8UGfDVreGiXanatvQn6XWU',
+        label: '王十一与陈老虎',
+        desc: '抖音唯一账号（其他都是骗子）感谢宝子们的喜欢 努力更新中……（宝宝穿的衣...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAArMyFFki5PiWOhfzUBr7MY46xC0XFFOFMpsCFZq7PdTA?previous_page=app_code_link',
+        label: '冬冬和37',
+        desc: '🍠 冬冬和37 Vbo 陈三七y ✨图 dongdong37123 外网不是本...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAWv3sq7DarxE2nIuH2aJ_7oBCw2Jky66FIIbGCT8MquuFcfe-vH_6O1fSOl_jNvfl',
+        label: '牟牟刘啊',
+        desc: '小两口的日常 视频源于生活 翻拍请标明出处 禁止转载和搬运！ 感谢大家！...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAeDFsir1XmvVvAfn_q3yyh3vidKegXiG32PWLL4C0Vm8?previous_page=app_code_link',
+        label: '坤哥哥.',
+        desc: '爱聪姐姐 一对刚刚新婚的甜蜜小夫妻👩‍❤️‍💋‍👨 上海没有房（正在努力）...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAl0Q-MIORzDupcWzXavXn34bGD8VlQdbOouU3-it9s0OqStEicA3ebgXSEM91563k',
+        label: '冰糖小小酥',
+        desc: '分享和小酥宝贝的恋爱日常～ 商务合作：Zswh1010（备注来意） 不会私下...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAARYg_TOBjFhAu7VOK6s6LR0hRKXZnhGwkaZ2qFYL2_AE',
+        label: '瑶瑶别追了',
+        desc: '对象@小玉在这（瑶瑶） 没有团队只有你们呀 商务合作：kaidie98...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAjMxX680UkwsISNXiAWCgSEymKPssDTb5yu3X_7Bu-Ak',
+        label: '小玉在这（瑶瑶）',
+        desc: '是瑶瑶也是小玉啦！！！ 情侣日常指路@瑶瑶别追了 合作lion661@...',
+      },
       {
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAx6aYkJUStzigaAuTdu4cFFOj6EouxlKJKzpwuBbG74Q',

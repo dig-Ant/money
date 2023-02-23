@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { LOGIN_PUP, LOGOUT_PUP } from '@/utils/api';
+import { GRT_LINK, LOGIN_PUP, LOGOUT_PUP } from '@/utils/api';
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
@@ -16,6 +16,10 @@ export default {
     },
     *logoutPup(_action: any, { call, put }: any) {
       yield call(() => request(LOGOUT_PUP, { method: 'post' }));
+      // yield put({ type: 'add' });
+    },
+    *grtLink(_action: any, { call, put }: any) {
+      yield call(() => request(GRT_LINK, { method: 'post' }));
       // yield put({ type: 'add' });
     },
   },

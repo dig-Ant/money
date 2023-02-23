@@ -376,6 +376,16 @@ class WebInterface {
         data: {},
       });
     });
+    // link
+    app.post('/v1/grtLink', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const list = await this.pupp.start('feature_grtLink');
+      res.send({
+        code: 0,
+        data: list,
+      });
+    });
 
     // 搜索抖音列表
     app.post('/v1/getDySearch', async (req, res) => {
