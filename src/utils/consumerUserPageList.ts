@@ -152,6 +152,12 @@ export const consumerUserPageList: Option[] = [
     label: '小学',
     children: [
       {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAiAToLy8KSDCwwdukKh3MIT11sZoVpCDs-mpyWmhElVQ',
+        label: '正姿教育-萝卜直播教握笔练字',
+        desc: '用心做好教育，成就孩子更好未来。 一个真正的教育者，是在经历了孩子现在所经历的...',
+      },
+      {
         label: '英语雪梨老师(家庭英语规划)',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA7F9srUZmSoxPRcywewClYslUk8ysERHVrz6srz0eNow',
