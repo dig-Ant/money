@@ -37,7 +37,7 @@ export default function HomePage() {
       },
     },
   );
-  let { run: getUser, data: userList } = useRequest(
+  let { run: getUser, data: userList=[] } = useRequest(
     (data) => {
       return request(GET_DY_PRODUCT_USER, {
         method: 'post',
@@ -160,9 +160,9 @@ export default function HomePage() {
         initialValues={{ type: 'favorite_collection' }}
         colon={false}
       >
-        <Form.Item name="user" label="user">
+        {/* <Form.Item name="user" label="user">
           <Select style={{ width: 120 }} options={userList} />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item>
           <Button type="primary" htmlType="submit">
             查询
