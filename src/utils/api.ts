@@ -35,6 +35,7 @@ export const GET_DY_PRODUCT_USER = '/v1/getProductUser';
 // 下载目标用户
 export const GET_DY_USERS = '/v1/getDyUsers';
 // 搜索目标用户
+export const GET_DY_USERS_NAME = '/v1/getDyUsersName';
 export const GET_DY_USERS_LIST = '/v1/getDyUsersList';
 
 // 下载直播间用户

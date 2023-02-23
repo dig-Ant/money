@@ -13,7 +13,11 @@ import {
   Modal,
 } from 'antd';
 import request from '@/utils/request';
-import { GET_DY_USERS, GET_DY_USERS_LIST } from '@/utils/api';
+import {
+  GET_DY_USERS,
+  GET_DY_USERS_LIST,
+  GET_DY_USERS_NAME,
+} from '@/utils/api';
 import {
   consumerUserPageList,
   businessUserPageList,
@@ -35,6 +39,7 @@ interface DataType {
 
 export default function searchUser() {
   const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState([]);
@@ -64,6 +69,22 @@ export default function searchUser() {
       },
     },
   );
+  const { run: userRun, data: userList = [] } = useRequest(
+    (data) => {
+      return request(GET_DY_USERS_NAME, {
+        method: 'post',
+        data,
+      }).then((res) => {
+        return res?.data;
+      });
+    },
+    {
+      manual: true,
+      onSuccess: (result, params) => {
+        return;
+      },
+    },
+  );
   const {
     run: listRun,
     data: listData = {},
@@ -84,8 +105,12 @@ export default function searchUser() {
     },
   );
   useEffect(() => {
-    listRun({ userType });
+    userRun({ userType });
+    setTimeout(() => {
+      listRun({ userType });
+    }, 1000);
   }, []);
+  console.log(userList);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -463,58 +488,70 @@ export default function searchUser() {
       userType,
     });
   };
+  const onSearchFinish = (values: Record<string, any>) => {
+    console.log('values: ', values);
+
+    listRun({
+      ...values,
+      userType,
+    });
+  };
   return (
     <div>
-      <Form
-        layout="inline"
-        form={form}
-        className="list-filter"
-        onFinish={onFinish}
-        initialValues={{
-          type: 'like',
-          limitLen: 1,
-          index: 0,
-          commentLimitLen: 270,
-        }}
-        colon={false}
-      >
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            获取
-          </Button>
-        </Form.Item>
-        <Form.Item name="userURL">
-          <Cascader options={CascaderOptions} placeholder="userURL" />
-        </Form.Item>
-        <Form.Item label="主页第" name="index">
-          <Input style={{ width: '42px' }} />
-        </Form.Item>
-        <Form.Item name="type" label="条">
-          <Radio.Group>
-            <Radio.Button value="post">作品</Radio.Button>
-            <Radio.Button value="like">喜欢</Radio.Button>
-            <Radio.Button value="favorite_collection">收藏</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item name="link" label="或link">
-          <Input style={{ width: '155px' }} />
-        </Form.Item>
-        <Form.Item name="commentLimitLen" label="的">
-          <Input style={{ width: '55px' }} />
-        </Form.Item>
-        <Form.Item label="条评论者">
-          <Button
-            type="primary"
-            onClick={() => {
-              form.validateFields().then((value) => {
-                listRun({ userType });
-              });
-            }}
-          >
-            查询
-          </Button>
-        </Form.Item>
-      </Form>
+      <div style={{ display: 'flex' }}>
+        <Form
+          layout="inline"
+          form={form}
+          className="list-filter"
+          onFinish={onFinish}
+          initialValues={{
+            type: 'like',
+            limitLen: 1,
+            index: 0,
+            commentLimitLen: 270,
+          }}
+          colon={false}
+        >
+          <Form.Item>
+            <Button type="primary" htmlType="submit" size="small">
+              获取
+            </Button>
+          </Form.Item>
+          <Form.Item name="userURL">
+            <Cascader
+              options={CascaderOptions}
+              size="small"
+              placeholder="userURL"
+            />
+          </Form.Item>
+          <Form.Item label="主页第" name="index">
+            <Input style={{ width: '42px' }} size="small" />
+          </Form.Item>
+          <Form.Item name="type" label="条">
+            <Radio.Group size="small">
+              <Radio.Button value="post">作品</Radio.Button>
+              <Radio.Button value="like">喜欢</Radio.Button>
+              <Radio.Button value="favorite_collection">收藏</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item name="link" label="或link">
+            <Input style={{ width: '125px' }} size="small" />
+          </Form.Item>
+          <Form.Item name="commentLimitLen">
+            <Input style={{ width: '47px' }} size="small" />
+          </Form.Item>
+        </Form>
+        <Form layout="inline" form={searchForm} onFinish={onSearchFinish}>
+          <Form.Item name="user" label="条评论者,用户">
+            <Select style={{ width: 120 }} options={userList} size="small" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" size="small">
+              查询
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
       <Table
         scroll={{ x: true, y: 500 }}
         columns={columns}

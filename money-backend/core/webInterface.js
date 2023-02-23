@@ -444,7 +444,7 @@ class WebInterface {
     app.post('/v1/getDyUsersList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const { page = 1, pageSize = 10, userType = 'consumer' } = body || {};
+      const { user = '', userType = 'consumer' } = body || {};
       const db = new Datastore({
         filename: path.resolve(__dirname, `../db/${userType}User.json`),
         autoload: true,
@@ -452,8 +452,8 @@ class WebInterface {
       });
       // const start = Math.floor((Number(page) - 1) * Number(pageSize));
       // const end = Math.floor(start + Number(pageSize));
-
-      db.find()
+      const query = user ? { name: user } : {};
+      db.find(query)
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
@@ -472,6 +472,40 @@ class WebInterface {
                 // page: Number(page),
                 // pageSize: Number(pageSize),
               },
+            });
+          }
+        });
+    });
+    // 搜索目标用户名
+    app.post('/v1/getDyUsersName', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const { userType = 'consumer' } = body || {};
+      const db = new Datastore({
+        filename: path.resolve(__dirname, `../db/${userType}User.json`),
+        autoload: true,
+        timestampData: true,
+      });
+      db.find()
+        .sort({ createdAt: -1 })
+        .exec((err, docs) => {
+          console.log();
+          let nameList = docs.map((e) => e.name).filter((e) => !!e);
+          nameList = [...new Set(nameList)].map((e) => ({
+            value: e,
+            label: e,
+          }));
+          if (err) {
+            res.end({
+              code: -1,
+              status: 'error',
+              errorMsg: err.toString(),
+            });
+          } else {
+            res.json({
+              status: 'success',
+              code: 0,
+              data: nameList,
             });
           }
         });
