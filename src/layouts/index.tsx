@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
-import { Link, Outlet, history, useLocation, request, useRequest, useDispatch } from 'umi';
+import {
+  Link,
+  Outlet,
+  history,
+  useLocation,
+  request,
+  useRequest,
+  useDispatch,
+} from 'umi';
 // import { request } from '@umijs/max';
 import cloneDeep from 'lodash/cloneDeep';
 import map from 'lodash/map';
 import each from 'lodash/each';
 import isEmpty from 'lodash/isEmpty';
 
-import { ConfigProvider, Layout, Menu, theme,Space, Button, Breadcrumb,  } from 'antd';
-import type {  MenuProps } from 'antd';
+import {
+  ConfigProvider,
+  Layout,
+  Menu,
+  theme,
+  Space,
+  Button,
+  Breadcrumb,
+} from 'antd';
+import type { MenuProps } from 'antd';
 
-import { LoginOutlined, LogoutOutlined } from '@ant-design/icons'
+import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -115,16 +131,22 @@ export default function Layouts() {
               },
             )}
             <Space style={{ marginLeft: 100, marginBottom: 10 }}>
-            <LoginOutlined title='首次需要登录chromium' onClick={() => {
-                dispatch({
-                  type: 'global/loginPup',
-                });
-              }}/>
-            <LogoutOutlined title='关闭登录chromium' onClick={() => {
-                dispatch({
-                  type: 'global/logoutPup',
-                });
-              }}/>
+              <LoginOutlined
+                title="首次需要登录chromium"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/loginPup',
+                  });
+                }}
+              />
+              <LogoutOutlined
+                title="关闭登录chromium"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/logoutPup',
+                  });
+                }}
+              />
             </Space>
           </Header>
           <Content
