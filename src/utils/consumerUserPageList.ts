@@ -32,6 +32,11 @@ export const consumerUserPageList: Option[] = [
     label: '男宝',
     children: [
       {
+        label: '✨是汐宝呀~',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAdwMxv0JoMJeWu0setf6TlTZ6dT9TP13fCvZCkdjz25XDgNqF57jyf3jRgpvOoL2L',
+      },
+      {
         label: '俏俏头发乱',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAp-CT3EYb5HLdH1KDernrh_ctsn7nCretQu7VpnCo5bM',
@@ -58,6 +63,11 @@ export const consumerUserPageList: Option[] = [
     value: '母婴/幼儿--女宝',
     label: '女宝',
     children: [
+      {
+        label: '快快超爱笑',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAkZbENFF7aoZHEqXxUHYy0WwAxMjh6e6ieR0AzHrBQKyW5c_5RUpwex60ry27edWn',
+      },
       {
         label: 'JoJo yoyo',
         value:
@@ -165,10 +175,10 @@ export const consumerUserPageList: Option[] = [
           'https://www.douyin.com/user/MS4wLjABAAAAr2pMtBFYBEtM-4U5s4oW2SkrIpXNpIvMBJiiDPXdtq4',
       },
       {
-        label: '一铭宝贝',
+        label: '一铭宝贝⌛️24号毛毛虫点读笔',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAPcshls-g-ImjskADotkeRMbn5xDZB-lQpCO3DxtFBw_F1bfj472yUUf7dNZQSnhB',
-      }, //
+      },
       {
         label: '柒娘',
         value:
@@ -190,6 +200,26 @@ export const consumerUserPageList: Option[] = [
     value: 'makeup',
     label: '美妆',
     children: [
+      {
+        label: '造型师大宝',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAogZHwmkIX1DU6RCti0S_1wrq6wrWgCx2FnxX0gTcHUY',
+      },
+      {
+        label: '我是张凯毅',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAMzoqOX-YDywVpIjF1uIp04gmDWRtxtXNCoAUuPMsDoQ',
+      },
+      {
+        label: '美妆师咕咚（战痘版）',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAhNHi-d7yfRBRmP2mxHV3tAmTH5fxVpriuDwyqmTV-F0',
+      },
+      {
+        label: '化妆小天才肖遥',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAfZGnxttLYjTcP8P9Hpa1ep4hBOy9wWhFzZCvSxp1n21bVXomyJ25M71IoUrIWFuA',
+      },
       {
         label: '卡卡宝贝贝',
         value:
@@ -267,6 +297,11 @@ export const consumerUserPageList: Option[] = [
     children: [
       {
         value:
+          'https://www.douyin.com/user/MS4wLjABAAAAx6aYkJUStzigaAuTdu4cFFOj6EouxlKJKzpwuBbG74Q',
+        label: '榕树下的邂逅',
+      },
+      {
+        value:
           'https://www.douyin.com/user/MS4wLjABAAAAWdpRZah396r0_sq_amCI2GxAYtMSvDUJz4KJZJ-68_s',
         label: '白十七是志强',
       },
@@ -304,6 +339,17 @@ export const consumerUserPageList: Option[] = [
         感谢大家一路的陪伴♥️
         🍠&🧣:一毛栗子
         合作v：mswh948`,
+      },
+    ],
+  },
+  {
+    value: '服饰',
+    label: '服饰',
+    children: [
+      {
+        label: '美洋MEIYANG',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAA3ZmvKhD17JYIXlIaP49Z59Qh1pFlQh2bQVZLA8Xm7sA',
       },
     ],
   },

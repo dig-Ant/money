@@ -72,7 +72,7 @@ interface Option {
       label: '小学',
       children: [
         {
-          label: '一铭宝贝',
+          label: '一铭宝贝⌛️24号毛毛虫点读笔',
           value:
             'https://www.douyin.com/user/MS4wLjABAAAAPcshls-g-ImjskADotkeRMbn5xDZB-lQpCO3DxtFBw_F1bfj472yUUf7dNZQSnhB',
         }, //

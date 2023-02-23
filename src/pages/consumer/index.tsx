@@ -282,6 +282,11 @@ export default function searchUser() {
       },
     },
     {
+      title: '评论',
+      dataIndex: 'comment',
+      width: 80,
+    },
+    {
       title: '用户名',
       dataIndex: 'userName',
       width: 60,

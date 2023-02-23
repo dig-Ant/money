@@ -229,12 +229,12 @@ export default function searchUser() {
           <Button
             type="primary"
             onClick={() => {
-              console.log(list);
+              console.log(list.map((e: any) => e.title));
 
               copy(
                 JSON.stringify(
                   list
-                    .map((e: any) => e.title)
+                    .map((e: any) => e.title.replace(/#.+$/,''))
                     .sort((a: any, b: any) => b.length - a.length),
                 ),
               );
