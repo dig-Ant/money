@@ -21,6 +21,11 @@ export const businessUserPageList: Option[] = [
     label: '全品类',
     children: [
       {
+        label: '乔妹好物',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAtdTddQ9ISD6FfJ0kHEkorbjISQeZnhF6rUqHZOzuHGE',
+      },
+      {
         label: '小颖好物',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAIffNageL7ftKI-ublUZs3v1eGu8T1VW2rzjXHKaZVxTfEhdDvyLtt-0yj2p2HqHr',

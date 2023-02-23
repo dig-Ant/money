@@ -21,6 +21,16 @@ export const videoNote = [
 ];
 export const textUserList = [
   {
+    label: '食堂夜话',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAo51awN_fkIquGt9JyeDgwZettDfekkJW4ZMYFwwVP-Y',
+  },
+  {
+    label: '汤师爷',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAABnKRwcGEwSsjWxLmNK9MLyTRFjCiw2TKTWeHVrwHiFaLG7uJOvLeW6oy1-x8TwQ0',
+  },
+  {
     label: '西子问',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAnXDRv4NxUbWXTlwxKQKDy5RcFBGGiMEIMn-AvpYgMQA',

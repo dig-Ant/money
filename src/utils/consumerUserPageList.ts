@@ -1,14 +1,41 @@
 interface Option {
   value: string | number;
   label: string;
+  desc?: string;
   children?: Option[];
 }
 export const consumerUserPageList: Option[] = [
   // 按母婴/美妆/小学用品/居家/情侣/分类
   {
+    value: '儿科医生',
+    label: '儿科医生',
+    children: [
+      {
+        label: '儿科姜主任',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAA6Bp_rWLKxQ_RqOZbFCS4ViLy8qIDAzHsIcVSvUq14dk',
+      },
+      {
+        label: '儿科医生鲍秀兰',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAenJjvvX_BzUf6yePPXEwqxqj2g6NhuIhGWBAAe5FGb8',
+      },
+      {
+        label: '兔子妈妈说育儿 2.24一亩宝',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAATzelu_6n-0rSNc4ddWx-fp1b5lqtDGJWlmGXHIrZFZU',
+      },
+    ],
+  },
+  {
     value: '母婴/幼儿--男宝',
     label: '男宝',
     children: [
+      {
+        label: '俏俏头发乱',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAp-CT3EYb5HLdH1KDernrh_ctsn7nCretQu7VpnCo5bM',
+      },
       {
         label: '高龄三胞胎宝妈玉姐',
         value:
@@ -80,6 +107,21 @@ export const consumerUserPageList: Option[] = [
         label: '米迪爸爸',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAA0zUwsmd-N7te6DdBijJYzRplT-opRbeHYKEOB_HMDiQ',
+      },
+      {
+        label: '希希不挑食',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAM0FCuzds7Wv_NRZXR6Mc8hiSn39-4rt03nWFQk1WsEg',
+      },
+      {
+        label: '一只小饱饱',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAA0gHEYboqgbifCEpGIctxeZwa0zlwJnWroZSeGi43SBz0aRREVtktJHVdCc2c8tFL',
+      },
+      {
+        label: '瑶一瑶小肉包',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAQoB4UQhzI4MuqMT3u5aNQSW2ZyDuXmYjQLU2TTVIWtE',
       },
     ],
   },
@@ -198,6 +240,25 @@ export const consumerUserPageList: Option[] = [
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAoarhuIcVxPFcG7BeBtBss0Pe7QFsU1yVVxIFNGv8xUq70FOxWPGdaOA4PPvlub4Q',
       },
+      {
+        label: '柔柔爱编发',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAwnK1QJNDYVNXkrAGacMOtN0E-LTNUM9jFx5YI3HGxQg',
+      },
+      {
+        label: '开架大王男仔（🔗在橱窗）',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAYsCb3kg_lAFWqNPs0eyRqJOq7qLx3zed2-44K6Olc6E',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAUt1Ue531FkpQkuUqLRhn367_pD3a5rXrYQhWckjoFe09rOqJ__o_0oNexiGQXwE4',
+        label: '阿King哥',
+        desc: `⭐19年明星造型经验，讲港普的处女男，形象顾问
+        🎤曾合作：香港，内地，英国等各地明星艺人
+        💄曾合作：LV Gucci YSL Dior Chanel等各大品牌
+        🈴：onlykkk123`,
+      },
     ],
   },
   {
@@ -238,6 +299,11 @@ export const consumerUserPageList: Option[] = [
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAZ3MxDkfGyCUSX0eytHGR0shi8aou4Rd0kBIbDvNZVOY',
         label: '一毛栗子',
+        desc: `辉煌哥@栗子的饲养员 栗子的好物分享@栗子五分熟
+        这是我们在一起的第九个年头啦
+        感谢大家一路的陪伴♥️
+        🍠&🧣:一毛栗子
+        合作v：mswh948`,
       },
     ],
   },

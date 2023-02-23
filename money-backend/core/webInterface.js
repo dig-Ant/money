@@ -177,6 +177,7 @@ class WebInterface {
         autoload: true,
         timestampData: true,
       });
+      /* db.insert([]); */
       db.find({}).exec((err, docs) => {
         console.log('docs: ', docs);
         if (err) {

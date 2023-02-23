@@ -95,7 +95,7 @@ export default function HomePage() {
       dataIndex: 'name',
       width: 150,
       render: (val, record: Record<string, any>) => {
-        return <span>{val.split('-')[0]}</span>;
+        return <span>{(val || record.filename || '').split('-')[0]}</span>;
       },
     },
     {
@@ -118,7 +118,11 @@ export default function HomePage() {
       dataIndex: 'name',
       width: 150,
       render: (val, record: Record<string, any>) => {
-        return <span>{val.split('-').slice(1).join('-')}</span>;
+        return (
+          <span>
+            {(val || record.filename || '').split('-').slice(1).join('-')}
+          </span>
+        );
       },
     },
     {
