@@ -118,10 +118,10 @@ export default function searchUser() {
         );
       },
     },
-    {
-      title: '_id',
-      dataIndex: '_id',
-    },
+    // {
+    //   title: '_id',
+    //   dataIndex: '_id',
+    // },
     {
       title: 'action',
       // key: 'action',
@@ -129,34 +129,39 @@ export default function searchUser() {
       render: (_, record) => {
         const { _id } = record || {};
         return (
-          <a
-            onClick={() => {
-              dispatch({
-                type: 'consumerPage/batchLike',
-                payload: { userType, _id, type: 'live' },
-              });
-            }}
-          >
-            赞
-          </a>
+          <Space>
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: { userType, _id, type: 'live' },
+                });
+              }}
+            >
+              赞
+            </a>
+
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/delete',
+                  payload: { userType, _id },
+                }).then(() => {
+                  listRun({ userType });
+                });
+              }}
+            >
+              删除
+            </a>
+          </Space>
         );
       },
     },
     {
-      title: '视频信息',
-      dataIndex: 'title',
+      title: '直播链接',
+      dataIndex: 'userURL',
       render: (val, record: Record<string, any>) => {
-        const {
-          href = 'javaScript:void(0);',
-          title = '',
-          likeNum = '',
-          user = {},
-        } = record || {};
-        return (
-          <a href={href}>
-            {user.name || ''}-{likeNum}-{title}
-          </a>
-        );
+        return <a href={val}>link</a>;
       },
     },
     {

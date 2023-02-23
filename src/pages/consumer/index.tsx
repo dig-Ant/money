@@ -282,10 +282,10 @@ export default function searchUser() {
         );
       },
     },
-    {
-      title: '_id',
-      dataIndex: '_id',
-    },
+    // {
+    //   title: '_id',
+    //   dataIndex: '_id',
+    // },
     {
       title: 'createdAt',
       dataIndex: 'createdAt',
