@@ -47,7 +47,7 @@ const feature_searchUsers = async function (params = {}) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
     devtools: false,
-    ...(isLogin ? {} : { userDataDir: undefined }),
+    ...(userType === 'aged' ? {} : { userDataDir: undefined }),
   });
 
   await page.setViewport(INIT_VIEWPORT);
