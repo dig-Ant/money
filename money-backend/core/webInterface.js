@@ -43,11 +43,48 @@ class WebInterface {
       autoload: true,
       timestampData: true,
     });
+    this.consumerDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/consumerUser.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.businessDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/businessUser.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.agedDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/agedUser.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.downloadDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/download.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.yunyunDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/yunyunUser.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.liveDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/liveUser.json`),
+      autoload: true,
+      timestampData: true,
+    });
+    this.followUsersDB = new Datastore({
+      filename: path.resolve(__dirname, `../db/followUsers.json`),
+      autoload: true,
+      timestampData: true,
+    });
     // 初始化服务器
     this.app = this.getServer();
     this.pupp = new Pupp();
   }
-
+  getUserDB(userType) {
+    return this[userType + 'DB'];
+  }
   // 获取
   getServer() {
     const app = express();
@@ -102,37 +139,17 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const dataSource = await this.pupp.start('feature_downloadVideo', body);
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/download.json`),
-        autoload: true,
-        timestampData: true,
-      });
+
       if (dataSource.code == -1) return;
-      db.insert(dataSource, (err, docs) => {
+      this.downloadDB.insert(dataSource, (err, docs) => {
         resHandle(res, err, docs);
       });
-      // const db = new Datastore({
-      //   filename: path.resolve(__dirname, `../db/download.json`),
-      //   autoload: true,
-      //   timestampData: true,
-      // });
-      // db.insert(
-      //   [],
-      //   (err, docs) => {
-      //     resHandle(res, err, docs);
-      //   },
-      // );
     });
     app.post('/v1/execDyFollowList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/followUsers.json`),
-        autoload: true,
-        timestampData: true,
-      });
-
-      db.find({})
+      this.followUsersDB
+        .find({})
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           console.log('docs: ', docs);
@@ -156,29 +173,13 @@ class WebInterface {
             });
           }
         });
-      // const db = new Datastore({
-      //   filename: path.resolve(__dirname, `../db/download.json`),
-      //   autoload: true,
-      //   timestampData: true,
-      // });
-      // db.insert(
-      //   [],
-      //   (err, docs) => {
-      //     resHandle(res, err, docs);
-      //   },
-      // );
     });
 
     // 查询下载列表
     app.post('/v1/getDyDownloadList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/download.json`),
-        autoload: true,
-        timestampData: true,
-      });
-      /* db.insert([]); */
-      db.find({}).exec((err, docs) => {
+      /* this.downloadDB.insert([]); */
+      this.downloadDB.find({}).exec((err, docs) => {
         console.log('docs: ', docs);
         if (err) {
           res.end({
@@ -205,15 +206,8 @@ class WebInterface {
     // 删除
     app.post('/v1/execDyDelete', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { userType, _id } = body;
-      console.log('delete userType, _id: ', userType, _id);
-
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
+      const { userType, _id } = req.body;
+      const db = this.getUserDB(userType);
       db.remove({ _id }, {}, (err, numRemoved) => {
         resHandle(res, err, numRemoved);
       });
@@ -221,14 +215,8 @@ class WebInterface {
     // 删除单条用户
     app.post('/v1/execDyDeleteSingle', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { userType, _id, listType, userName } = body;
-      console.log('userType, _id, listType: ', userType, _id, listType);
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
+      const { userType, _id, listType, userName } = req.body;
+      const db = this.getUserDB(userType);
       db.find({ _id }).exec((err, doc) => {
         let updateList = doc[0][listType].filter(
           (e) => e.userName !== userName,
@@ -249,30 +237,21 @@ class WebInterface {
     app.post('/v1/getDyYunyun', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/yunyunUser.json`),
-        autoload: true,
-        timestampData: true,
-      });
       const list = await this.pupp.start('feature_yunyun', body);
       console.log('list', list);
       if (list.code == -1) return;
-      db.insert(list, (err, docs) => {
+      this.yunyunDB.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
     });
     app.post('/v1/getDyYunyunList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/yunyunUser.json`),
-        autoload: true,
-        timestampData: true,
-      });
       const { page = 1, pageSize = 10 } = body || {};
       const start = Math.floor((Number(page) - 1) * Number(pageSize));
       const end = Math.floor(start + Number(pageSize));
-      db.find({})
+      this.yunyunDB
+        .find({})
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
@@ -320,35 +299,6 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const { user } = body;
-      // const db = new Datastore({
-      //   filename: path.resolve(__dirname, `../db/${userType}User.json`),
-      //   autoload: true,
-      //   timestampData: true,
-      // });
-      // db.find({
-      //   userType,
-      // })
-      //   .sort({ createdAt: -1 })
-      //   .exec((err, docs) => {
-      //     if (err) {
-      //       res.end({
-      //         code: -1,
-      //         status: 'error',
-      //         errorMsg: err.toString(),
-      //       });
-      //     } else {
-      //       res.json({
-      //         status: 'success',
-      //         code: 0,
-      //         data: {
-      //           total: docs.length,
-      //           list: docs.slice(start, end),
-      //           page: Number(page),
-      //           pageSize: Number(pageSize),
-      //         },
-      //       });
-      //     }
-      //   });
       res.send({
         code: 0,
         data: allJSON[user],
@@ -435,15 +385,9 @@ class WebInterface {
     // 下载目标用户
     app.post('/v1/getDyUsers', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { userType } = body;
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
+      const { userType } = req.body;
+      const db = this.getUserDB(userType);
       const list = await this.pupp.start('feature_searchUsers', body);
-      console.log('list', list);
       if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
@@ -453,15 +397,8 @@ class WebInterface {
     // 搜索目标用户
     app.post('/v1/getDyUsersList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { user = '', userType = 'consumer' } = body || {};
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
-      // const start = Math.floor((Number(page) - 1) * Number(pageSize));
-      // const end = Math.floor(start + Number(pageSize));
+      const { user = '', userType = 'consumer' } = req.body;
+      const db = this.getUserDB(userType);
       const query = user ? { name: user } : {};
       db.find(query)
         .sort({ createdAt: -1 })
@@ -489,13 +426,8 @@ class WebInterface {
     // 搜索目标用户名
     app.post('/v1/getDyUsersName', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { userType = 'consumer' } = body || {};
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
+      const { userType = 'consumer' } = req.body;
+      const db = this.getUserDB(userType);
       db.find()
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
@@ -526,14 +458,9 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const list = await this.pupp.start('feature_liveusers', body);
-      const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/liveUser.json'),
-        autoload: true,
-        timestampData: true,
-      });
       console.log('list: ', list);
       // if (list.code == -1) return;
-      db.insert(list, (err, docs) => {
+      this.liveDB.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
       // res.send({
@@ -544,16 +471,12 @@ class WebInterface {
     // 搜索直播间用户
     app.post('/v1/getDyLiveUserList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const db = new Datastore({
-        filename: path.resolve(__dirname, '../db/liveUser.json'),
-        autoload: true,
-        timestampData: true,
-      });
       const body = req.body;
       const { page = 1, pageSize = 10 } = body || {};
       const start = Math.floor((Number(page) - 1) * Number(pageSize));
       const end = Math.floor(start + Number(pageSize));
-      db.find({})
+      this.liveDB
+        .find({})
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
@@ -590,13 +513,8 @@ class WebInterface {
     // 给用户点赞
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { _id, userType, listType = 'commentList' } = body || {};
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
+      const { _id, userType, listType = 'commentList' } = req.body;
+      const db = this.getUserDB(userType);
       db.find({ _id }, async (err, docs) => {
         if (err) {
           return res.json({
@@ -628,14 +546,8 @@ class WebInterface {
     // execDyVidelMsg
     app.post('/v1/execDyVidelMsg', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const body = req.body;
-      const { _id, userType } = body || {};
-      const db = new Datastore({
-        filename: path.resolve(__dirname, `../db/${userType}User.json`),
-        autoload: true,
-        timestampData: true,
-      });
-      console.log(_id);
+      const { _id, userType } = (req.body = {});
+      const db = this.getUserDB(userType);
       db.find({ _id }, async (err, docs) => {
         if (err) {
           return res.json({
