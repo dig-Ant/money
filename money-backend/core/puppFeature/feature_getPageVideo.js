@@ -1,44 +1,16 @@
-const path = require('path');
-const qs = require('qs');
-const { limitExec } = require('../../utils/common');
-const fs = require('fs');
-const moment = require('moment');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const {
   MY_USER_LINK,
   VIDEO_LIST_SELECTOR,
-  VIDEO_SRC_SELECTOR,
-  COMMENT_LIST_SELECTOR,
-  BUSINESS_NAME,
   LIMIT,
   INIT_VIEWPORT,
-  STRINGNUM,
-  DEVTOOLS,
-  IS_CONSUMER_TYPE,
-  IS_BUSINESS_TYPE,
-  USER_INFO_LIST_SELECTOR,
-  IS_BUSINESS_USER,
-  STRING_TO_NUM_FUN,
   GET_URL,
   TIME_OUT,
-  IS_MATE,
-  NOT_REPEAT,
-  LESS_FIVE,
-  NOT_MATE,
-  NOT_SVG_MATE,
-  FILTER_FANS_LIKE,
-  FILTER_BUSINESS,
-  TO_NUM,
-  LESS_40,
-  FILTER_AGE,
 } = require('../../utils/constance');
-const { createDownloadPath } = puppeteerUtils;
 const feature_getPageVideo = async function (params = {}) {
   let {
     userURL = MY_USER_LINK,
     index = 0,
-    commentLimitLen = LIMIT,
-    downloadFilename = '',
     type = '',
     isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉

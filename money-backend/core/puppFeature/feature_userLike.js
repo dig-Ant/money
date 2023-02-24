@@ -33,32 +33,34 @@ const feature_userLike = async function (params) {
           console.log('firstVideoSrc444: ', firstVideoSrc);
           //类名 点赞kr4MM4DQ 有红心的NILc2fGS
           // 获取评论区用户的信息
-          let hasQin = await newPage.evaluate(async (COMMENT_LIST_SELECTOR) => {
-            let commentList = [
-              ...document.querySelector(COMMENT_LIST_SELECTOR).children,
-            ];
-            console.log(commentList.at(-1).innerText);
-            while (
-              !commentList.at(-1).innerText.includes('暂无评论') &&
-              !commentList.at(-1).innerText.includes('没有')
-            ) {
-              window.scrollBy({ left: 0, top: 2 * window.innerHeight });
-              await new Promise((res) => setTimeout(() => res(), 600));
-              commentList = [
+          let hasQin = false;
+          if (userType !== 'aged') {
+            hasQin = await newPage.evaluate(async (COMMENT_LIST_SELECTOR) => {
+              let commentList = [
                 ...document.querySelector(COMMENT_LIST_SELECTOR).children,
               ];
-            }
-            commentList.splice(-1, 1);
-            hasQin = commentList.find((el) => {
-              const userInfoEl = el.querySelector('div:nth-child(2)');
-              if (!userInfoEl) return false;
-              const isQin =
-                userInfoEl.querySelector('a').innerText == '琴琴好物';
-              return isQin;
-            });
-            return hasQin;
-          }, COMMENT_LIST_SELECTOR);
-
+              console.log(commentList.at(-1).innerText);
+              while (
+                !commentList.at(-1).innerText.includes('暂无评论') &&
+                !commentList.at(-1).innerText.includes('没有')
+              ) {
+                window.scrollBy({ left: 0, top: 2 * window.innerHeight });
+                await new Promise((res) => setTimeout(() => res(), 600));
+                commentList = [
+                  ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+                ];
+              }
+              commentList.splice(-1, 1);
+              hasQin = commentList.find((el) => {
+                const userInfoEl = el.querySelector('div:nth-child(2)');
+                if (!userInfoEl) return false;
+                const isQin =
+                  userInfoEl.querySelector('a').innerText == '琴琴好物';
+                return isQin;
+              });
+              return hasQin;
+            }, COMMENT_LIST_SELECTOR);
+          }
           console.log('hasQin: ', hasQin);
           if (!hasQin) {
             await delay(3000);

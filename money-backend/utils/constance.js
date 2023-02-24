@@ -1,4 +1,5 @@
 const qs = require('qs');
+const moment = require('moment');
 const {
   consumer1,
   consumer2,
@@ -52,6 +53,21 @@ const STRING_TO_NUM_FUN = function (like, type = true) {
     } else {
       return Number(like);
     }
+  }
+};
+const GET_TIME_TEXT = function () {
+  let time = moment().format('YYYY-MM-DD HH:mm:ss'); //2022-09-06 11:10:09
+  time = time.slice(10, 12);
+  if (time < 10) {
+    return '早上';
+  } else if (time < 12) {
+    return '上午';
+  } else if (time < 13) {
+    return '中午';
+  } else if (time < 18) {
+    return '下午';
+  } else if (time < 23) {
+    return '晚上';
   }
 };
 const IS_BUSINESS_USER = function (username) {
@@ -123,6 +139,7 @@ module.exports = {
   NOT_MATE(commentList) {
     return commentList.filter((e) => !IS_MATE(e.userName));
   },
+  GET_TIME_TEXT,
   // NOT_SVG_MATE(commentList) {
   //   return commentList.filter((e) => {
   //     console.log(e.svgHtml);
