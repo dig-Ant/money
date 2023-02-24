@@ -316,14 +316,14 @@ export default function searchUser() {
       dataIndex: 'userName',
       width: 60,
       render: (userName, render: any) => {
-        const { svgHtml } = render;
+        const { svgHtml, userLink } = render;
         const a = () => {
           return { __html: svgHtml };
         };
         return (
           <div>
             <div dangerouslySetInnerHTML={a()}></div>
-            <a>{userName}</a>
+            <a href={userLink}>{userName}</a>
           </div>
         );
       },

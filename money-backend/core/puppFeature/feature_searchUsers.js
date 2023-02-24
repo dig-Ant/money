@@ -43,7 +43,7 @@ const feature_searchUsers = async function (params = {}) {
     isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-
+  
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
     devtools: false,
