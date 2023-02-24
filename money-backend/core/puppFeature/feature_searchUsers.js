@@ -43,7 +43,7 @@ const feature_searchUsers = async function (params = {}) {
     isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-  
+
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
     devtools: false,
@@ -86,7 +86,7 @@ const feature_searchUsers = async function (params = {}) {
     await videoPage.goto(myVideo.href, TIME_OUT);
     await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, TIME_OUT);
     // 3.获取myVideo评论区下的用户信息
-    let { fans, like, name, commentList } = await videoPage.evaluate(
+    let { fans, like, name, time, commentList } = await videoPage.evaluate(
       async (
         USER_INFO_LIST_SELECTOR,
         COMMENT_LIST_SELECTOR,
@@ -94,6 +94,7 @@ const feature_searchUsers = async function (params = {}) {
       ) => {
         const user = document.querySelector(USER_INFO_LIST_SELECTOR);
         const name = user.children[1].querySelector('a').innerText;
+        const time = document.querySelector('.aQoncqRg').innerText;
         const [fans, like] = user.children[1]
           .querySelector('p')
           .innerText.slice(2)
@@ -139,6 +140,7 @@ const feature_searchUsers = async function (params = {}) {
           fans,
           like,
           name,
+          time,
           commentList,
         };
       },
@@ -226,7 +228,7 @@ const feature_searchUsers = async function (params = {}) {
         console.log('error: ---', error);
       }
     }, commentList);
-    console.log(commentList);
+    // console.log(commentList);
     // commentList = NOT_SVG_MATE(commentList);
     // console.log('==========根据svg过滤男', commentList.length);
     // commentList = FILTER_AGE(commentList);
@@ -252,6 +254,7 @@ const feature_searchUsers = async function (params = {}) {
       fans,
       like,
       name,
+      time,
       commentList,
       followList,
       businessList,

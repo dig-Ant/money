@@ -153,6 +153,18 @@ export const consumerUserPageList: Option[] = [
     children: [
       {
         value:
+          'https://www.douyin.com/user/MS4wLjABAAAAtW6Hl-DWwCXPgcAzHFkfTJOat1qKnUbHHdvmQn3SMoh-n93EGmLvDHXlc25gDRPw',
+        label: '磐写旗舰店',
+        desc: '涂鸦开启梦幻童年！8:00-22:00企业号直播 我们的产品: 磐写儿童液晶...',
+      },
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAqeMdZ_PxUEuVAwLIHfWvZbDyxfqDfvnrOmgRYZIRVY4',
+        label: '亲子宝贝玩具',
+        desc: '每天分享[益智玩具］［绘本］［好物］ 视频同款点击商品橱窗搜索\ud83d...',
+      },
+      {
+        value:
           'https://www.douyin.com/user/MS4wLjABAAAAiAToLy8KSDCwwdukKh3MIT11sZoVpCDs-mpyWmhElVQ',
         label: '正姿教育-萝卜直播教握笔练字',
         desc: '用心做好教育，成就孩子更好未来。 一个真正的教育者，是在经历了孩子现在所经历的...',

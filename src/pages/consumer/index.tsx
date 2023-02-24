@@ -266,6 +266,13 @@ export default function searchUser() {
       },
     },
     {
+      title: '发布时间',
+      dataIndex: 'time',
+      render: (val, record: Record<string, any>) => {
+        return <span>{(val || '').slice(5)}</span>;
+      },
+    },
+    {
       title: '视频信息',
       dataIndex: 'title',
       render: (val, record: Record<string, any>) => {
@@ -581,15 +588,14 @@ export default function searchUser() {
           onClick={() => {
             copy(
               JSON.stringify(
-                current
-                  .map((e: any) => {
-                    return e.videoTitles[0]
-                      .split('\n')
-                      .slice(-1)[0]
-                      .split(/[#|\s]/)
-                      .join(' ');
-                  })
-                  .sort((a: any, b: any) => b.length - a.length),
+                current.map((e: any) => {
+                  return e.videoTitles[0]
+                    .split('\n')
+                    .slice(-1)[0]
+                    .split(/[#|\s]/)
+                    .join(' ');
+                }),
+                // .sort((a: any, b: any) => b.length - a.length),
               ),
             );
           }}
