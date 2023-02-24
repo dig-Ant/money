@@ -137,8 +137,29 @@ export default function searchUser() {
             </a>
             &nbsp; &nbsp;
             {commentNUM.map((e, index) => {
+              const startI = index * 15 + 15;
+              const endI = startI + 15;
+              let allCmted = undefined;
+              let cmtLiked = commentList
+                .slice(startI, endI)
+                .map((e: any) => e.isLiked);
+              cmtLiked = [...new Set(cmtLiked)];
+              if (cmtLiked.length == 1 && cmtLiked[0] == true) {
+                allCmted = true;
+              } else if (cmtLiked.length == 1 && cmtLiked[0] == false) {
+                allCmted = false;
+              } else {
+                allCmted = undefined;
+              }
+              let color =
+                allCmted === true
+                  ? 'grey'
+                  : allCmted === false
+                  ? 'blue'
+                  : 'orange';
               return (
                 <a
+                  style={{ color }}
                   onClick={() => {
                     dispatch({
                       type: 'consumerPage/batchLike',

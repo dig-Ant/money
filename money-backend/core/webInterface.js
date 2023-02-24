@@ -431,7 +431,6 @@ class WebInterface {
       db.find()
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
-          console.log();
           let nameList = docs.map((e) => e.name).filter((e) => !!e);
           nameList = [...new Set(nameList)].map((e) => ({
             value: e,
@@ -529,6 +528,7 @@ class WebInterface {
         let code = await this.pupp.start(feature, {
           list: docs[0][listType],
           userType,
+          _id,
         }).code;
         if (code !== 0) {
           return res.json({

@@ -83,7 +83,8 @@ const feature_userLike = async function (params) {
         }
       }
     }
-    if (userType == 'business') {
+
+    if (userType == '1business') {
       for (i = 0; i < list.length; i++) {
         const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
         if (secondVideoSrc && secondVideoSrc.includes('video')) {
