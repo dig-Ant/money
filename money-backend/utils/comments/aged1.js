@@ -18,9 +18,9 @@ const GET_TIME_TEXT = function () {
 };
 const time = GET_TIME_TEXT();
 console.log(time);
-let agedComment = time.上午;
+let agedComment = aged.上午;
 if (['早上', '上午'].includes(time)) {
-  agedComment = time.上午.map((e) => e.replace('上午', time) + '[一起加油]');
+  agedComment = aged.上午.map((e) => e.replace('上午', time) + '[一起加油]');
 }
 /**
  * // [微笑][色][发呆][酷拽][抠鼻][流泪][捂脸]
