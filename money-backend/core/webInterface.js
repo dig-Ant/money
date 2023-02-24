@@ -387,7 +387,7 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const { userType } = req.body;
       const db = this.getUserDB(userType);
-      const list = await this.pupp.start('feature_searchUsers', { userType });
+      const list = await this.pupp.start('feature_searchUsers', req.body);
       if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
