@@ -307,6 +307,11 @@ export default function searchUser() {
       },
     },
     {
+      title: '最近活跃',
+      dataIndex: 'activeTime',
+      width: 80,
+    },
+    {
       title: '评论',
       dataIndex: 'comment',
       width: 80,
@@ -406,7 +411,7 @@ export default function searchUser() {
                   key={i}
                   onClick={() => {
                     copy(e);
-                    window.open(location.origin + '/search?v=' + e);
+                    // window.open(location.origin + '/search?v=' + e);
                   }}
                 >
                   {e}
