@@ -126,7 +126,7 @@ export default function searchUser() {
           <div>
             <a
               onClick={() => {
-                // console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
+                console.log(val);
                 num && setIsModalOpen(true);
                 setListType('commentList');
                 seID(record._id);
@@ -356,6 +356,18 @@ export default function searchUser() {
       title: '最近活跃',
       dataIndex: 'activeTime',
       width: 80,
+    },
+    {
+      title: '已赞',
+      dataIndex: 'isLiked',
+      width: 50,
+      render: (val, render: any) => {
+        let res = '';
+        if (val == 'true' || val == true) {
+          res = '已赞';
+        }
+        return <div>{res}</div>;
+      },
     },
     {
       title: '评论',

@@ -3,6 +3,7 @@ const {
   GET_COMMENT2,
   COMMENT_LIST_SELECTOR,
   TIME_OUT,
+  getDB,
 } = require('../../utils/constance');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
@@ -13,24 +14,20 @@ const feature_userLike = async function (params) {
     devtools: false,
   });
   try {
-    const { list = [], userType } = params || {};
+    const { list = [], userType, _id, listType } = params || {};
 
     for (i = 0; i < list.length; i++) {
       const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
-      console.log('firstVideoSrc1111: ', firstVideoSrc);
       if (firstVideoSrc && firstVideoSrc.includes('video')) {
         try {
           const newPage = await browser.newPage();
           // await newPage.setViewport({ width: 1080, height: 800 });
-          console.log('firstVideoSrc222: ', firstVideoSrc);
           await newPage.goto(firstVideoSrc, TIME_OUT);
-          console.log('firstVideoSrc333: ', firstVideoSrc);
           // 检测到有视频为止
           await newPage.waitForSelector(
             '.xg-video-container video source',
             TIME_OUT,
           );
-          console.log('firstVideoSrc444: ', firstVideoSrc);
           //类名 点赞kr4MM4DQ 有红心的NILc2fGS
           // 获取评论区用户的信息
           let hasQin = false;
@@ -77,6 +74,28 @@ const feature_userLike = async function (params) {
             await newPage.keyboard.press('Enter'); // 回车
             await delay(3000);
           }
+          const db = getDB(userType);
+          db.find({ _id }).exec((err, doc) => {
+            const data = doc[0];
+            let updateList = data[listType].map((e) => {
+              if (list[i] && e.userLink === list[i].userLink) {
+                console.log('e.userName: ', e.userName);
+                e.isLiked = true;
+              }
+              return e;
+            });
+            db.update(
+              { _id },
+              {
+                ...data,
+                [listType]: updateList,
+              },
+              {},
+              (err, numReplaced) => {
+                console.log('err, numReplaced: ', err, numReplaced);
+              },
+            );
+          });
           newPage.close();
         } catch (error) {
           console.log('点赞可能失败', error);

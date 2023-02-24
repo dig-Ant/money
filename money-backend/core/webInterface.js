@@ -387,7 +387,7 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const { userType } = req.body;
       const db = this.getUserDB(userType);
-      const list = await this.pupp.start('feature_searchUsers', body);
+      const list = await this.pupp.start('feature_searchUsers', { userType });
       if (list.code == -1) return;
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
@@ -523,10 +523,9 @@ class WebInterface {
         }
         const feature =
           listType === 'followList' ? 'feature_userFollow' : 'feature_userLike';
-        console.log(listType, docs[0][listType].length);
-        // return;
         let code = await this.pupp.start(feature, {
           list: docs[0][listType],
+          listType,
           userType,
           _id,
         }).code;
