@@ -15,21 +15,17 @@ export default {
   },
   effects: {
     *batchLike({ payload }: any, { call, put }: any) {
-      console.log(333);
-
       yield call(() =>
         request(EXEC_DY_USERS_LIKE, { method: 'post', data: payload }),
       );
     },
   },
   subscriptions: {
-    setups(action) {
-      console.log('action:11 ', action);
-      const { history, dispatch } = action;
-
-      // history.listen((location) => {
-
-      // });
-    },
+    // setups(action) {
+    //
+    // const { history, dispatch } = action;
+    // history.listen((location) => {
+    // });
+    // },
   },
 };

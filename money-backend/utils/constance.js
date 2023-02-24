@@ -166,6 +166,13 @@ module.exports = {
       );
     });
   },
+  getDB(userType) {
+    return new Datastore({
+      filename: path.resolve(__dirname, `../db/${userType}User.json`),
+      autoload: true,
+      timestampData: true,
+    });
+  },
   LESS_FIVE(commentList) {
     return commentList.filter((e) => STRING_TO_NUM_FUN(e.userLike) < 5);
   },

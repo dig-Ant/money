@@ -27,7 +27,9 @@ import {
 } from '@/utils/common';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
-
+const createArr = function (length: number) {
+  return new Array(Math.ceil(length / 15)).fill(1);
+};
 interface DataType {
   _id: string;
   key: string;
@@ -110,22 +112,21 @@ export default function searchUser() {
       listRun({ userType });
     }, 1000);
   }, []);
-  console.log(userList);
-
+  // console.log(userList);
   const columns: ColumnsType<DataType> = [
     {
       title: '消N',
-      width: 70,
+      width: 150,
       dataIndex: 'commentList',
       render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const commentList = val || [];
+        const commentNUM = createArr(commentList.length);
         return (
           <div>
             <a
               onClick={() => {
-                console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
-
+                // console.log(val.map((e) => `gender:${e.gender}-age:${e.age}`));
                 num && setIsModalOpen(true);
                 setListType('commentList');
                 seID(record._id);
@@ -134,32 +135,38 @@ export default function searchUser() {
             >
               {num}
             </a>
-            &nbsp; &nbsp; &nbsp;
-            <a
-              onClick={() => {
-                dispatch({
-                  type: 'consumerPage/batchLike',
-                  payload: {
-                    userType,
-                    listType: 'commentList',
-                    _id: record._id,
-                  },
-                });
-              }}
-            >
-              评论
-            </a>
+            &nbsp; &nbsp;
+            {commentNUM.map((e, index) => {
+              return (
+                <a
+                  onClick={() => {
+                    dispatch({
+                      type: 'consumerPage/batchLike',
+                      payload: {
+                        userType,
+                        listType: 'commentList',
+                        _id: record._id,
+                        index,
+                      },
+                    });
+                  }}
+                >
+                  评论{index}&nbsp; &nbsp;
+                </a>
+              );
+            })}
           </div>
         );
       },
     },
     {
       title: '同N',
-      width: 70,
+      width: 150,
       dataIndex: 'businessList',
       render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const businessList = val || [];
+        const commentNUM = createArr(businessList.length);
         return (
           <div>
             <a
@@ -173,32 +180,38 @@ export default function searchUser() {
             >
               {num}
             </a>
-            &nbsp; &nbsp; &nbsp;
-            <a
-              onClick={() => {
-                dispatch({
-                  type: 'consumerPage/batchLike',
-                  payload: {
-                    userType,
-                    listType: 'businessList',
-                    _id: record._id,
-                  },
-                });
-              }}
-            >
-              评论
-            </a>
+            &nbsp; &nbsp;
+            {commentNUM.map((e, index) => {
+              return (
+                <a
+                  onClick={() => {
+                    dispatch({
+                      type: 'consumerPage/batchLike',
+                      payload: {
+                        userType,
+                        listType: 'commentList',
+                        _id: record._id,
+                        index,
+                      },
+                    });
+                  }}
+                >
+                  评论{index}&nbsp; &nbsp;
+                </a>
+              );
+            })}
           </div>
         );
       },
     },
     {
       title: '关N',
-      width: 70,
+      width: 150,
       dataIndex: 'followList',
       render: (val, record: any) => {
         const num = (val && val.length) || 0;
         const followList = val || [];
+        const commentNUM = createArr(followList.length);
         return (
           <div>
             <a
@@ -212,28 +225,57 @@ export default function searchUser() {
             >
               {num}
             </a>
-            &nbsp; &nbsp; &nbsp;
-            <a
-              onClick={() => {
-                dispatch({
-                  type: 'consumerPage/batchLike',
-                  payload: {
-                    userType,
-                    listType: 'followList',
-                    _id: record._id,
-                  },
-                });
-              }}
-            >
-              关注
-            </a>
+            &nbsp; &nbsp;
+            {commentNUM.map((e, index) => {
+              return (
+                <a
+                  onClick={() => {
+                    dispatch({
+                      type: 'consumerPage/batchLike',
+                      payload: {
+                        userType,
+                        listType: 'commentList',
+                        _id: record._id,
+                        index,
+                      },
+                    });
+                  }}
+                >
+                  评论{index}&nbsp; &nbsp;
+                </a>
+              );
+            })}
           </div>
         );
       },
     },
     {
+      title: '发布时间',
+      dataIndex: 'time',
+      render: (val, record: Record<string, any>) => {
+        return <span>{(val || '').slice(5)}</span>;
+      },
+    },
+    {
+      title: '视频信息',
+      dataIndex: 'title',
+      render: (val, record: Record<string, any>) => {
+        const {
+          href = 'javaScript:void(0);',
+          title = '',
+          likeNum = '',
+          name = '',
+        } = record || {};
+        return (
+          <a href={href}>
+            {name || ''}-{likeNum}-{title}
+          </a>
+        );
+      },
+    },
+    {
       title: 'action',
-      width: 100,
+      width: 170,
       render: (_, record) => {
         return (
           <Space size="middle">
@@ -262,30 +304,6 @@ export default function searchUser() {
               </a>
             ) : null}
           </Space>
-        );
-      },
-    },
-    {
-      title: '发布时间',
-      dataIndex: 'time',
-      render: (val, record: Record<string, any>) => {
-        return <span>{(val || '').slice(5)}</span>;
-      },
-    },
-    {
-      title: '视频信息',
-      dataIndex: 'title',
-      render: (val, record: Record<string, any>) => {
-        const {
-          href = 'javaScript:void(0);',
-          title = '',
-          likeNum = '',
-          name = '',
-        } = record || {};
-        return (
-          <a href={href}>
-            {name || ''}-{likeNum}-{title}
-          </a>
         );
       },
     },
@@ -480,17 +498,10 @@ export default function searchUser() {
   list.reduce((prev: any, curr: any) => {
     if (curr.commentList) {
       prev += curr.commentList.length;
-      console.log(
-        curr.commentList.length,
-        prev,
-        moment(curr.createdAt).format('YYYY-MM-DD HH:mm:ss').slice(10, 16),
-      );
     }
     return prev;
   }, 0);
-
-  console.log('list: ', list, listError);
-
+  // console.log('list: ', list, listError);
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
 

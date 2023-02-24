@@ -16,13 +16,11 @@ export default {
       yield put({ type: 'add' });
     },
   },
-  subscriptions: {
-    setups(action) {
-      console.log('action:11 ', action);
-      const { history, dispatch } = action;
-
-      // history.listen((location) => {
-      // });
-    },
-  },
+  // subscriptions: {
+  // setups(action) {
+  // const { history, dispatch } = action;
+  // history.listen((location) => {
+  // });
+  // },
+  // },
 };
