@@ -224,6 +224,7 @@ class WebInterface {
         db.update(
           { _id },
           {
+            ...doc[0],
             [listType]: updateList,
           },
           {},

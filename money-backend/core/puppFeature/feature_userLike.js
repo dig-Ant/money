@@ -94,6 +94,7 @@ const feature_userLike = async function (params) {
           const db = getDB(userType);
           db.find({ _id }).exec((err, doc) => {
             const data = doc[0];
+            console.log('Object.keys(doc[0])----',Object.keys(doc[0]));
             let updateList = data[listType].map((e) => {
               if (list[i] && e.userLink === list[i].userLink) {
                 console.log('e.userName: ', e.userName);
