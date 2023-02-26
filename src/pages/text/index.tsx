@@ -77,7 +77,7 @@ export default function searchUser() {
               onClick={() => {
                 copy(
                   textList
-                    .sort((a: any, b: any) => b.length - a.length)
+                    // .sort((a: any, b: any) => b.length - a.length)
                     .join(''),
                 );
               }}

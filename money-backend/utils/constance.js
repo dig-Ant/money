@@ -142,6 +142,10 @@ module.exports = {
     return commentList.filter((e) => !IS_MATE(e.userName));
   },
   GET_TIME_TEXT,
+  NOT_SVG_MATE(svgHtml) {
+    console.log('svgHtml---', svgHtml.slice(1, 5));
+    return svgHtml && (svgHtml.includes('woman') || !svgHtml.includes('>'));
+  },
   // NOT_SVG_MATE(commentList) {
   //   return commentList.filter((e) => {
   //     console.log(e.svgHtml);

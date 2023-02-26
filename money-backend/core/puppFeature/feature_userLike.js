@@ -4,6 +4,7 @@ const {
   COMMENT_LIST_SELECTOR,
   TIME_OUT,
   getDB,
+  NOT_SVG_MATE,
 } = require('../../utils/constance');
 const { limitExec } = require('../../utils/common');
 const { delay, getToday } = require('../../utils/index');
@@ -11,17 +12,33 @@ const { delay, getToday } = require('../../utils/index');
 const feature_userLike = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_userLike',
-    devtools: false,
+    devtools: true,
   });
   try {
     const { list = [], userType, _id, listType } = params || {};
 
-    for (i = 0; i < list.length; i++) {
-      const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
+    for (i = 4; i < list.length; i++) {
+      const { firstVideoSrc, userLink, secondVideoSrc, thirdVideoSrc } =
+        list[i] || {};
       if (firstVideoSrc && firstVideoSrc.includes('video')) {
         try {
           const newPage = await browser.newPage();
           // await newPage.setViewport({ width: 1080, height: 800 });
+          console.log('userLink: ', userLink);
+          await newPage.goto(userLink, TIME_OUT);
+          const svgInfo = await newPage.evaluate(async () => {
+            console.log(
+              (document.querySelector('.N4QS6RJT') || {}).innerHTML || '',
+            );
+            return (document.querySelector('.N4QS6RJT') || {}).innerHTML || '';
+          });
+          // console.log('svgInfo: ', svgInfo);
+          NOT_SVG_MATE(svgInfo);
+          if (!NOT_SVG_MATE) {
+            console.log(userLink, '----男');
+            return;
+          }
+          // await delay(50000);
           await newPage.goto(firstVideoSrc, TIME_OUT);
           // 检测到有视频为止
           await newPage.waitForSelector(
