@@ -3,7 +3,7 @@ const WebInterface = require('./webInterface');
 const core = async () => {
   // 启动db
   // 启动服务器
-  const webServer = new WebInterface({ port: 8010 });
+  const webServer = new WebInterface({ port: 8011 });
   webServer
     .start()
     .then(({ ip, port }) => {

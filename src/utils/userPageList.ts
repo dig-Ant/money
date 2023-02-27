@@ -22,6 +22,25 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAAeCZfmwQBYvgEhbGfP7-HtsZYvya9_KclUSQU_Kscg-E',
+    label: '肆月SIYUE',
+    desc: '全网粉丝300W+网红店 直播周一至周六09:55开播 甄选好物 福利秒杀 ...',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAtrrYE_WcQz1G9GVL-9OtdzGbf5IRphRG6u6DsZbNhlqS9ON_O5rdb_4m_HIH-Q1s',
+    label: '贝亲蒂拉品牌母婴',
+    desc: '贝亲蒂拉−母婴产品质量坚定的捍卫者！ 专注母婴待产产品16年：数家直营...',
+  },
+
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAF6PjSNd23SJvOnJJ3Fkw21wALlch7wrS516NdWREhds?previous_page=app_code_link',
+    label: '一棵小菠菜',
+    desc: '🛳梦想环游世界的旅行博主、民宿掌柜，旅居大理 🈴️scboboy123，民宿...',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAAF6PjSNd23SJvOnJJ3Fkw21wALlch7wrS516NdWREhds?previous_page=app_code_link',
     label: '一棵小菠菜',
     desc: '🛳梦想环游世界的旅行博主、民宿掌柜，旅居大理 🈴️scboboy123，民宿...',

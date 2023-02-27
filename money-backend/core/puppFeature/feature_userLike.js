@@ -70,8 +70,11 @@ const feature_userLike = async function (params) {
                 if (!userInfoEl) return false;
                 const isQin =
                   userInfoEl.querySelector('a').innerText == '琴琴好物';
+                console.log(userInfoEl.querySelector('a'));
                 return isQin;
               });
+
+              debugger;
               return hasQin;
             }, COMMENT_LIST_SELECTOR);
           }

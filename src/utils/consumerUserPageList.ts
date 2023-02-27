@@ -237,6 +237,12 @@ export const consumerUserPageList: Option[] = [
     label: '美妆',
     children: [
       {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAeCZfmwQBYvgEhbGfP7-HtsZYvya9_KclUSQU_Kscg-E',
+        label: '肆月SIYUE',
+        desc: '全网粉丝300W+网红店 直播周一至周六09:55开播 甄选好物 福利秒杀 ...',
+      },
+      {
         label: '造型师大宝',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAogZHwmkIX1DU6RCti0S_1wrq6wrWgCx2FnxX0gTcHUY',

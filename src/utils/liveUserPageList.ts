@@ -11,7 +11,7 @@ export const liveUserPageList: Option[] = [
     children: [
       {
         label: '贝亲蒂拉品牌母婴',
-        value: 'https://live.douy1in.com/292133672322',
+        value: 'https://live.douyin.com/292133672322',
       },
       {
         label: '交个朋友母婴生活',
@@ -59,6 +59,10 @@ export const liveUserPageList: Option[] = [
     value: 'makeup',
     label: '美妆',
     children: [
+      {
+        label: '肆月SIYUE',
+        value: 'https://live.douyin.com/83199150978',
+      },
       {
         label: '小希姐高定饰品',
         value: 'https://v.douyin.com/BQGDAPj/',
@@ -117,8 +121,8 @@ export const liveUserPageList: Option[] = [
     label: 'home',
     children: [
       {
-        label:'五季好物',
-        value:'https://v.douyin.com/BXKV9LG/'
+        label: '五季好物',
+        value: 'https://v.douyin.com/BXKV9LG/',
       },
       {
         label: '爱上做饭的小娘子',
