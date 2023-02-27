@@ -86,7 +86,7 @@ module.exports = {
   VIDEO_LIST_SELECTOR: '[data-e2e="scroll-list"] li a.chmb2GX8', // .mwo84cvf>div:last-child [data-e2e="scroll-list"] li a
   VIDEO_SRC_SELECTOR: '.xg-video-container video source',
   LIMIT: 100,
-  INIT_VIEWPORT: { width: 1080, height: 800 },
+  INIT_VIEWPORT: { width: 780, height: 500 },
   TIME_OUT: {
     timeout: 4 * 000,
   },
