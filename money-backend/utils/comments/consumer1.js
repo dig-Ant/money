@@ -9,7 +9,7 @@ const text = require('./text');
 module.exports = [
   // ...weekily.周五适合发朋友圈的快乐文案,
   //   ...text.浩子,
-  // ...text.西子问,
+  // ...text.一棵小菠菜,
   ...text.爱捣鼓的小仙儿,
   // ...weekily.miss,
 ];

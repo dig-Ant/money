@@ -12,7 +12,7 @@ const { delay, getToday } = require('../../utils/index');
 const feature_userLike = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_userLike',
-    devtools: true,
+    devtools: false,
   });
   try {
     const { list = [], userType, _id, listType } = params || {};
@@ -94,7 +94,7 @@ const feature_userLike = async function (params) {
           const db = getDB(userType);
           db.find({ _id }).exec((err, doc) => {
             const data = doc[0];
-            console.log('Object.keys(doc[0])----',Object.keys(doc[0]));
+            console.log('Object.keys(doc[0])----', Object.keys(doc[0]));
             let updateList = data[listType].map((e) => {
               if (list[i] && e.userLink === list[i].userLink) {
                 console.log('e.userName: ', e.userName);
@@ -121,7 +121,7 @@ const feature_userLike = async function (params) {
       }
     }
 
-    if (userType == '1business') {
+    if (userType == 'business') {
       for (i = 0; i < list.length; i++) {
         const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
         if (secondVideoSrc && secondVideoSrc.includes('video')) {

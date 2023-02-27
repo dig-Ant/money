@@ -25,7 +25,7 @@ const {
   NOT_REPEAT,
   LESS_FIVE,
   NOT_MATE,
-  NOT_SVG_MATE,
+  SVG_FILTER,
   FILTER_FANS_LIKE,
   FILTER_BUSINESS,
   TO_NUM,
@@ -43,12 +43,12 @@ const feature_searchUsers = async function (params = {}) {
     isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-  
+
   console.log('userURL: ', userURL);
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_searchUsers',
     devtools: false,
-    // ...(userType === 'aged' ? {} : { userDataDir: undefined }),
+    ...(userType === 'aged' ? {} : { userDataDir: undefined }),
   });
 
   await page.setViewport(INIT_VIEWPORT);
@@ -230,7 +230,7 @@ const feature_searchUsers = async function (params = {}) {
       }
     }, commentList);
     // console.log(commentList);
-    // commentList = NOT_SVG_MATE(commentList);
+    // commentList = SVG_FILTER(commentList);
     // console.log('==========根据svg过滤男', commentList.length);
     // commentList = FILTER_AGE(commentList);
     // commentList = LESS_40(commentList);

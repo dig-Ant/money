@@ -210,7 +210,7 @@ export default function searchUser() {
                       type: 'consumerPage/batchLike',
                       payload: {
                         userType,
-                        listType: 'commentList',
+                        listType: 'businessList',
                         _id: record._id,
                         index,
                       },
@@ -255,7 +255,7 @@ export default function searchUser() {
                       type: 'consumerPage/batchLike',
                       payload: {
                         userType,
-                        listType: 'commentList',
+                        listType: 'followList',
                         _id: record._id,
                         index,
                       },
@@ -482,7 +482,8 @@ export default function searchUser() {
     },
   ];
   let { list = [] } = listData;
-  list = list.map((e: any) => {
+
+  list = list.map((e: any, i: number) => {
     if (e.commentList) {
       e.commentList = e.commentList
         .map((f: any) => {
@@ -495,7 +496,21 @@ export default function searchUser() {
         .filter((e: any) => {
           if (!e.age) return true;
           return e.age < 40;
+          if (
+            e.svgHtml &&
+            !e.svgHtml.includes('男') &&
+            (e.svgHtml.includes('woman') || !e.svgHtml.includes('>')) &&
+            e.age < 40
+          ) {
+            return true;
+          } else {
+            return false;
+          }
         });
+
+      if (i == 0) {
+        console.log(e.commentList.map((e) => e.svgHtml));
+      }
     }
     if (e.businessList) {
       e.businessList = e.businessList
@@ -630,16 +645,16 @@ export default function searchUser() {
         <Button
           type="link"
           onClick={() => {
+            console.log(current);
             copy(
               JSON.stringify(
                 current.map((e: any) => {
-                  return e.videoTitles[0]
+                  return (e.videoTitles || [''])[0]
                     .split('\n')
                     .slice(-1)[0]
                     .split(/[#|\s]/)
                     .join(' ');
                 }),
-                // .sort((a: any, b: any) => b.length - a.length),
               ),
             );
           }}

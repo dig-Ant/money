@@ -146,14 +146,14 @@ module.exports = {
     console.log('svgHtml---', svgHtml.slice(1, 5));
     return svgHtml && (svgHtml.includes('woman') || !svgHtml.includes('>'));
   },
-  // NOT_SVG_MATE(commentList) {
-  //   return commentList.filter((e) => {
-  //     console.log(e.svgHtml);
-  //     return (
-  //       e.svgHtml && (e.svgHtml.includes('woman') || !e.svgHtml.includes('>'))
-  //     );
-  //   });
-  // },
+  SVG_FILTER(commentList) {
+    return commentList.filter((e) => {
+      console.log(e.svgHtml);
+      return (
+        e.svgHtml && (e.svgHtml.includes('woman') || !e.svgHtml.includes('>'))
+      );
+    });
+  },
   FILTER_AGE(commentList) {
     return commentList.map((e) => {
       if (e.gender) {

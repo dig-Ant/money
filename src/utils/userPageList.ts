@@ -22,6 +22,18 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAAF6PjSNd23SJvOnJJ3Fkw21wALlch7wrS516NdWREhds?previous_page=app_code_link',
+    label: '一棵小菠菜',
+    desc: '🛳梦想环游世界的旅行博主、民宿掌柜，旅居大理 🈴️scboboy123，民宿...',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAA5zwQNPifeMuxPDfrDOJZxzqbvzPYpUNC_EXXAE0MUZI?previous_page=app_code_link',
+    label: '一汐一夏',
+    desc: '喜欢花草🌹🌹 喜欢美景🌸🌸 手机拍摄🎬🎬 原创视频🌺🌺 感谢关注...',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAACDj9q6j6SBSHTgb-nljiMnaJ8maHUS78aig5HRUDepqR55cKDkMni1xwrqYfeIPF',
     label: '书程小驿',
     desc: '橱窗有惊喜 为你挑选好书的博主 用书塑身、受用一生，以书会友、天长地久。 ：...',
