@@ -158,7 +158,7 @@ export default function HomePage() {
         // size="small"
         onFinish={onFinish}
         initialValues={{
-          downloadFilename: '德宝手帕纸',
+          downloadFilename: '沥水盒',
           type: 'favorite_collection',
           limitStart: 0,
           limitEnd: 3,

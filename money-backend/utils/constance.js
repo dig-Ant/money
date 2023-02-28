@@ -17,6 +17,7 @@ const BUSINESS_NAME = [
   '好物',
   '分享',
   '优选',
+  '优享',
   '严选',
   '寻宝',
   '百货',
@@ -79,6 +80,7 @@ const IS_BUSINESS_USER = function (username) {
 };
 const MY_USER_LINK =
   'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA';
+// ('https://www.douyin.com/user/MS4wLjABAAAAEzQz0XCD58V1HQ9bIKoM_Brao_PhSSS078quoHUMjfU');
 module.exports = {
   // searchUser
   // https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v

@@ -50,7 +50,7 @@ const feature_searchUsers = async function (params = {}) {
     devtools: false,
     ...(userType === 'aged' ? {} : { userDataDir: undefined }),
   });
-
+  
   await page.setViewport(INIT_VIEWPORT);
 
   // 1.打开主页userURL

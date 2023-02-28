@@ -455,7 +455,7 @@ export default function searchUser() {
                     .sort((a: any, b: any) => b.length - a.length)
                     .join(''),
                 );
-                window.open(location.origin + '/search?v=' + textList.join(''));
+                window.open(location.host + '/text/keyword?v=' + textList.join(''));
               }}
             >
               total
@@ -469,7 +469,7 @@ export default function searchUser() {
                   key={i}
                   onClick={() => {
                     copy(e);
-                    // window.open(location.origin + '/search?v=' + e);
+                    window.open(window.location.host + '/text/keyword?v=' + e);
                   }}
                 >
                   {e}

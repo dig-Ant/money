@@ -37,7 +37,7 @@ export default function HomePage() {
       },
     },
   );
-  let { run: getUser, data: userList=[] } = useRequest(
+  let { run: getUser, data: userList = [] } = useRequest(
     (data) => {
       return request(GET_DY_PRODUCT_USER, {
         method: 'post',
@@ -61,7 +61,7 @@ export default function HomePage() {
     console.log('values: ', values);
     run(values);
   };
-  let { run: listRun, data: listData = {} } = useRequest(
+  let { run: listRun, data: listData = [] } = useRequest(
     (data) => {
       return request(GET_DY_PRODUCT_MSG_LIST, {
         method: 'post',
@@ -91,7 +91,18 @@ export default function HomePage() {
       dataIndex: 'title',
       render: (val, record: any) => {
         const { href } = record;
-        return <a href={href}>{val}</a>;
+        return (
+          <Space>
+            <a href={href}>{val}</a>
+            <span
+              onClick={() => {
+                copy(val);
+              }}
+            >
+              copy
+            </span>
+          </Space>
+        );
       },
     },
     {
@@ -160,9 +171,9 @@ export default function HomePage() {
         initialValues={{ type: 'favorite_collection' }}
         colon={false}
       >
-        {/* <Form.Item name="user" label="user">
+        <Form.Item name="user" label="user">
           <Select style={{ width: 120 }} options={userList} />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             查询
@@ -170,7 +181,7 @@ export default function HomePage() {
         </Form.Item>
       </Form>
       <Table columns={columns} pagination={false} dataSource={listData || []} />
-      <Modal
+      {/* <Modal
         title=""
         width="85%"
         open={isModalOpen}
@@ -189,7 +200,7 @@ export default function HomePage() {
           rowKey="_id"
           dataSource={current}
         />
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
