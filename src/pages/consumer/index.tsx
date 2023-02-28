@@ -406,7 +406,7 @@ export default function searchUser() {
       width: 35,
       render: (val, record: any) => {
         return (
-          <div
+          <a
             onClick={() => {
               dispatch({
                 type: 'consumerPage/deleteSingleUser',
@@ -416,8 +416,8 @@ export default function searchUser() {
               });
             }}
           >
-            删除
-          </div>
+            a
+          </a>
         );
       },
     },
