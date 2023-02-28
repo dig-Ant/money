@@ -288,9 +288,20 @@ export default function searchUser() {
           name = '',
         } = record || {};
         return (
-          <a href={href}>
-            {name || ''}-{likeNum}-{title}
-          </a>
+          <Space>
+            <a href={href}>
+              {name || ''}-{likeNum}-{title}
+            </a>
+            &nbsp;
+            <a
+              href="javaScript:void(0);"
+              onClick={() => {
+                copy(title);
+              }}
+            >
+              copy
+            </a>
+          </Space>
         );
       },
     },
@@ -455,7 +466,9 @@ export default function searchUser() {
                     .sort((a: any, b: any) => b.length - a.length)
                     .join(''),
                 );
-                window.open(location.host + '/text/keyword?v=' + textList.join(''));
+                window.open(
+                  location.host + '/text/keyword?v=' + textList.join(''),
+                );
               }}
             >
               total

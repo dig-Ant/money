@@ -10,6 +10,11 @@ export const businessUserPageList: Option[] = [
     label: '居家',
     children: [
       {
+        label: '乐林好物',
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAWHKVcRzaBT0cB6Imk39ABPqsZTIHamZkcFDmrhRFt6s',
+      },
+      {
         label: '乔乔好物',
         value:
           'https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v',

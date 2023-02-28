@@ -12,6 +12,12 @@ export const consumerUserPageList: Option[] = [
     children: [
       {
         value:
+          'https://www.douyin.com/user/MS4wLjABAAAAvkOzxco_27aLfTeqGW1JSVo3J9847fF0gdHc1MyZJiYQo2QBQWHPuFjVXA6BP7LQ',
+        label: '冬悦百货',
+        desc: '源头工厂发货，品质保证……',
+      },
+      {
+        value:
           'https://www.douyin.com/user/MS4wLjABAAAAtdAMFmWvZpzVXAKSXg_k1CMec3bGbu90pCiLj1_9nIA',
         label: '崔玉涛',
         desc: '儿科医生 知名养育专家 关注账号，留言写下您的育儿困惑...',

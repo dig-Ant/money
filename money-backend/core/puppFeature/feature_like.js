@@ -38,7 +38,7 @@ const feature_like = async function (params = {}) {
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
   }
-
+console.log(111111221);
   try {
     // 获取列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a';
@@ -75,9 +75,9 @@ const feature_like = async function (params = {}) {
     );
     console.log(dataSource.length);
     console.log(dataSource);
-    for (i = 0; i < dataSource.length; i++) {
+    const newPage = await browser.newPage();
+    for (i = 112; i < dataSource.length; i++) {
       try {
-        const newPage = await browser.newPage();
         // await newPage.setViewport({ width: 1080, height: 800 });
         await newPage.goto(dataSource[i].href, TIME_OUT);
         // 检测到有视频为止
@@ -95,12 +95,12 @@ const feature_like = async function (params = {}) {
         await delay(5000);
         await newPage.keyboard.press('Enter'); // 回车
         await delay(3000);
-        newPage.close();
       } catch (error) {
         console.log('点赞可能失败', error);
       }
     }
 
+    newPage.close();
     await browser.close();
     return dataSource;
   } catch (error) {
