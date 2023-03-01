@@ -196,10 +196,11 @@ export default function HomePage() {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
         >
-          <Radio.Group>
+          <Radio.Group style={{ width: '245px' }}>
             <Radio.Button value="favorite_collection">收藏</Radio.Button>
             <Radio.Button value="like">喜欢</Radio.Button>
             <Radio.Button value="post">作品</Radio.Button>
+            <Radio.Button value="record">历史</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item>

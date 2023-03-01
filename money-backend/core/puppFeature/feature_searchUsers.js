@@ -50,7 +50,6 @@ const feature_searchUsers = async function (params = {}) {
     devtools: false,
     ...(userType === 'aged' ? {} : { userDataDir: undefined }),
   });
-  
   await page.setViewport(INIT_VIEWPORT);
 
   // 1.打开主页userURL
@@ -158,35 +157,61 @@ const feature_searchUsers = async function (params = {}) {
       console.log('==========找消费粉过滤点赞高于5的', commentList.length);
     }
     // 去页面获取详细的commentList
-    await limitExec(async (comment) => {
-      try {
-        const videoPage = await browser.newPage();
-        await videoPage.goto(comment.userLink, TIME_OUT);
-        await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
-        // await videoPage.waitForSelector('.N4QS6RJT', TIME_OUT);
-        const userInfo = await videoPage.evaluate(async () => {
-          try {
-            // 1.过滤男和粉丝点赞多的
-            const svgHtml =
-              (document.querySelector('.N4QS6RJT') || {}).innerHTML || '';
-            const gender =
-              (document.querySelector('.N4QS6RJT') || {}).innerText || '';
-            const ip =
-              (document.querySelector('.a83NyFJ4') || {}).innerText || '';
-            const [follow, fans, like] = [
-              ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
-            ].map((v) => v.innerText);
-            let videoList = [
-              ...(
-                document.querySelector(
-                  '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
-                ) || { children: [] }
-              ).children,
-            ].filter(
-              (e) =>
-                !e.innerText.includes('图文') && !e.innerText.includes('置顶'),
-            );
-            if (videoList.length <= 0)
+    await limitExec(
+      async (comment) => {
+        try {
+          const videoPage = await browser.newPage();
+          await videoPage.goto(comment.userLink, TIME_OUT);
+          await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
+          // await videoPage.waitForSelector('.N4QS6RJT', TIME_OUT);
+          const userInfo = await videoPage.evaluate(async () => {
+            try {
+              // 1.过滤男和粉丝点赞多的
+              const svgHtml =
+                (document.querySelector('.N4QS6RJT') || {}).innerHTML || '';
+              const gender =
+                (document.querySelector('.N4QS6RJT') || {}).innerText || '';
+              let age = '';
+              if (gender) {
+                const match = gender.match(/(\d+)岁/);
+                if (match) age = match[1];
+              }
+              const ip =
+                (document.querySelector('.a83NyFJ4') || {}).innerText || '';
+              const [follow, fans, like] = [
+                ...(document.querySelectorAll('.TxoC9G6_') || [{}]),
+              ].map((v) => v.innerText);
+              let videoList = [
+                ...(
+                  document.querySelector(
+                    '.mwo84cvf>div:last-child [data-e2e="scroll-list"]',
+                  ) || { children: [] }
+                ).children,
+              ].filter(
+                (e) =>
+                  !e.innerText.includes('图文') &&
+                  !e.innerText.includes('置顶'),
+              );
+              if (videoList.length <= 0)
+                return {
+                  ip,
+                  gender,
+                  age,
+                  svgHtml,
+                  follow,
+                  fans,
+                  like,
+                  type: '关注',
+                };
+              videoList = videoList.slice(0, 6);
+              const videoTitles = videoList.map((v) => v.innerText || '');
+              const firstVideoSrc = videoList[0].querySelector('a').href;
+              const secondVideoSrc = videoList[1]
+                ? videoList[1].querySelector('a').href
+                : '';
+              const thirdVideoSrc = videoList[2]
+                ? videoList[2].querySelector('a').href
+                : '';
               return {
                 ip,
                 gender,
@@ -194,41 +219,26 @@ const feature_searchUsers = async function (params = {}) {
                 follow,
                 fans,
                 like,
-                type: '关注',
+                videoTitles,
+                firstVideoSrc,
+                secondVideoSrc,
+                thirdVideoSrc,
               };
-            videoList = videoList.slice(0, 6);
-            const videoTitles = videoList.map((v) => v.innerText || '');
-            const firstVideoSrc = videoList[0].querySelector('a').href;
-            const secondVideoSrc = videoList[1]
-              ? videoList[1].querySelector('a').href
-              : '';
-            const thirdVideoSrc = videoList[2]
-              ? videoList[2].querySelector('a').href
-              : '';
-            return {
-              ip,
-              gender,
-              svgHtml,
-              follow,
-              fans,
-              like,
-              videoTitles,
-              firstVideoSrc,
-              secondVideoSrc,
-              thirdVideoSrc,
-            };
-          } catch (error) {
-            console.log(error);
-            debugger;
-          }
-        });
-        if (userInfo) Object.assign(comment, userInfo);
-        videoPage.close();
-      } catch (error) {
-        videoPage.close();
-        console.log('error: ---', error);
-      }
-    }, commentList);
+            } catch (error) {
+              console.log(error);
+              debugger;
+            }
+          });
+          if (userInfo) Object.assign(comment, userInfo);
+          videoPage.close();
+        } catch (error) {
+          videoPage.close();
+          console.log('error: ---', error);
+        }
+      },
+      commentList,
+      2,
+    );
     // console.log(commentList);
     // commentList = SVG_FILTER(commentList);
     // console.log('==========根据svg过滤男', commentList.length);

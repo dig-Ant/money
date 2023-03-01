@@ -38,7 +38,6 @@ const feature_like = async function (params = {}) {
     await browser.close();
     return { code: -1, errorMsg: '列表页打开失败' };
   }
-console.log(111111221);
   try {
     // 获取列表数据
     const resultsSelector = '[data-e2e="scroll-list"] li a';
@@ -74,9 +73,9 @@ console.log(111111221);
       limitLen,
     );
     console.log(dataSource.length);
-    console.log(dataSource);
+    console.log(dataSource.map((e) => e.filename));
     const newPage = await browser.newPage();
-    for (i = 112; i < dataSource.length; i++) {
+    for (i = 0; i < dataSource.length; i++) {
       try {
         // await newPage.setViewport({ width: 1080, height: 800 });
         await newPage.goto(dataSource[i].href, TIME_OUT);

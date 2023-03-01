@@ -212,6 +212,7 @@ export default function searchUser() {
             <Radio.Button value="post">作品</Radio.Button>
             <Radio.Button value="like">喜欢</Radio.Button>
             <Radio.Button value="favorite_collection">收藏</Radio.Button>
+            <Radio.Button value="record">历史</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="commentLimitLen" label="的文案">
@@ -234,7 +235,7 @@ export default function searchUser() {
               copy(
                 JSON.stringify(
                   list
-                    .map((e: any) => e.title.replace(/#.+$/,''))
+                    .map((e: any) => e.title.replace(/#.+$/, ''))
                     .sort((a: any, b: any) => b.length - a.length),
                 ),
               );

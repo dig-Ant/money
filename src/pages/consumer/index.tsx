@@ -467,7 +467,7 @@ export default function searchUser() {
                     .join(''),
                 );
                 window.open(
-                  location.host + '/text/keyword?v=' + textList.join(''),
+                  window.location.host + '/text/keyword?v=' + textList.join(''),
                 );
               }}
             >
@@ -524,34 +524,6 @@ export default function searchUser() {
       if (i == 0) {
         console.log(e.commentList.map((e) => e.svgHtml));
       }
-    }
-    if (e.businessList) {
-      e.businessList = e.businessList
-        .map((f: any) => {
-          if (f.gender) {
-            const match = f.gender.match(/(\d+)岁/);
-            if (match) f.age = match[1];
-          }
-          return f;
-        })
-        .filter((e: any) => {
-          if (!e.age) return true;
-          return e.age < 40;
-        });
-    }
-    if (e.followList) {
-      e.followList = e.followList
-        .map((f: any) => {
-          if (f.gender) {
-            const match = f.gender.match(/(\d+)岁/);
-            if (match) f.age = match[1];
-          }
-          return f;
-        })
-        .filter((e: any) => {
-          if (!e.age) return true;
-          return e.age < 40;
-        });
     }
     return e;
   });
@@ -616,6 +588,7 @@ export default function searchUser() {
               <Radio.Button value="post">作品</Radio.Button>
               <Radio.Button value="like">喜欢</Radio.Button>
               <Radio.Button value="favorite_collection">收藏</Radio.Button>
+              <Radio.Button value="record">历史</Radio.Button>
             </Radio.Group>
           </Form.Item>
           <Form.Item name="link" label="或link">
