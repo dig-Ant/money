@@ -128,7 +128,7 @@ const feature_downloadVideo = async function (params) {
                 src: videoSrc,
                 time,
                 likeNum: StringToNumFun.eval(like),
-                name: `${userName}-粉丝${fans}个-获赞${like}`,
+                name: `${userName}-${fans}粉-${like}赞`,
               };
             },
             videoSelect,

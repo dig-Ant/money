@@ -132,13 +132,13 @@ export default function HomePage() {
         const { href = 'javaScript:void(0);' } = record || {};
         return (
           <Space>
-            <Button
+            <a
               onClick={() => {
-                copy(val);
+                copy(val.replace(/#.+$/, ''));
               }}
             >
               copy
-            </Button>
+            </a>
             <a href={href} target="_blank">
               {val}
             </a>
