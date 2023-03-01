@@ -194,8 +194,7 @@ export default function searchUser() {
           // url: 'https://www.douyin.com/user/MS4wLjABAAAAXceYJEb9XGH8zmgd8FSurkqWCZVeHRzycGB0LHmuiaP0ewYxT20MuOQBwXsw1soV/',
           isLogin: false,
           type: 'post',
-          limitLen: 100,
-          commentLimitLen: 100,
+          limitLen: 17,
         }}
         colon={false}
       >
@@ -215,7 +214,7 @@ export default function searchUser() {
             <Radio.Button value="record">历史</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name="commentLimitLen" label="的文案">
+        <Form.Item label="的文案">
           {/* <Input style={{ width: '55px' }} /> */}
         </Form.Item>
         <Form.Item name="url" label="url">
