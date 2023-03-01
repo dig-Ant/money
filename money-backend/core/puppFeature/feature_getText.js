@@ -1,9 +1,3 @@
-const path = require('path');
-const qs = require('qs');
-const { limitExec } = require('../../utils/common');
-const fs = require('fs');
-const moment = require('moment');
-const { delay, getToday } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const {
   MY_USER_LINK,
@@ -11,7 +5,6 @@ const {
   GET_URL,
   VIDEO_LIST_SELECTOR,
 } = require('../../utils/constance');
-const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_getText = async function (params = {}) {
   let {

@@ -6,8 +6,7 @@ const {
   getDB,
   NOT_SVG_MATE,
 } = require('../../utils/constance');
-const { limitExec } = require('../../utils/common');
-const { delay, getToday } = require('../../utils/index');
+const { delay } = require('../../utils/index');
 
 const feature_userLike = async function (params) {
   const { browser, page } = await this.createBrowser({

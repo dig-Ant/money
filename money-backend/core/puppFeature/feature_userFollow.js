@@ -1,13 +1,12 @@
 const Datastore = require('nedb');
 const path = require('path');
 const { TIME_OUT, INIT_VIEWPORT } = require('../../utils/constance');
-const { limitExec } = require('../../utils/common');
-const { delay, getToday } = require('../../utils/index');
+const { delay } = require('../../utils/index');
 
 const feature_userFollow = async function (params) {
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_userFollow',
-    devtools:  false,
+    devtools: false,
   });
   await page.setViewport(INIT_VIEWPORT);
   const { list = [], userType } = params || {};

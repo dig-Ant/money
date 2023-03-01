@@ -1,14 +1,5 @@
-const puppeteer = require('puppeteer');
 const path = require('path');
-const puppeteerUtils = require('../../utils/puppeteerUtils');
-const qs = require('qs');
-const { limitExec } = require('../../utils/common');
-const mkdirp = require('mkdirp');
 const fs = require('fs');
-const moment = require('moment');
-const Datastore = require('nedb');
-const { delay, getToday } = require('../../utils/index');
-const { downFile, createDownloadPath } = puppeteerUtils;
 
 // 自动批量导入puppFeature文件夹下的文件
 var allFeature = {};

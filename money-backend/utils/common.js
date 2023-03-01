@@ -29,7 +29,7 @@
   3,
 );
  */
-const limitExec = async (fn, data, limitNum = 5) => {
+const limitExec = async (fn, data, limitNum = 2) => {
   if (!Array.isArray(data)) {
     console.error('limitExec data不是数组');
     return null;

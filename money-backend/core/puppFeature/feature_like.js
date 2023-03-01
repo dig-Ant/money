@@ -1,9 +1,4 @@
-const path = require('path');
-const qs = require('qs');
-const { limitExec } = require('../../utils/common');
-const fs = require('fs');
-const moment = require('moment');
-const { delay, getToday } = require('../../utils/index');
+const { delay } = require('../../utils/index');
 const puppeteerUtils = require('../../utils/puppeteerUtils');
 const {
   GET_COMMENT1,
@@ -12,7 +7,6 @@ const {
   TIME_OUT,
   GET_URL,
 } = require('../../utils/constance');
-const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_like = async function (params = {}) {
   let {

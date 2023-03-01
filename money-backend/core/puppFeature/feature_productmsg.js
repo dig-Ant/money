@@ -1,4 +1,3 @@
-const { limitExec } = require('../../utils/common');
 const {
   INIT_VIEWPORT,
   STRINGNUM,

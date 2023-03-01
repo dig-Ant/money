@@ -1,12 +1,6 @@
 const path = require('path');
-const qs = require('qs');
-const { limitExec } = require('../../utils/common');
-const fs = require('fs');
-const moment = require('moment');
-
 const Datastore = require('nedb');
-const { delay, getToday } = require('../../utils/index');
-const puppeteerUtils = require('../../utils/puppeteerUtils');
+const { delay } = require('../../utils/index');
 const {
   GET_COMMENT1,
   GET_COMMENT2,
@@ -14,7 +8,6 @@ const {
   IS_BUSINESS_USER,
   TIME_OUT,
 } = require('../../utils/constance');
-const { downFile, createDownloadPath } = puppeteerUtils;
 
 const feature_liveusers = async function (params = {}) {
   const {
