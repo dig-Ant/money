@@ -143,24 +143,24 @@ const createDownloadPath = (pathname, dp) => {
 const downFile = async (arr, file) => {
   const { downloadPath, pathname } = file || {};
   const [mkdirPath] = createDownloadPath(pathname, downloadPath);
-  try {
-    fs.writeFileSync(
-      path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
-      JSON.stringify(arr),
-    );
-    // fs.writeFileSync(
-    //   path.resolve(__dirname, `${mkdirPath}/${pathname}-time.json`),
-    //   JSON.stringify(
-    //     arr.sort((q, w) => {
-    //       let time1 = new Date(q.time.slice(5));
-    //       let time2 = new Date(w.time.slice(5));
-    //       return time1.getTime() - time2.getTime();
-    //     }),
-    //   ),
-    // );
-  } catch (error) {
-    console.log('数据文件下载失败', error);
-  }
+  // try {
+  //   fs.writeFileSync(
+  //     path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
+  //     JSON.stringify(arr),
+  //   );
+  //   // fs.writeFileSync(
+  //   //   path.resolve(__dirname, `${mkdirPath}/${pathname}-time.json`),
+  //   //   JSON.stringify(
+  //   //     arr.sort((q, w) => {
+  //   //       let time1 = new Date(q.time.slice(5));
+  //   //       let time2 = new Date(w.time.slice(5));
+  //   //       return time1.getTime() - time2.getTime();
+  //   //     }),
+  //   //   ),
+  //   // );
+  // } catch (error) {
+  //   console.log('数据文件下载失败', error);
+  // }
   let i = 0;
   while (arr[i]) {
     try {

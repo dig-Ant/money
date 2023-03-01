@@ -22,7 +22,6 @@ const feature_downloadVideo = async function (params) {
 
   const { browser, page } = await this.createBrowser({
     launchKey: 'feature_downloadVideo',
-    isLogin: true,
     devtools: false,
   });
   await page.setViewport(INIT_VIEWPORT);
