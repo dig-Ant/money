@@ -3,7 +3,7 @@ const aged = require('./aged');
 const GET_TIME_TEXT = function () {
   let time = moment().format('YYYY-MM-DD HH:mm:ss'); //2022-09-06 11:10:09
   time = time.slice(11, 13) - 0;
-  console.log(time);
+  // console.log(time);
   if (time < 9) {
     return '早上';
   } else if (time < 11) {
@@ -17,7 +17,7 @@ const GET_TIME_TEXT = function () {
   }
 };
 const time = GET_TIME_TEXT();
-console.log(time);
+// console.log(time);
 let agedComment = aged.上午;
 if (['早上', '上午'].includes(time)) {
   agedComment = aged.上午.map((e) => e.replace('上午', time) + '[一起加油]');

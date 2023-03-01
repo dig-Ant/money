@@ -7,8 +7,8 @@ const core = async () => {
   webServer
     .start()
     .then(({ ip, port }) => {
-      console.log(`[MONEY] backend started on port:  http://localhost:${port}`);
-      console.log(`[MONEY] backend started on port:  http://127.0.0.1:${port}`);
+      // console.log(`[MONEY] backend started on port:  http://localhost:${port}`);
+      // console.log(`[MONEY] backend started on port:  http://127.0.0.1:${port}`);
       console.log(`[MONEY] backend started on port:  http://${ip}:${port}`);
     })
     .catch((e) => {
