@@ -139,11 +139,43 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const body = req.body;
       const dataSource = await this.pupp.start('feature_downloadVideo', body);
-
       if (dataSource.code == -1) return;
-      this.downloadDB.insert(dataSource, (err, docs) => {
-        resHandle(res, err, docs);
-      });
+      const db = this.downloadDB;
+      fs.writeFile(
+        path.resolve(__dirname, `../db/download.json`),
+        '',
+        (err) => {
+          console.log('err: ', err);
+          db.insert(dataSource, (err, docs) => {
+            console.log('err, docs: ', err, docs);
+            // resHandle(res, err, docs);
+            if (err) {
+              res.json({
+                status: 'error',
+                code: -1,
+                errorMsg: err,
+              });
+            } else {
+              fs.copyFile(
+                path.resolve(__dirname, `../db/download.json`),
+                path.resolve(
+                  __dirname,
+                  `../db/download/${body.downloadFilename}.json`,
+                ),
+                (...args) => {
+                  console.log(args);
+                },
+              );
+              res.json({
+                status: 'success',
+                data: dataSource,
+                code: 0,
+              });
+            }
+          });
+        },
+      );
+      // db.remove({}, { multi: true }, function (err, numRemoved) {});
     });
     app.post('/v1/execDyFollowList', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');

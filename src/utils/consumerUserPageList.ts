@@ -5,6 +5,19 @@ interface Option {
   children?: Option[];
 }
 export const consumerUserPageList: Option[] = [
+  {
+    value: '儿科医生',
+    label: '儿科医生',
+    children: [
+      {
+        value:
+          'https://www.douyin.com/user/MS4wLjABAAAAoeOYJKqG2sgbm1CMQYrBH5BEVY_BatSH5CW_wUX4bw6kHaoq_6z4tfIbmPkANWtU',
+        label: '范五孃的川菜厨房',
+        desc: '感谢大家的喜欢 一个爱做饭又爱美的范五孃 每天上午10点直播 每天直播间接受...',
+      },
+    ],
+  },
+
   // 按母婴/美妆/小学用品/居家/情侣/分类
   {
     value: '儿科医生',
