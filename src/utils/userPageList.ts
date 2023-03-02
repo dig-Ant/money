@@ -22,6 +22,12 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAAZOrW4gE67s4Ee2ZfY9fY3pBESFWlpXi8c3EW9nBT1FNB8IVX5-Qkbfprduc9Re_e',
+    label: 'Ruafufu软软家',
+    desc: '（𝐑𝐮𝐚. 𝐟𝐮𝐟𝐮）®：❝ 𝗡𝗲𝘄 & 𝗩𝗶𝗻\ud835...',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAAeCZfmwQBYvgEhbGfP7-HtsZYvya9_KclUSQU_Kscg-E',
     label: '肆月SIYUE',
     desc: '全网粉丝300W+网红店 直播周一至周六09:55开播 甄选好物 福利秒杀 ...',
