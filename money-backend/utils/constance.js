@@ -50,7 +50,7 @@ const IS_MATE = function (username) {
 };
 const STRING_TO_NUM_FUN = function (like, type = true) {
   if (type) {
-    if (like.includes('万')) {
+    if ((like||'').includes('万')) {
       const [num] = like.split('万');
       return Number((+num * 10000).toFixed(0));
     } else {
@@ -82,8 +82,8 @@ const IS_BUSINESS_USER = function (username) {
 // 一次性铝箔盘锡纸盘 空气炸锅
 // https://www.douyin.com/video/7143228200724761896
 const MY_USER_LINK =
-  // 'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA';
-  'https://www.douyin.com/user/MS4wLjABAAAAEzQz0XCD58V1HQ9bIKoM_Brao_PhSSS078quoHUMjfU';
+  'https://www.douyin.com/user/MS4wLjABAAAA0zWieAn78LZo2nyh-QqNf7cWI0oJK3r3UmJq6LLtxpA';
+  // 'https://www.douyin.com/user/MS4wLjABAAAAEzQz0XCD58V1HQ9bIKoM_Brao_PhSSS078quoHUMjfU';
 module.exports = {
   // searchUser
   // https://www.douyin.com/user/MS4wLjABAAAAc1psH2X0JDFrH3sBzn7a3Z60FzNbkgyPs1VOrmTukDddwuD_Cb5u5Pl7i0zaLa1v
