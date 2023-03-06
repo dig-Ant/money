@@ -19,6 +19,7 @@ export const videoNote = [
     value: 'note',
   },
 ];
+
 export const textUserList = [
   {
     value:

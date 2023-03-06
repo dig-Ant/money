@@ -130,7 +130,7 @@ export default function searchUser() {
                 num && setIsModalOpen(true);
                 setListType('commentList');
                 seID(record._id);
-                setCurrent(commentList);
+                setCurrent(commentList.filter((e) => !e.isLiked));
               }}
             >
               {num}
@@ -168,6 +168,7 @@ export default function searchUser() {
                         listType: 'commentList',
                         _id: record._id,
                         index,
+                        list: e[commentList],
                       },
                     });
                   }}
@@ -538,6 +539,9 @@ export default function searchUser() {
           } else {
             return false;
           }
+        })
+        .filter((e: any) => {
+          return !e.isLiked;
         });
 
       if (i == 0) {

@@ -419,8 +419,8 @@ class WebInterface {
     app.post('/v1/getDyUsers', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       let { userType, link: href } = req.body;
-      if (!link) {
-        link = await this.pupp.start('feature_getPageVideo', req.body);
+      if (!href) {
+        href = await this.pupp.start('feature_getPageVideo', req.body);
       }
       const list = await this.pupp.start('feature_searchUsers', {
         ...req.body,
@@ -551,7 +551,7 @@ class WebInterface {
     // 给用户点赞
     app.post('/v1/execDyUsersLike', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const { _id, userType, listType = 'commentList' } = req.body;
+      let { _id, userType, listType = 'commentList', list = [] } = req.body;
       const db = this.getUserDB(userType);
       db.find({ _id }, async (err, docs) => {
         if (err) {
@@ -562,8 +562,10 @@ class WebInterface {
         }
         const feature =
           listType === 'followList' ? 'feature_userFollow' : 'feature_userLike';
+        list = list.length > 0 ? list : docs[0][listType];
+        list = list.filter((e) => !e.isLiked);
         let code = await this.pupp.start(feature, {
-          list: docs[0][listType],
+          list,
           listType,
           userType,
           _id,
