@@ -55,7 +55,7 @@ const feature_searchUsers = async function (params = {}) {
 
   // 2.获取目标视频myVideo
   try {
-    if (!myVideo.href.includes('video'))
+    if (!(myVideo.href||'').includes('video'))
       return { code: -1, errorMsg: '不是video' };
     // myVideo.likeNum = STRING_TO_NUM_FUN(myVideo.like);
     const videoPage = await browser.newPage();
