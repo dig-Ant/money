@@ -339,10 +339,10 @@ export default function searchUser() {
         );
       },
     },
-    // {
-    //   title: '_id',
-    //   dataIndex: '_id',
-    // },
+    {
+      title: '_id',
+      dataIndex: '_id',
+    },
     {
       title: 'createdAt',
       dataIndex: 'createdAt',
@@ -455,6 +455,25 @@ export default function searchUser() {
         const textList = text.split(/[#|\s]/);
         return (
           <Space>
+            {userType == 'business' ? (
+              <Button
+                type="link"
+                onClick={() => {
+                  request(GET_DY_USERS, {
+                    method: 'post',
+                    data: {
+                      link: firstVideoSrc,
+                      userType,
+                      commentLimitLen: 100,
+                    },
+                  });
+                }}
+              >
+                获取用户
+              </Button>
+            ) : (
+              ''
+            )}
             <a href={firstVideoSrc} target="_blank">
               link
             </a>

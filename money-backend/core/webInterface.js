@@ -418,10 +418,16 @@ class WebInterface {
     // 下载目标用户
     app.post('/v1/getDyUsers', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      const { userType } = req.body;
-      const db = this.getUserDB(userType);
-      const list = await this.pupp.start('feature_searchUsers', req.body);
+      let { userType, link: href } = req.body;
+      if (!link) {
+        link = await this.pupp.start('feature_getPageVideo', req.body);
+      }
+      const list = await this.pupp.start('feature_searchUsers', {
+        ...req.body,
+        myVideo: { href },
+      });
       if (list.code == -1) return;
+      const db = this.getUserDB(userType);
       db.insert(list, (err, docs) => {
         resHandle(res, err, docs);
       });
