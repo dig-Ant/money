@@ -16,12 +16,12 @@ const feature_userLike = async function (params) {
   try {
     const { list = [], userType, _id, listType } = params || {};
     
+    const newPage = await browser.newPage();
     for (i = 0; i < list.length; i++) {
       const { firstVideoSrc, userLink, secondVideoSrc, thirdVideoSrc } =
         list[i] || {};
       if (firstVideoSrc && firstVideoSrc.includes('video')) {
         try {
-          const newPage = await browser.newPage();
           // await newPage.setViewport({ width: 1080, height: 800 });
           console.log('userLink: ', userLink);
           // await newPage.goto(userLink, TIME_OUT);
@@ -115,7 +115,6 @@ const feature_userLike = async function (params) {
               },
             );
           });
-          newPage.close();
         } catch (error) {
           console.log('点赞可能失败', error);
         }
@@ -126,7 +125,6 @@ const feature_userLike = async function (params) {
         const { firstVideoSrc, secondVideoSrc, thirdVideoSrc } = list[i] || {};
         if (secondVideoSrc && secondVideoSrc.includes('video')) {
           try {
-            const newPage = await browser.newPage();
             // await newPage.setViewport({ width: 1080, height: 800 });
             await newPage.goto(secondVideoSrc, TIME_OUT);
             // 检测到有视频为止
@@ -181,13 +179,13 @@ const feature_userLike = async function (params) {
               await newPage.keyboard.press('Enter'); // 回车
               await delay(3000);
             }
-            newPage.close();
           } catch (error) {
             console.log('点赞可能失败', error);
           }
         }
       }
     }
+    await newPage.close();
     await browser.close();
     return { code: 0, data: {} };
   } catch (error) {

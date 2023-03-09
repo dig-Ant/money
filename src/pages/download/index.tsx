@@ -139,6 +139,13 @@ export default function HomePage() {
             >
               copy
             </a>
+            <a
+              onClick={() => {
+                window.open(location.origin + '/text/comment?v=' + href);
+              }}
+            >
+              cmt
+            </a>
             <a href={href} target="_blank">
               {val}
             </a>

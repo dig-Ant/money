@@ -11,6 +11,7 @@ const express = require('express'),
   path = require('path'),
   Pupp = require('./pupp');
 const mkdirp = require('mkdirp');
+const { INIT_VIEWPORT } = require('../utils/constance');
 
 const allJSON = {};
 try {
@@ -419,17 +420,30 @@ class WebInterface {
     app.post('/v1/getDyUsers', async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*');
       let { userType, link: href } = req.body;
+      const { browser, page } = await this.pupp.createBrowser({
+        launchKey: 'feature_searchUsers',
+        devtools: false,
+        userDataDir: undefined,
+      });
+      await page.setViewport(INIT_VIEWPORT);
       if (!href) {
-        href = await this.pupp.start('feature_getPageVideo', req.body);
+        href = await this.pupp.start('feature_getPageVideo', {
+          ...req.body,
+          browser,
+          page,
+        });
       }
       const list = await this.pupp.start('feature_searchUsers', {
         ...req.body,
         myVideo: { href },
+        browser,
+        page,
       });
       if (list.code == -1) return;
       const db = this.getUserDB(userType);
-      db.insert(list, (err, docs) => {
+      db.insert(list, async (err, docs) => {
         resHandle(res, err, docs);
+        // await browser.close();
       });
     });
 

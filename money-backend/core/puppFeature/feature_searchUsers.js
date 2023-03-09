@@ -42,20 +42,13 @@ const feature_searchUsers = async function (params = {}) {
     type = '',
     isLogin = false,
     myVideo = '',
+    browser,
+    page,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
 
-  console.log('userURL: ', userURL);
-  const { browser, page } = await this.createBrowser({
-    launchKey: 'feature_searchUsers',
-    devtools: false,
-    ...(userType === 'aged' ? {} : { userDataDir: undefined }),
-  });
-  await page.setViewport(INIT_VIEWPORT);
-
-  // 2.获取目标视频myVideo
   try {
-    if (!(myVideo.href||'').includes('video'))
+    if (!(myVideo.href || '').includes('video'))
       return { code: -1, errorMsg: '不是video' };
     // myVideo.likeNum = STRING_TO_NUM_FUN(myVideo.like);
     const videoPage = await browser.newPage();
@@ -133,14 +126,14 @@ const feature_searchUsers = async function (params = {}) {
       console.log('==========找消费粉过滤点赞高于5的', commentList.length);
     }
     // 去页面获取详细的commentList
+    const userPage = await browser.newPage();
     await limitExec(
       async (comment) => {
         try {
-          const videoPage = await browser.newPage();
-          await videoPage.goto(comment.userLink, TIME_OUT);
-          await videoPage.waitForSelector('.Nu66P_ba', TIME_OUT);
-          // await videoPage.waitForSelector('.N4QS6RJT', TIME_OUT);
-          const userInfo = await videoPage.evaluate(async () => {
+          await userPage.goto(comment.userLink, TIME_OUT);
+          await userPage.waitForSelector('.Nu66P_ba', TIME_OUT);
+          // await userPage.waitForSelector('.N4QS6RJT', TIME_OUT);
+          const userInfo = await userPage.evaluate(async () => {
             try {
               // 1.过滤男和粉丝点赞多的
               const svgHtml =
@@ -206,14 +199,14 @@ const feature_searchUsers = async function (params = {}) {
             }
           });
           if (userInfo) Object.assign(comment, userInfo);
-          videoPage.close();
+          // userPage.close();
         } catch (error) {
-          videoPage.close();
+          // userPage.close();
           console.log('error: ---', error);
         }
       },
       commentList,
-      2,
+      1,
     );
     // console.log(commentList);
     // commentList = SVG_FILTER(commentList);
@@ -246,7 +239,7 @@ const feature_searchUsers = async function (params = {}) {
       followList,
       businessList,
     });
-    videoPage.close();
+    userPage.close();
     const [_, partPath] = createDownloadPath(downloadFilename);
 
     fs.writeFileSync(

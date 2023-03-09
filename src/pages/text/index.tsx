@@ -222,6 +222,7 @@ export default function searchUser() {
         <Form.Item name="url" label="url">
           <Select
             defaultValue=""
+            allowClear
             style={{ width: 120 }}
             options={textUserList}
           />

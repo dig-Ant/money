@@ -23,6 +23,18 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAAGJ6N3Fx5MqjTRPSdG2XHlMdlmju8CyMU9PC4LIDWd7c?previous_page=app_code_link',
+    label: '陌上🌸开',
+    desc: '*我把秘密告诉了花，花香吹满了整个小巷* 抖音搜索“火火壁纸”或“星空精选”输入...',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAOOE9P7MXaLZrZ5UnA4HeRcJ8EFMsTilQE7qq42YhyTE?previous_page=app_code_link',
+    label: '𝑴𝒐𝒐𝒏͜͜',
+    desc: '“关注作者”对作者留一份期待. 每天给你们分享更多“独特”美景✨ V：Sheyo...',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAAZOrW4gE67s4Ee2ZfY9fY3pBESFWlpXi8c3EW9nBT1FNB8IVX5-Qkbfprduc9Re_e',
     label: 'Ruafufu软软家',
     desc: '（𝐑𝐮𝐚. 𝐟𝐮𝐟𝐮）®：❝ 𝗡𝗲𝘄 & 𝗩𝗶𝗻\ud835...',
@@ -40,12 +52,6 @@ export const textUserList = [
     desc: '贝亲蒂拉−母婴产品质量坚定的捍卫者！ 专注母婴待产产品16年：数家直营...',
   },
 
-  {
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAF6PjSNd23SJvOnJJ3Fkw21wALlch7wrS516NdWREhds?previous_page=app_code_link',
-    label: '一棵小菠菜',
-    desc: '🛳梦想环游世界的旅行博主、民宿掌柜，旅居大理 🈴️scboboy123，民宿...',
-  },
   {
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAF6PjSNd23SJvOnJJ3Fkw21wALlch7wrS516NdWREhds?previous_page=app_code_link',
@@ -125,6 +131,11 @@ export const textUserList = [
     label: '小盛夏👧🏼',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAr_FGd1QaMJdIM-BsZYb4xOPkGtYmUkW5av4ldq6bKK8',
+  },
+  {
+    label: '爱捣鼓的小仙儿',
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAANpPYio7BrbmitoqGXoa44by7SK50m8xXCWx2zd6vU_c',
   },
   {
     label: '小麦',

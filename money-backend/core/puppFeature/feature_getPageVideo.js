@@ -9,20 +9,14 @@ const {
 } = require('../../utils/constance');
 const feature_getPageVideo = async function (params = {}) {
   let {
+    browser,
+    page,
     userURL = MY_USER_LINK,
     index = 0,
     type = '',
     isLogin = false,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-
-  const { browser, page } = await this.createBrowser({
-    launchKey: 'feature_getPageVideo',
-    devtools: false,
-    ...(isLogin ? {} : { userDataDir: undefined }),
-  });
-
-  await page.setViewport(INIT_VIEWPORT);
 
   // 1.打开主页userURL
   try {
@@ -51,9 +45,10 @@ const feature_getPageVideo = async function (params = {}) {
       VIDEO_LIST_SELECTOR,
       index,
     );
-    if (!myVideo.href.includes('video'))
+    if (!myVideo.href.includes('video')) {
+      await browser.close();
       return { code: -1, errorMsg: '不是video' };
-    await browser.close();
+    }
     return myVideo.href;
   } catch (error) {
     console.log('error: ', error);

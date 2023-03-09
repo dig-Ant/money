@@ -11,7 +11,7 @@ const feature_getText = async function (params = {}) {
     url = MY_USER_LINK,
     limitLen = 1,
     type = '',
-    isLogin = false,
+    isLogin = true,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
 
