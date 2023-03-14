@@ -23,6 +23,16 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAA-5xrM7Sswx8aCk-jedBJnivMuqPOZ2MyUZqKh61Vf8U',
+    label: '缘定今生🌻',
+  },
+  {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAAGcKOyJiPXNKndhO4EBeF_wOIWuFboPbzVhx5JDYYnfU',
+    label: '江河',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAAGJ6N3Fx5MqjTRPSdG2XHlMdlmju8CyMU9PC4LIDWd7c?previous_page=app_code_link',
     label: '陌上🌸开',
     desc: '*我把秘密告诉了花，花香吹满了整个小巷* 抖音搜索“火火壁纸”或“星空精选”输入...',

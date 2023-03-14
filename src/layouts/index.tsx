@@ -43,11 +43,25 @@ import styles from './index.less';
 import { copy } from '@/utils/common';
 
 const { Header, Sider, Content } = Layout;
-let 爱捣鼓的小仙儿i = 0,
-  business2i = 0;
 let 爱捣鼓的小仙儿 = require('../../money-backend/utils/comments/text/爱捣鼓的小仙儿');
+let 春天 = require('../../money-backend/utils/comments/text/春天');
+let text = require('../../money-backend/utils/comments/text/text');
+let miss = require('../../money-backend/utils/comments/weekily/miss');
+let 可可爱爱文案 = require('../../money-backend/utils/comments/weekily/可可爱爱文案');
+let 宝宝 = require('../../money-backend/utils/comments/宝宝');
+let 风景 = require('../../money-backend/utils/comments/景色');
+let 美食 = require('../../money-backend/utils/comments/食物');
 let business2 = require('../../money-backend/utils/comments/business2');
+let 美女 = require('../../money-backend/utils/comments/girls');
+let aged = require('../../money-backend/utils/comments/aged1');
 
+const getCMText = function (list: [string]) {
+  const len = list.length;
+  let i = Math.random() * len;
+  i = Math.floor(i);
+  console.log(list[i]);
+  return list[i] + '[比心][比心]';
+};
 // 更具路由生成menu
 const formatRoutesToMenus = (routes: any): MenuProps['items'] => {
   const handleData = cloneDeep(routes);
@@ -165,8 +179,29 @@ export default function Layouts() {
                 style={{ cursor: 'pointer' }}
                 title="copy"
                 onClick={() => {
-                  copy(爱捣鼓的小仙儿[爱捣鼓的小仙儿i]);
-                  爱捣鼓的小仙儿i++;
+                  const cmtText = getCMText(business2);
+                  copy(cmtText);
+                }}
+              >
+                同
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(aged);
+                  copy(cmtText);
+                }}
+              >
+                aged
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(爱捣鼓的小仙儿);
+                  copy(cmtText);
                 }}
               >
                 消
@@ -175,11 +210,81 @@ export default function Layouts() {
                 style={{ cursor: 'pointer' }}
                 title="copy"
                 onClick={() => {
-                  copy(business2[business2i]);
-                  business2i++;
+                  const cmtText = getCMText(美女);
+                  copy(cmtText);
                 }}
               >
-                同
+                美女
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(miss);
+                  copy(cmtText);
+                }}
+              >
+                miss
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(风景);
+                  copy(cmtText);
+                }}
+              >
+                风景
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(宝宝);
+                  copy(cmtText);
+                }}
+              >
+                宝
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(春天);
+                  copy(cmtText);
+                }}
+              >
+                春天
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(text);
+                  copy(cmtText);
+                }}
+              >
+                text
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(可可爱爱文案);
+                  copy(cmtText);
+                }}
+              >
+                可爱
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  const cmtText = getCMText(美食);
+                  copy(cmtText);
+                }}
+              >
+                美食
               </span>
             </Space>
           </Header>

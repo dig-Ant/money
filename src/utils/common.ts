@@ -20,7 +20,7 @@ export function copy(text: string) {
   document.execCommand('copy');
   // 删除input元素
   document.body.removeChild(el);
-  message.info('复制成功');
+  // message.info('复制成功');
 }
 
 export function transformUrl(userURL: any) {
