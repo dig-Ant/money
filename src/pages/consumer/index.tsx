@@ -447,6 +447,24 @@ export default function searchUser() {
       },
     },
     {
+      title: 'video',
+      dataIndex: 'firstVideoSrc',
+      width: 150,
+      render: (val, render: any) => {
+        val = val.split('video/')[1];
+        return (
+          <Button
+            type="link"
+            onClick={() => {
+              copy(val);
+            }}
+          >
+            {val}
+          </Button>
+        );
+      },
+    },
+    {
       title: '第一条视频',
       dataIndex: 'firstVideoSrc',
       width: 350,
@@ -642,6 +660,7 @@ export default function searchUser() {
       <Modal
         title=""
         width="85%"
+        style={{ top: 120 }}
         open={isModalOpen}
         onOk={() => {
           setIsModalOpen(false);
