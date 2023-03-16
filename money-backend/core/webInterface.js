@@ -370,6 +370,15 @@ class WebInterface {
         data: list,
       });
     });
+    app.post('/v1/grtText', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = req.body;
+      const list = await this.pupp.start('feature_grtText', body);
+      res.send({
+        code: 0,
+        data: list,
+      });
+    });
 
     // 搜索抖音列表
     app.post('/v1/getDySearch', async (req, res) => {
@@ -588,6 +597,37 @@ class WebInterface {
           return res.json({
             code: -1,
             errorMsg: '点赞报错',
+          });
+        }
+        return res.json({
+          code: 1,
+          data: '成功',
+        });
+      });
+    });
+    app.post('/v1/execDyUsersScan', async (req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      let { _id, userType, listType = 'commentList', list = [] } = req.body;
+      const db = this.getUserDB(userType);
+      db.find({ _id }, async (err, docs) => {
+        if (err) {
+          return res.json({
+            code: -1,
+            errorMsg: err,
+          });
+        }
+        list = list.length > 0 ? list : docs[0][listType];
+        list = list.filter((e) => !e.isLiked);
+        let code = await this.pupp.start('feature_scan', {
+          list,
+          listType,
+          userType,
+          _id,
+        }).code;
+        if (code !== 0) {
+          return res.json({
+            code: -1,
+            errorMsg: 'scan报错',
           });
         }
         return res.json({

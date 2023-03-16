@@ -136,7 +136,40 @@ export default function searchUser() {
               {num}
             </a>
             &nbsp; &nbsp;
-            {commentNUM.map((e, index) => {
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: {
+                    userType,
+                    listType: 'commentList',
+                    _id: record._id,
+                    // index,
+                    list: commentList,
+                  },
+                });
+              }}
+            >
+              评论
+            </a>
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: {
+                    userType,
+                    listType: 'commentList',
+                    _id: record._id,
+                    // index,
+                    list: commentList,
+                    type: 'scan',
+                  },
+                });
+              }}
+            >
+              浏览
+            </a>
+            {/* {commentNUM.map((e, index) => {
               const startI = index * 15 + 15;
               const endI = startI + 15;
               let allCmted = undefined;
@@ -176,7 +209,7 @@ export default function searchUser() {
                   评论{index}&nbsp; &nbsp;
                 </a>
               );
-            })}
+            })} */}
           </div>
         );
       },
@@ -450,7 +483,7 @@ export default function searchUser() {
       title: 'video',
       dataIndex: 'firstVideoSrc',
       width: 150,
-      render: (val, render: any) => {
+      render: (val = '', render: any) => {
         val = val.split('video/')[1];
         return (
           <Button
@@ -660,7 +693,7 @@ export default function searchUser() {
       <Modal
         title=""
         width="85%"
-        style={{ top: 120 }}
+        style={{ top: 20 }}
         open={isModalOpen}
         onOk={() => {
           setIsModalOpen(false);

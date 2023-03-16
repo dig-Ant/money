@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { GRT_LINK, LOGIN_PUP, LOGOUT_PUP } from '@/utils/api';
+import { GRT_LINK, GRT_TEXT, LOGIN_PUP, LOGOUT_PUP } from '@/utils/api';
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
@@ -20,6 +20,10 @@ export default {
     },
     *grtLink(_action: any, { call, put }: any) {
       yield call(() => request(GRT_LINK, { method: 'post' }));
+      // yield put({ type: 'add' });
+    },
+    *grtText({ payload }: any, { call, put }: any) {
+      yield call(() => request(GRT_TEXT, { method: 'post', data: payload }));
       // yield put({ type: 'add' });
     },
   },

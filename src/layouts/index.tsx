@@ -54,6 +54,7 @@ let 美食 = require('../../money-backend/utils/comments/食物');
 let business2 = require('../../money-backend/utils/comments/business2');
 let 美女 = require('../../money-backend/utils/comments/girls');
 let aged = require('../../money-backend/utils/comments/aged1');
+let urlList = require('../../money-backend/downloadFiles/urlText');
 
 const getCMText = function (list: [string]) {
   const len = list.length;
@@ -172,6 +173,17 @@ export default function Layouts() {
                 onClick={() => {
                   dispatch({
                     type: 'global/grtLink',
+                  });
+                }}
+              />
+              <LinkOutlined
+                title="link"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/grtText',
+                    payload: {
+                      urlList,
+                    },
                   });
                 }}
               />

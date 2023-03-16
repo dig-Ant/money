@@ -5,7 +5,7 @@ import {
   EXEC_DY_VIDEPMSG,
 } from '@/utils/api';
 
-const { EXEC_DY_USERS_LIKE } = api;
+const { EXEC_DY_USERS_LIKE,EXEC_DY_USERS_SCAN } = api;
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export default {
@@ -22,6 +22,11 @@ export default {
     *batchLike({ payload }: any, { call, put }: any) {
       yield call(() =>
         request(EXEC_DY_USERS_LIKE, { method: 'post', data: payload }),
+      );
+    },
+    *scan({ payload }: any, { call, put }: any) {
+      yield call(() =>
+        request(EXEC_DY_USERS_SCAN, { method: 'post', data: payload }),
       );
     },
     *getVideoMsg({ payload }: any, { call, put }: any) {
