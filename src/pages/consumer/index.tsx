@@ -145,7 +145,7 @@ export default function searchUser() {
                     listType: 'commentList',
                     _id: record._id,
                     // index,
-                    list: commentList,
+                    // list: commentList,
                   },
                 });
               }}

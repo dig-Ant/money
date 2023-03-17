@@ -5,7 +5,15 @@ export {
   businessUserPageList,
   liveUserPageList,
 } from './userPageList';
-
+export function string_to_num(like) {
+  
+  if ((like||'').includes('万')) {
+    const [num] = like.split('万');
+    return Number((+num * 10000).toFixed(0));
+  } else {
+    return Number(like);
+  }
+};
 export function copy(text: string) {
   // text是复制文本
   // 创建input元素

@@ -54,7 +54,7 @@ let 美食 = require('../../money-backend/utils/comments/食物');
 let business2 = require('../../money-backend/utils/comments/business2');
 let 美女 = require('../../money-backend/utils/comments/girls');
 let aged = require('../../money-backend/utils/comments/aged1');
-let urlList = require('../../money-backend/downloadFiles/urlText');
+let urlList = require('../../money-backend/utils/urlText');
 
 const getCMText = function (list: [string]) {
   const len = list.length;

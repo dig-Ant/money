@@ -18,7 +18,7 @@ import request from '@/utils/request';
 import { EXEC_DY_DOWNLIST, GET_DY_RESOURCE } from '@/utils/api';
 import type { ColumnsType } from 'antd/es/table';
 import styles from './index.less';
-import { copy, transformUrl } from '@/utils/common';
+import { copy, string_to_num, transformUrl } from '@/utils/common';
 
 interface DataType {
   key: string;
@@ -103,7 +103,16 @@ export default function HomePage() {
       dataIndex: 'like',
       defaultSortOrder: 'descend',
       width: 100,
-      sorter: (a: any, b: any) => a.like - b.like,
+      sorter: (a: any, b: any) => string_to_num(a.like) - string_to_num(b.like),
+    },
+    {
+      title: '赞',
+      dataIndex: 'like',
+      // defaultSortOrder: 'descend',
+      width: 100,
+      render: (val, record: Record<string, any>) => {
+        return <span>{string_to_num(val)} </span>;
+      },
     },
     {
       title: '发布时间',
