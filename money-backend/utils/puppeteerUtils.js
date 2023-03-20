@@ -172,12 +172,13 @@ const downFile = async (arr, file) => {
   }
 };
 function objectToFormatString(obj) {
-  const objJson = JSON.stringify(obj, null, "\t")
-  const strArr = objJson.split(/\r\n|\n|\r/gm).map(item => {
-    return item.replace(/"/, "").replace(/\"\:/, ":")
-  })
-  const objStr = strArr.join("\r\n")
-  return objStr
+  const objJson = JSON.stringify(obj, null, '  ');
+  // const strArr = objJson.split(/\r\n|\n|\r/gm).map(item => {
+  //   // return item.replace(/"/, "").replace(/\"\:/, ":")
+  //   return item.replace(/\t/, "  ").replace(/\"\:/, ":")
+  // })
+  // const objStr = strArr.join("\r\n")
+  return objJson.replace('\t', '');
 }
 
 const downProductmsg = async (arr, file) => {
