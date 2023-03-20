@@ -171,13 +171,22 @@ const downFile = async (arr, file) => {
     i++;
   }
 };
+function objectToFormatString(obj) {
+  const objJson = JSON.stringify(obj, null, "\t")
+  const strArr = objJson.split(/\r\n|\n|\r/gm).map(item => {
+    return item.replace(/"/, "").replace(/\"\:/, ":")
+  })
+  const objStr = strArr.join("\r\n")
+  return objStr
+}
+
 const downProductmsg = async (arr, file) => {
   const { downloadPath, pathname } = file || {};
   const [mkdirPath] = createDownloadPath(pathname, downloadPath);
   try {
     fs.writeFileSync(
       path.resolve(__dirname, `${mkdirPath}/${pathname}.json`),
-      JSON.stringify(arr),
+      objectToFormatString(arr),
     );
   } catch (error) {
     console.log(pathname + '的账号作品信息下载失败', error);
