@@ -23,6 +23,12 @@ export const videoNote = [
 export const textUserList = [
   {
     value:
+      'https://www.douyin.com/user/MS4wLjABAAAAOOE9P7MXaLZrZ5UnA4HeRcJ8EFMsTilQE7qq42YhyTE',
+    label: '𝑴𝒐𝒐𝒏͜͜',
+    desc: '“关注作者”对作者留一份期待. 每天给你们分享更多“独特”美景 V：Sheyo...',
+  },
+  {
+    value:
       'https://www.douyin.com/user/MS4wLjABAAAAeCZfmwQBYvgEhbGfP7-HtsZYvya9_KclUSQU_Kscg-E',
     label: '肆月SIYUE',
     desc: '全网粉丝300W+网红店 直播周一至周六09:55开播 甄选好物 福利秒杀 ...',

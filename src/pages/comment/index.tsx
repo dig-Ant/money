@@ -130,8 +130,10 @@ export default function HomePage() {
   const onFinish = (values: Record<string, any>) => {
     console.log('values: ', values);
     let keyword = values.keyword;
-    if (keyword) {
+    if (keyword.includes('http')) {
       keyword = 'http' + keyword.split('http')[1];
+    } else {
+      keyword = 'https://www.douyin.com/video/' + keyword;
     }
 
     run({

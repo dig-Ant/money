@@ -281,7 +281,21 @@ export default function searchUser() {
               {num}
             </a>
             &nbsp; &nbsp;
-            {commentNUM.map((e, index) => {
+            <a
+              onClick={() => {
+                dispatch({
+                  type: 'consumerPage/batchLike',
+                  payload: {
+                    userType,
+                    listType: 'followList',
+                    _id: record._id,
+                  },
+                });
+              }}
+            >
+              评论
+            </a>
+            {/* {commentNUM.map((e, index) => {
               return (
                 <a
                   onClick={() => {
@@ -299,7 +313,7 @@ export default function searchUser() {
                   评论{index}&nbsp; &nbsp;
                 </a>
               );
-            })}
+            })} */}
           </div>
         );
       },
