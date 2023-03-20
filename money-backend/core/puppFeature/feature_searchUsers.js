@@ -133,6 +133,7 @@ const feature_searchUsers = async function (params = {}) {
     await limitExec(
       async (comment) => {
         try {
+          console.log(comment);
           await userPage.goto(comment.userLink, TIME_OUT);
           await userPage.waitForSelector('.Nu66P_ba', TIME_OUT);
           // await userPage.waitForSelector('.N4QS6RJT', TIME_OUT);
