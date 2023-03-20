@@ -3,7 +3,19 @@ const path = require('path');
 const axiosRequest = require('./request');
 const { delay, getToday } = require('./index');
 const mkdirp = require('mkdirp');
+/**
+ 理财
+ 支付宝 46781+10234
+ 平安口袋银行 536857
+ 平安证券 48768
+ 同花顺 3000
+ 46781+10234+536857+48768+3000=645640
+ 公积金 142255
 
+ 
+ 花费
+ 房租水电(4500+300)*12=57600
+ */
 const hrefClassMap = {
   music: 'o2WoARuk',
   user: 'Eie04v01',

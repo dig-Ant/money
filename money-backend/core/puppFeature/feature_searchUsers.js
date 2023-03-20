@@ -55,68 +55,71 @@ const feature_searchUsers = async function (params = {}) {
     await videoPage.goto(myVideo.href, TIME_OUT);
     await videoPage.waitForSelector(VIDEO_SRC_SELECTOR, TIME_OUT);
     // 3.获取myVideo评论区下的用户信息
-    let { fans, like, name, time, commentList } = await videoPage.evaluate(
-      async (
+    let { fans, like, name, time, title, commentList } =
+      await videoPage.evaluate(
+        async (
+          USER_INFO_LIST_SELECTOR,
+          COMMENT_LIST_SELECTOR,
+          commentLimitLen,
+        ) => {
+          const user = document.querySelector(USER_INFO_LIST_SELECTOR);
+          const name = user.children[1].querySelector('a').innerText;
+          const time = document.querySelector('.aQoncqRg').innerText;
+          const title = document.title;
+          const [fans, like] = user.children[1]
+            .querySelector('p')
+            .innerText.slice(2)
+            .split('获赞');
+          // 获取评论
+          let commentList = [
+            ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+          ];
+          // 获取对应数量为止
+          if (typeof commentLimitLen !== 'undefined') {
+            while (
+              commentList.length < commentLimitLen &&
+              !commentList.at(-1).innerText.includes('没有')
+            ) {
+              window.scrollBy({ left: 0, top: 2 * window.innerHeight });
+              await new Promise((res) => setTimeout(() => res(), 600));
+              commentList = [
+                ...document.querySelector(COMMENT_LIST_SELECTOR).children,
+              ];
+            }
+          }
+          commentList.splice(-1, 1);
+          console.log(commentList);
+          commentList = commentList.map((el) => {
+            const userInfoEl = el.querySelector('div:nth-child(2)');
+            const userImgSrc = (el.querySelector('.PbpHcHqa') || {}).src || '';
+            if (!userInfoEl) return {};
+            return {
+              userImgSrc,
+              //https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_e1ebac7151274d35b2d6f8d3b3dd7f33~c5_300x300.jpeg?from=2956013662
+              //https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_e1ebac7151274d35b2d6f8d3b3dd7f33.jpeg?from=2956013662
+              userImg: userImgSrc
+                .replace('aweme/100x100', 'img')
+                .replace('.jpeg', '~c5_300x300.jpeg'),
+              userName: userInfoEl.querySelector('a').innerText,
+              userLink: userInfoEl.querySelector('a').href,
+              userLike: userInfoEl.querySelector('.jtyFqENC').innerText,
+              activeTime: userInfoEl.querySelector('.L4ozKLf7').innerText,
+              comment: userInfoEl.querySelector('p').innerText,
+            };
+          });
+          return {
+            fans,
+            like,
+            name,
+            time,
+            title,
+            commentList,
+          };
+        },
         USER_INFO_LIST_SELECTOR,
         COMMENT_LIST_SELECTOR,
         commentLimitLen,
-      ) => {
-        const user = document.querySelector(USER_INFO_LIST_SELECTOR);
-        const name = user.children[1].querySelector('a').innerText;
-        const time = document.querySelector('.aQoncqRg').innerText;
-        const [fans, like] = user.children[1]
-          .querySelector('p')
-          .innerText.slice(2)
-          .split('获赞');
-        // 获取评论
-        let commentList = [
-          ...document.querySelector(COMMENT_LIST_SELECTOR).children,
-        ];
-        // 获取对应数量为止
-        if (typeof commentLimitLen !== 'undefined') {
-          while (
-            commentList.length < commentLimitLen &&
-            !commentList.at(-1).innerText.includes('没有')
-          ) {
-            window.scrollBy({ left: 0, top: 2 * window.innerHeight });
-            await new Promise((res) => setTimeout(() => res(), 600));
-            commentList = [
-              ...document.querySelector(COMMENT_LIST_SELECTOR).children,
-            ];
-          }
-        }
-        commentList.splice(-1, 1);
-        console.log(commentList);
-        commentList = commentList.map((el) => {
-          const userInfoEl = el.querySelector('div:nth-child(2)');
-          const userImgSrc = (el.querySelector('.PbpHcHqa') || {}).src || '';
-          if (!userInfoEl) return {};
-          return {
-            userImgSrc,
-            //https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_e1ebac7151274d35b2d6f8d3b3dd7f33~c5_300x300.jpeg?from=2956013662
-            //https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-i-0813_e1ebac7151274d35b2d6f8d3b3dd7f33.jpeg?from=2956013662
-            userImg: userImgSrc
-              .replace('aweme/100x100', 'img')
-              .replace('.jpeg', '~c5_300x300.jpeg'),
-            userName: userInfoEl.querySelector('a').innerText,
-            userLink: userInfoEl.querySelector('a').href,
-            userLike: userInfoEl.querySelector('.jtyFqENC').innerText,
-            activeTime: userInfoEl.querySelector('.L4ozKLf7').innerText,
-            comment: userInfoEl.querySelector('p').innerText,
-          };
-        });
-        return {
-          fans,
-          like,
-          name,
-          time,
-          commentList,
-        };
-      },
-      USER_INFO_LIST_SELECTOR,
-      COMMENT_LIST_SELECTOR,
-      commentLimitLen,
-    );
+      );
     console.log('==========过滤前的个数', commentList.length);
     commentList = NOT_MATE(commentList);
     commentList = NOT_REPEAT(commentList);
@@ -235,6 +238,7 @@ const feature_searchUsers = async function (params = {}) {
       like,
       name,
       time,
+      title,
       commentList,
       followList,
       businessList,
