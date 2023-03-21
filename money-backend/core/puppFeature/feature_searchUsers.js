@@ -46,7 +46,7 @@ const feature_searchUsers = async function (params = {}) {
     page,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-
+  
   try {
     if (!(myVideo.href || '').includes('video'))
       return { code: -1, errorMsg: '不是video' };
