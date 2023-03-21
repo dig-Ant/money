@@ -430,7 +430,7 @@ class WebInterface {
       res.setHeader('Access-Control-Allow-Origin', '*');
       let { userType, link: href } = req.body;
       const { browser, page } = await this.pupp.createBrowser({
-        launchKey: 'feature_searchUsers',
+        launchKey: 'feature_search' + userType,
         devtools: false,
         userDataDir: undefined,
       });
@@ -442,7 +442,7 @@ class WebInterface {
           page,
         });
       }
-      const list = await this.pupp.start('feature_searchUsers', {
+      const list = await this.pupp.start('feature_search' + userType, {
         ...req.body,
         myVideo: { href },
         browser,

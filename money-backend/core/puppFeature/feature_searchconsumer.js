@@ -33,7 +33,7 @@ const {
   FILTER_AGE,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
-const feature_searchUsers = async function (params = {}) {
+const feature_searchconsumer = async function (params = {}) {
   let {
     userURL = MY_USER_LINK,
     index = 0,
@@ -266,4 +266,4 @@ const feature_searchUsers = async function (params = {}) {
   }
 };
 
-module.exports = feature_searchUsers;
+module.exports = feature_searchconsumer;
