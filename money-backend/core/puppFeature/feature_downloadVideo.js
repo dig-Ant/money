@@ -48,7 +48,9 @@ const feature_downloadVideo = async function (params) {
         let StringToNumFun = new StringToNum();
 
         let eleList = [
-          ...document.querySelectorAll('[data-e2e="scroll-list"] li a.chmb2GX8'),
+          ...document.querySelectorAll(
+            '[data-e2e="scroll-list"] li a.chmb2GX8',
+          ),
         ];
         // 获取对应数量为止
         if (
@@ -60,7 +62,9 @@ const feature_downloadVideo = async function (params) {
             window.scrollBy({ left: 0, top: 2 * window.innerHeight });
             await new Promise((res) => setTimeout(() => res(), 1000));
             eleList = [
-              ...document.querySelectorAll('[data-e2e="scroll-list"] li a.chmb2GX8'),
+              ...document.querySelectorAll(
+                '[data-e2e="scroll-list"] li a.chmb2GX8',
+              ),
             ];
           }
           eleList = eleList.slice(limitStart, limitEnd);
