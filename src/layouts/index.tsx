@@ -54,7 +54,9 @@ let 美食 = require('../../money-backend/utils/comments/食物');
 let business2 = require('../../money-backend/utils/comments/business2');
 let 美女 = require('../../money-backend/utils/comments/girls');
 let aged = require('../../money-backend/utils/comments/aged1');
-let urlList = require('../../money-backend/utils/urlText');
+let 文案List = require('../../money-backend/utils/文案URL');
+let 萌宝List = require('../../money-backend/utils/萌宝URL');
+let 同行List = require('../../money-backend/utils/同行URL');
 
 const getCMText = function (list: [string]) {
   const len = list.length;
@@ -152,6 +154,48 @@ export default function Layouts() {
               },
             )}
             <Space style={{ marginLeft: 100, marginBottom: 10 }}>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/grtText',
+                    payload: {
+                      urlList: 文案List,
+                    },
+                  });
+                }}
+              >
+                文案
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/grtText',
+                    payload: {
+                      urlList: 萌宝List,
+                    },
+                  });
+                }}
+              >
+                萌宝
+              </span>
+              <span
+                style={{ cursor: 'pointer' }}
+                title="copy"
+                onClick={() => {
+                  dispatch({
+                    type: 'global/grtText',
+                    payload: {
+                      urlList: 同行List,
+                    },
+                  });
+                }}
+              >
+                同行
+              </span>
               <LoginOutlined
                 title="首次需要登录chromium"
                 onClick={() => {
@@ -173,17 +217,6 @@ export default function Layouts() {
                 onClick={() => {
                   dispatch({
                     type: 'global/grtLink',
-                  });
-                }}
-              />
-              <LinkOutlined
-                title="link"
-                onClick={() => {
-                  dispatch({
-                    type: 'global/grtText',
-                    payload: {
-                      urlList,
-                    },
                   });
                 }}
               />
