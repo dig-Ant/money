@@ -70,7 +70,12 @@ export default function HomePage() {
   useEffect(() => {
     listRun({});
   }, []);
-  console.log('listData: ', listData);
+  console.log(
+    'listData: ',
+    listData.map((e) => {
+      return { value: e.userName, label: e.userLink };
+    }),
+  );
   listData = listData.map((e: any) => {
     e.publishTime = new Date(e.time.slice(5)).getTime();
     return e;
@@ -227,6 +232,20 @@ export default function HomePage() {
             }}
           >
             查询
+          </Button>
+          <Button
+            htmlType="button"
+            onClick={() => {
+              copy(
+                JSON.stringify(
+                  listData.map((e: any) => {
+                    return { label: '同行/' + e.userName, value: e.userLink };
+                  }),
+                ).slice(1, -1) + ',',
+              );
+            }}
+          >
+            copyUser
           </Button>
         </Form.Item>
       </Form>

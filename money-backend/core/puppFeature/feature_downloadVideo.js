@@ -116,30 +116,42 @@ const feature_downloadVideo = async function (params) {
           //   return source.src;
           // });
 
-          const { src, likeNum, name, time } = await videoPage.evaluate(
-            (videoSelect, userSelect, STRINGNUM) => {
-              let StringToNum = new Function(STRINGNUM);
-              let StringToNumFun = new StringToNum();
-              const videoSrc = document.querySelector(videoSelect).src;
-              const time = document.querySelector('.aQoncqRg').innerText;
-              const user = document.querySelector(userSelect);
-              const userName = user.children[1].querySelector('a').innerText;
-              const [fans, like] = user.children[1]
-                .querySelector('p')
-                .innerText.slice(2)
-                .split('获赞');
-              return {
-                src: videoSrc,
-                time,
-                likeNum: StringToNumFun.eval(like),
-                name: `${userName}-${fans}粉-${like}赞`,
-              };
-            },
-            videoSelect,
-            userSelect,
-            STRINGNUM,
+          const { src, likeNum, userLink, userName, name, time } =
+            await videoPage.evaluate(
+              (videoSelect, userSelect, STRINGNUM) => {
+                let StringToNum = new Function(STRINGNUM);
+                let StringToNumFun = new StringToNum();
+                const videoSrc = document.querySelector(videoSelect).src;
+                const time = document.querySelector('.aQoncqRg').innerText;
+                const userLink = document.querySelector('.owClatq2 a').href;
+                const user = document.querySelector(userSelect);
+                const userName = user.children[1].querySelector('a').innerText;
+                const [fans, like] = user.children[1]
+                  .querySelector('p')
+                  .innerText.slice(2)
+                  .split('获赞');
+                return {
+                  src: videoSrc,
+                  time,
+                  userLink,
+                  userName,
+                  likeNum: StringToNumFun.eval(like),
+                  name: `${userName}-${fans}粉-${like}赞`,
+                };
+              },
+              videoSelect,
+              userSelect,
+              STRINGNUM,
+            );
+          console.log(
+            'src, likeNum, userLink, userName, name, time: ',
+            src,
+            likeNum,
+            userLink,
+            userName,
+            name,
+            time,
           );
-          console.log('src, likeNum, name, time: ', src, likeNum, name, time);
           // if(user){
           //   item.user = user.substring(1).split('· ')[0];
           //   item.createDate = user.substring(1).split('· ')[1];
@@ -148,6 +160,8 @@ const feature_downloadVideo = async function (params) {
           item.likeNum = likeNum;
           item.name = name;
           item.time = time;
+          item.userLink = userLink;
+          item.userName = userName;
           item.filename = `${name}-${item.like}-${item.title.split(' ')[0]}`;
         } catch (error) {
           console.log('获取无水印视频报错----', error);
