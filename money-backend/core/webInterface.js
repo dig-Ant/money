@@ -432,7 +432,7 @@ class WebInterface {
       const { browser, page } = await this.pupp.createBrowser({
         launchKey: 'feature_search' + userType,
         devtools: false,
-        userDataDir: undefined,
+        // userDataDir: undefined,
       });
       await page.setViewport(INIT_VIEWPORT);
       if (!href) {

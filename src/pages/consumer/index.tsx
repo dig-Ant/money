@@ -155,13 +155,13 @@ export default function searchUser() {
             <a
               onClick={() => {
                 dispatch({
-                  type: 'consumerPage/batchLike',
+                  type: 'consumerPage/scan',
                   payload: {
                     userType,
                     listType: 'commentList',
                     _id: record._id,
                     // index,
-                    list: commentList,
+                    // list: commentList,
                     type: 'scan',
                   },
                 });
