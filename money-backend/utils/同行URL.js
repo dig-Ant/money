@@ -1,5 +1,11 @@
 module.exports = [
   {
+    value:
+      'https://www.douyin.com/user/MS4wLjABAAAASRw_LTCR0Xw_tKDero0DUwp2xePByY0n5-UjiHuFCHrwrfYOwTJhBA3sAfCB9ISM?previous_page=app_code_link',
+    label: '小羊公主',
+    desc: '谢谢你的关注',
+  },
+  {
     label: '同行/达达不溜',
     value:
       'https://www.douyin.com/user/MS4wLjABAAAAF4P0f-UviR_MX-AFQEInMDL1nNI6wyvydoauqoVSUqCp30p-9cv06ga6ZZwkEiUw',
