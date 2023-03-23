@@ -47,11 +47,11 @@ module.exports = [
     label: '萌宝/童年终结者',
     desc: '事已至此 先吃饭吧 是个普通人有七情六欲，请勿圣人化 日常分享小号：@童年终结...',
   },
-  {
-    label: '萌宝/✨是汐宝呀~',
-    value:
-      'https://www.douyin.com/user/MS4wLjABAAAAdwMxv0JoMJeWu0setf6TlTZ6dT9TP13fCvZCkdjz25XDgNqF57jyf3jRgpvOoL2L',
-  },
+  // {
+  //   label: '萌宝/✨是汐宝呀~',
+  //   value:
+  //     'https://www.douyin.com/user/MS4wLjABAAAAdwMxv0JoMJeWu0setf6TlTZ6dT9TP13fCvZCkdjz25XDgNqF57jyf3jRgpvOoL2L',
+  // },
   {
     label: '萌宝/俏俏头发乱',
     value:
