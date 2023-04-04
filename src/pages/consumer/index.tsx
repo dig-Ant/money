@@ -475,7 +475,7 @@ export default function searchUser() {
               });
             }}
           >
-            a
+            delete
           </a>
         );
       },

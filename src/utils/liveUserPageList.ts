@@ -60,6 +60,14 @@ export const liveUserPageList: Option[] = [
     label: '美妆',
     children: [
       {
+        label: 'colorkey',
+        value: 'https://live.douyin.com/876194626449',
+      },
+      {
+        label: '完美日记',
+        value: 'https://live.douyin.com/380988451678',
+      },
+      {
         label: '肆月SIYUE',
         value: 'https://live.douyin.com/83199150978',
       },
