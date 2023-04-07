@@ -462,7 +462,7 @@ export default function searchUser() {
     // },
     {
       title: '操作',
-      width: 35,
+      width: 75,
       render: (val, record: any) => {
         return (
           <a
