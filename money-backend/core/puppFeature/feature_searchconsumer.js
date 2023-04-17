@@ -31,6 +31,7 @@ const {
   TO_NUM,
   LESS_40,
   FILTER_AGE,
+  FILTER_ACTIVE_TIME,
 } = require('../../utils/constance');
 const { createDownloadPath } = puppeteerUtils;
 const feature_searchconsumer = async function (params = {}) {
@@ -46,7 +47,7 @@ const feature_searchconsumer = async function (params = {}) {
     page,
     userType = 'consumer', // business同行 consumer用户 aged大龄粉
   } = params;
-  
+
   try {
     if (!(myVideo.href || '').includes('video'))
       return { code: -1, errorMsg: '不是video' };
@@ -120,14 +121,15 @@ const feature_searchconsumer = async function (params = {}) {
         COMMENT_LIST_SELECTOR,
         commentLimitLen,
       );
-    console.log('==========过滤前的个数', commentList.length);
+    console.log('======过滤前有', commentList.length + '个');
     commentList = NOT_MATE(commentList);
     commentList = NOT_REPEAT(commentList);
-    console.log('==========过滤男和重复', commentList.length);
-    if (IS_CONSUMER_TYPE(userType)) {
-      commentList = LESS_FIVE(commentList);
-      console.log('==========找消费粉过滤点赞高于5的', commentList.length);
-    }
+    commentList = LESS_FIVE(commentList);
+    commentList = FILTER_BUSINESS(commentList).commentList;
+    console.log('=======过滤男/重复/好物/点赞高于5', commentList.length);
+    commentList = FILTER_ACTIVE_TIME(commentList);
+    console.log('=======过滤30min外的', commentList.length);
+
     // 去页面获取详细的commentList
     const userPage = await browser.newPage();
     await limitExec(

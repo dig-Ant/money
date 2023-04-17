@@ -130,7 +130,28 @@ export default function searchUser() {
                 num && setIsModalOpen(true);
                 setListType('commentList');
                 seID(record._id);
-                setCurrent(commentList.filter((e) => !e.isLiked));
+                setCurrent(
+                  commentList
+                    .filter((e: any) => {
+                      if (!e.age) return true;
+                      return e.age < 40;
+                      if (
+                        e.svgHtml &&
+                        !e.svgHtml.includes('男') &&
+                        (e.svgHtml.includes('woman') ||
+                          !e.svgHtml.includes('>')) &&
+                        e.age < 40
+                      ) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    })
+                    .filter((e: any) => {
+                      return !e.isLiked;
+                    })
+                    .filter((e) => !e.isLiked),
+                );
               }}
             >
               {num}
@@ -583,31 +604,13 @@ export default function searchUser() {
 
   list = list.map((e: any, i: number) => {
     if (e.commentList) {
-      e.commentList = e.commentList
-        .map((f: any) => {
-          if (f.gender) {
-            const match = f.gender.match(/(\d+)岁/);
-            if (match) f.age = match[1];
-          }
-          return f;
-        })
-        .filter((e: any) => {
-          if (!e.age) return true;
-          return e.age < 40;
-          if (
-            e.svgHtml &&
-            !e.svgHtml.includes('男') &&
-            (e.svgHtml.includes('woman') || !e.svgHtml.includes('>')) &&
-            e.age < 40
-          ) {
-            return true;
-          } else {
-            return false;
-          }
-        })
-        .filter((e: any) => {
-          return !e.isLiked;
-        });
+      e.commentList = e.commentList.map((f: any) => {
+        if (f.gender) {
+          const match = f.gender.match(/(\d+)岁/);
+          if (match) f.age = match[1];
+        }
+        return f;
+      });
 
       if (i == 0) {
         console.log(e.commentList.map((e) => e.svgHtml));
@@ -652,7 +655,7 @@ export default function searchUser() {
             type: 'like',
             limitLen: 1,
             index: 0,
-            commentLimitLen: 270,
+            commentLimitLen: 170,
           }}
           colon={false}
         >

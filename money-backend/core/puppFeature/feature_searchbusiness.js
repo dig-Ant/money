@@ -109,6 +109,13 @@ const feature_searchbusiness = async function (params = {}) {
                 e.activeTime.includes('刚刚') ||
                 e.activeTime.includes('秒')
               );
+            })
+            .filter((e) => {
+              if(e.activeTime.includes('分钟前')){
+                return e.activeTime.split('分钟前')[0]<30
+              }else {
+                return true
+              }
             });
           console.log('1---' + commentList.length);
           return {

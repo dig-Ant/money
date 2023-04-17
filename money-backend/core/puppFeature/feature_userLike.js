@@ -38,7 +38,7 @@ const feature_userLike = async function (params) {
             // await newPage.keyboard.press('V');
             // await newPage.keyboard.up('Control');
             await delay(5000); // data-text
-            console.log(GET_COMMENT1(userType));
+            console.log('第', i, '条', GET_COMMENT1(userType));
             await newPage.keyboard.type(GET_COMMENT1(userType));
             await delay(2000);
             await newPage.keyboard.press('Enter'); // 回车
